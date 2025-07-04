@@ -1,0 +1,135 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\onedrive\\desktop\\industriale\\provamvc\\provamvc\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\onedrive\\desktop\\industriale\\provamvc\\provamvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\onedrive\\desktop\\industriale\\provamvc\\provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\onedrive\\desktop\\industriale\\provamvc\\provamvc\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\onedrive\\desktop\\industriale\\provamvc\\provamvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\onedrive\\desktop\\industriale\\provamvc\\provamvc\\views\\utenti\\registrazione.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\utenti\\registrazione.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\onedrive\\desktop\\industriale\\provamvc\\provamvc\\views\\utenti\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\utenti\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-22T09:26:56.32Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RepartiController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Controllers\\RepartiController.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\RepartiController.cs",
+              "ToolTip": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Controllers\\RepartiController.cs",
+              "RelativeToolTip": "ProvaMVC\\Controllers\\RepartiController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T14:00:28.451Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Program.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Program.cs",
+              "ToolTip": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Program.cs",
+              "RelativeToolTip": "ProvaMVC\\Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAADwvx8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T13:07:31.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "ProvaMVC\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T09:31:02.884Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Registrazione.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-12T08:49:25.276Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UtentiController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Controllers\\UtentiController.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\UtentiController.cs",
+              "ToolTip": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Controllers\\UtentiController.cs",
+              "RelativeToolTip": "ProvaMVC\\Controllers\\UtentiController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwAkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-09T09:04:39.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Views\\Utenti\\Login.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Utenti\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\OneDrive\\Desktop\\Industriale\\ProvaMVC\\ProvaMVC\\Views\\Utenti\\Login.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Utenti\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-12T08:49:27.188Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
