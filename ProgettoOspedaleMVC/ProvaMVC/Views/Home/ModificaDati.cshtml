@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Modifica Dati";
+    var ruolo = Context.Session.GetString("Ruolo");
+    var canEditMedicoData = ViewBag.CanEditMedicoData ?? false; // Recupera il valore da ViewBag
+}
+
+<h1 class="display-4">Modifica Dati</h1>
+<p class="lead">Qui puoi modificare i tuoi dati personali.</p>
+
+<div class="mt-4">
+    <div class="alert alert-info">
+        **Da implementare**: Questo modulo dovrà essere pre-popolato con i dati attuali dell'utente.
+    </div>
+
+    <form>
+        <h2>Dati Personali</h2>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" class="form-control" id="nome" value="Nome Utente">
+        </div>
+        <div class="mb-3">
+            <label for="cognome" class="form-label">Cognome:</label>
+            <input type="text" class="form-control" id="cognome" value="Cognome Utente">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" value="utente@esempio.com">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Nuova Password (opzionale):</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+
+        @* Sezione per la modifica dei dati del medico (solo se l'utente è un Medico) *@
+        @if (canEditMedicoData)
+        {
+            <h2 class="mt-5">Dati Medico</h2>
+            <div class="alert alert-warning">
+                Questi campi sono visibili solo ai medici.
+            </div>
+            <div class="mb-3">
+                <label for="specializzazione" class="form-label">Specializzazione:</label>
+                <input type="text" class="form-control" id="specializzazione" value="Cardiologia">
+            </div>
+            <div class="mb-3">
+                <label for="codiceOrdine" class="form-label">Codice Ordine Medici:</label>
+                <input type="text" class="form-control" id="codiceOrdine" value="ABC123XYZ">
+            </div>
+        }
+
+        <button type="submit" class="btn btn-primary btn-lg mt-4">Salva Modifiche</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

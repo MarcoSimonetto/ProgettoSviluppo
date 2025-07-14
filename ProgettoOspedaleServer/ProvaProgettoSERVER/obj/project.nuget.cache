@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3/f3KFmpFto=",
+  "dgSpecHash": "0tn57d8uASE=",
   "success": true,
-  "projectFilePath": "D:\\ProgettoSviluppo-main\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj",
+  "projectFilePath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\botto\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\botto\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

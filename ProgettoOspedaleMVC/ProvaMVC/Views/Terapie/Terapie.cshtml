@@ -1,0 +1,110 @@
+﻿@model List<ProvaMVC.Models.Terapia>
+@{
+    ViewData["Title"] = "Gestione Terapie";
+    var ruolo = ViewBag.RuoloUtente as string;
+    var pazientiMap = ViewBag.PazientiMapPerTabella as Dictionary<int, string> ?? new();
+    var pazientiDisponibili = ViewBag.PazientiDisponibili as List<ProvaMVC.Models.Paziente> ?? new();
+    var matricolaMedico = ViewBag.MatricolaMedico ?? 0;
+}
+
+<h2>Gestione Terapie</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+@if (TempData["AccessDenied"] != null)
+{
+    <div class="alert alert-warning">@TempData["AccessDenied"]</div>
+}
+
+<!-- Form per inserimento terapia (solo per Medici) -->
+@if (ruolo == "Medico")
+{
+    <h3>Assegna Nuova Terapia</h3>
+    <form asp-action="Terapie" method="post">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label for="IDPaziente">Paziente</label>
+            <select class="form-control" name="IDPaziente" required>
+                <option value="">-- Seleziona Paziente --</option>
+                @foreach (var p in pazientiDisponibili)
+                {
+                    <option value="@p.ID">@p.Nome @p.Cognome (@p.CF)</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Farmaco">Farmaco</label>
+            <input type="text" name="Farmaco" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Dosaggio">Dosaggio</label>
+            <input type="text" name="Dosaggio" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="OrarioSomministrazione">Orario Somministrazione</label>
+            <input type="time" name="OrarioSomministrazione" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="DataInizio">Data Inizio</label>
+            <input type="date" name="DataInizio" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="DataFine">Data Fine</label>
+            <input type="date" name="DataFine" class="form-control" required />
+        </div>
+
+        <input type="hidden" name="MatricolaMedico" value="@matricolaMedico" />
+
+        <button type="submit" class="btn btn-primary mt-2">Assegna Terapia</button>
+    </form>
+}
+
+<hr />
+
+<!-- Tabella delle terapie -->
+<h3>Elenco Terapie</h3>
+@if (!Model.Any())
+{
+    <p>Nessuna terapia trovata per il reparto.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Paziente</th>
+                <th>Farmaco</th>
+                <th>Dosaggio</th>
+                <th>Orario</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th>Prescritta da (Matricola)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@(pazientiMap.ContainsKey(t.IDPaziente) ? pazientiMap[t.IDPaziente] : $"ID: {t.IDPaziente}")</td>
+                    <td>@t.Farmaco</td>
+                    <td>@t.Dosaggio</td>
+                    <td>@t.OrarioSomministrazione.ToString("HH\\:mm")</td>
+                    <td>@t.DataInizio.ToString("dd/MM/yyyy")</td>
+                    <td>@t.DataFine.ToString("dd/MM/yyyy")</td>
+                    <td>@t.MatricolaMedico</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

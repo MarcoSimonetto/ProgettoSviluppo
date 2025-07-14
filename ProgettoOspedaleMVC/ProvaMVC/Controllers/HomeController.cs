@@ -42,9 +42,6 @@ public class HomeController : Controller
         try
         {
 
-            _logger.LogInformation("Matricola from session: {Matricola}", matricola);
-            // Be careful printing sensitive info like passwords to logs in production!
-            _logger.LogInformation("Password from session: {Password}", password); // Use LogDebug for sensitive info
             string authString = $"{matricola}:{password}";
             string base64Token = System.Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
 
@@ -103,6 +100,68 @@ public class HomeController : Controller
             _logger.LogError(ex, "Errore imprevisto durante la chiamata al server per ottenere i pazienti.");
             TempData["LogError"] = "Errore imprevisto durante il recupero dei pazienti.";
             return View();
+        }
+        return View();
+    }
+
+    public IActionResult Reparto()
+    {
+        return View();
+    }
+
+    public IActionResult Pazienti()
+    {
+        return View();
+    }
+
+    public IActionResult Terapie()
+    {
+        var ruolo = HttpContext.Session.GetString("Ruolo");
+        if (ruolo == "Medico" || ruolo == "Infermieri")
+        {
+            return View();
+        }
+        else
+        {
+            TempData["AccessDenied"] = "Non si dispone delle autorizzazioni necessarie per accedere a questa sezione.";
+            return RedirectToAction("Index");
+        }
+    }
+
+    public IActionResult AlertTerapieScadenza()
+    {
+        var ruolo = HttpContext.Session.GetString("Ruolo");
+        if (ruolo == "Infermieri")
+        {
+            return View();
+        }
+        else
+        {
+            TempData["AccessDenied"] = "Funzionalità riservata agli infermieri.";
+            return RedirectToAction("Index");
+        }
+    }
+
+    public IActionResult CalcoloLettiDisponibili()
+    {
+        return View();
+    }
+
+    public IActionResult RichiestaTrasferimentoPaziente()
+    {
+        return View();
+    }
+
+    public IActionResult ModificaDati()
+    {
+        var ruolo = HttpContext.Session.GetString("Ruolo");
+        if (ruolo == "Medico")
+        {
+            ViewBag.CanEditMedicoData = true;
+        }
+        else
+        {
+            ViewBag.CanEditMedicoData = false;
         }
         return View();
     }

@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Reparto - Griglia Letti";
+    var reparto = ViewBag.Reparto as ProvaMVC.Models.Reparto;
+}
+
+@if (TempData["LogError"] != null)
+{
+    <div class="alert alert-danger">@TempData["LogError"]</div>
+}
+
+<h1 class="display-4">Reparto: @reparto.Nome</h1>
+<p class="lead">Disposizione dei letti nel reparto. Clicca su un letto per vedere i dettagli del paziente.</p>
+
+<div class="mt-4">
+    <h2>Griglia Letti</h2>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        @for (int i = 1; i <= reparto.NumeroLetti; i++)
+        {
+            // Puoi eventualmente sostituire questa logica con uno stato letto/paziente reale
+            bool lettoOccupato = i % 2 != 0; // Esempio: occupato se dispari
+
+            <div class="col">
+                <div class="card h-100 @(lettoOccupato ? "text-bg-warning" : "text-bg-success")">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Letto @i</h5>
+                        <p class="card-text">
+                            @if (lettoOccupato)
+                            {
+                                <span>Occupato (Paziente X)</span>
+
+                                <br />
+                                <a href="@Url.Action("VisualizzaLetto", "Reparti", new { numero = i })" class="btn btn-sm btn-outline-dark mt-2">Visualizza Paziente</a>
+                            }
+                            else
+                            {
+                                <span>Disponibile</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

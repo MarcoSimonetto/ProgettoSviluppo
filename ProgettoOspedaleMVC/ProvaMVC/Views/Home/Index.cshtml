@@ -1,48 +1,70 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
-    var pazienti = ViewBag.Pazienti as List<ProvaMVC.Models.Paziente>;
+    ViewData["Title"] = "Dashboard di Benvenuto";
+    var ruolo = ViewBag.Ruolo as string;
+    var reparto = ViewBag.Reparto as int?; // O il tipo corretto del tuo Reparto
+    var matricola = ViewBag.Matricola as int?; // O il tipo corretto della tua Matricola
 }
 
 <div class="text-center">
-    <h1 class="display-4">Benvenuto in @ViewBag.Reparto</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Benvenuto, @ruolo!</h1>
+    @if (reparto.HasValue)
+    {
+        <p>Il tuo reparto: <strong>@reparto.Value</strong></p>
+    }
+    @if (matricola.HasValue)
+    {
+        <p>Matricola: <strong>@matricola.Value</strong></p>
+    }
+    <p>Seleziona una delle opzioni disponibili:</p>
 </div>
-<div>
-    <h2>Lista Pazienti del Reparto</h2>
 
-@if (pazienti != null && pazienti.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>Codice Fiscale</th>
-                <th>Data Ricovero</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in pazienti)
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        <div class="d-grid gap-3">
+            <a class="btn btn-primary btn-lg" asp-area="" asp-controller="Reparti" asp-action="Index">
+                <i class="bi bi-hospital"></i> Reparto - Griglia Letti
+            </a>
+
+            <a class="btn btn-primary btn-lg" asp-area="" asp-controller="Pazienti" asp-action="Pazienti">
+                <i class="bi bi-people"></i> Pazienti (Elenco, Ricoveri, Dimissioni)
+            </a>
+
+            @* Bottone Terapie: visibile solo per Medici e Infermieri *@
+            @if (ruolo == "Medico" || ruolo == "Infermieri")
             {
-                <tr>
-                    <td>@p.Nome</td>
-                    <td>@p.Cognome</td>
-                    <td>@p.CF</td>
-                    <td>@p.DataRicovero</td>
-                </tr>
+                <a class="btn btn-info btn-lg" asp-area="" asp-controller="Terapie" asp-action="Terapie">
+                    <i class="bi bi-capsule"></i> Terapie (Visualizza, Aggiungi, Somministra)
+                </a>
             }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Nessun paziente trovato.</p>
-}
 
-@if (TempData["LogError"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["LogError"]
+            @* Bottone Alert Terapie in Scadenza: visibile solo per Infermieri *@
+            @if (ruolo == "Infermieri")
+            {
+                <a class="btn btn-warning btn-lg" asp-area="" asp-controller="Home" asp-action="AlertTerapieScadenza">
+                    <i class="bi bi-bell"></i> Alert Terapie in Scadenza
+                </a>
+            }
+
+            <a class="btn btn-secondary btn-lg" asp-area="" asp-controller="Home" asp-action="CalcoloLettiDisponibili">
+                <i class="bi bi-bed"></i> Calcolo Letti Disponibili
+            </a>
+
+            <a class="btn btn-secondary btn-lg" asp-area="" asp-controller="Home" asp-action="RichiestaTrasferimentoPaziente">
+                <i class="bi bi-arrow-right-square"></i> Richiesta Trasferimento Paziente
+            </a>
+
+            <a class="btn btn-secondary btn-lg" asp-area="" asp-controller="Home" asp-action="ModificaDati">
+                <i class="bi bi-person-gear"></i> Modifica Dati (Medico/Personali)
+            </a>
+
+            <a class="btn btn-light btn-lg" asp-area="" asp-controller="Home" asp-action="Privacy">
+                <i class="bi bi-info-circle"></i> Privacy
+            </a>
+
+            @* Bottone Logout *@
+            <a class="btn btn-danger btn-lg mt-4" asp-area="" asp-controller="Utenti" asp-action="Logout">
+                <i class="bi bi-box-arrow-right"></i> Esci
+            </a>
+        </div>
     </div>
-}
 </div>

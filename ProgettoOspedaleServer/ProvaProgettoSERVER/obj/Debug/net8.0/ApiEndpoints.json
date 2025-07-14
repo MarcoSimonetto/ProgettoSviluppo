@@ -348,6 +348,16 @@
   },
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.TerapieController",
+    "Method": "TerapieDelGiorno",
+    "RelativePath": "api/Terapie/oggi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.TerapieController",
     "Method": "EliminaTerapia",
     "RelativePath": "api/Terapie/rimuovi",
     "HttpMethod": "DELETE",

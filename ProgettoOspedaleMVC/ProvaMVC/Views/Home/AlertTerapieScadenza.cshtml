@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Alert Terapie in Scadenza";
+}
+
+<h1 class="display-4">Alert Terapie in Scadenza</h1>
+<p class="lead">Visualizza le terapie dei pazienti che stanno per scadere.</p>
+
+<div class="mt-4">
+    <div class="alert alert-warning">
+        **Da implementare**: Qui verrà visualizzata una lista di alert per le terapie in scadenza. Potrebbe essere una tabella con filtri e opzioni di notifica.
+    </div>
+
+    @* Esempio di un alert di terapia *@
+    <div class="card mb-3 border-danger">
+        <div class="card-body">
+            <h5 class="card-title text-danger"><i class="bi bi-exclamation-octagon-fill"></i> Terapia in Scadenza Imminente!</h5>
+            <p class="card-text">Paziente: **Mario Rossi**</p>
+            <p class="card-text">Terapia: **Antibiotico X**</p>
+            <p class="card-text">Scadenza: **14/07/2025 ore 16:00**</p>
+            <button class="btn btn-sm btn-danger">Prendi Azione</button>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title text-warning"><i class="bi bi-exclamation-triangle-fill"></i> Terapia in Scadenza Presto</h5>
+            <p class="card-text">Paziente: **Luisa Bianchi**</p>
+            <p class="card-text">Terapia: **Analgesico Y**</p>
+            <p class="card-text">Scadenza: **15/07/2025 ore 09:00**</p>
+            <button class="btn btn-sm btn-warning">Controlla</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

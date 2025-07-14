@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProvaProgettoSERVER.Models;
@@ -18,7 +19,9 @@ public class TerapieController : ControllerBase
         _context = context;
     }
 
+    [Authorize(Roles = "Medico")]
     [HttpPost("assegna")]
+    
     public async Task<IActionResult> AssegnaTerapia([FromBody] Terapia terapia)
     {
         try
@@ -140,5 +143,37 @@ public class TerapieController : ControllerBase
             return StatusCode(500, "Errore imprevisto: " + ex.Message);
         }
     }
+
+    [Authorize]
+    [HttpGet("oggi")]
+    public async Task<IActionResult> TerapieDelGiorno()
+    {
+        try
+        {
+          
+
+            var oggi = DateOnly.FromDateTime(DateTime.Today);
+
+            var terapieDelGiorno = await _context.Terapie
+                .Where(t =>
+                    t.DataInizio <= oggi &&
+                    t.DataFine >= oggi)
+                .ToListAsync();
+
+            if (!terapieDelGiorno.Any())
+                return NotFound("Nessuna terapia da somministrare oggi.");
+
+            return Ok(terapieDelGiorno);
+        }
+        catch (SqlException ex)
+        {
+            return StatusCode(500, "Errore nel database: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
 
 }

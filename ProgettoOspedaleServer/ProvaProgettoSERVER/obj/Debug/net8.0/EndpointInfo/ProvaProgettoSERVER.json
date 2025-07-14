@@ -595,6 +595,18 @@
         }
       }
     },
+    "/api/Terapie/oggi": {
+      "get": {
+        "tags": [
+          "Terapie"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Utenti/registrazione": {
       "post": {
         "tags": [

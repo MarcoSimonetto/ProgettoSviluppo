@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Calcolo Letti Disponibili";
+}
+
+<h1 class="display-4">Calcolo Letti Disponibili</h1>
+<p class="lead">Qui puoi visualizzare il numero di letti liberi nel tuo reparto o in altri reparti.</p>
+
+<div class="mt-4">
+    <div class="alert alert-info">
+        **Da implementare**: Logica per recuperare e mostrare i dati sulla disponibilità dei letti.
+    </div>
+
+    <div class="card text-center mb-3">
+        <div class="card-header">
+            Disponibilità Letti Reparto
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Letti totali: **50**</h5>
+            <h5 class="card-title">Letti occupati: **35**</h5>
+            <h1 class="card-text display-3 text-success">Letti disponibili: **15**</h1>
+        </div>
+        <div class="card-footer text-muted">
+            Aggiornato al: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h2>Disponibilità Letti per Altri Reparti</h2>
+        <div class="alert alert-secondary">
+            **Da implementare**: Potresti aggiungere qui una tabella o un sistema di ricerca per controllare la disponibilità in altri reparti.
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Pazienti";
+    var pazienti = ViewBag.Pazienti as List<ProvaMVC.Models.Paziente>;
+}
+
+<h1 class="display-4">Gestione Pazienti</h1>
+<p class="lead">Qui puoi gestire l'elenco dei pazienti, pianificare ricoveri e dimissioni.</p>
+
+@if (TempData["LogError"] != null)
+{
+    <div class="alert alert-danger">@TempData["LogError"]</div>
+}
+@if (TempData["LoginError"] != null)
+{
+    <div class="alert alert-warning">@TempData["LoginError"]</div>
+}
+
+<div class="mt-4">
+    <div class="d-grid gap-3">
+        <a class="btn btn-primary btn-lg" href="#">
+            <i class="bi bi-person-lines-fill"></i> Elenco Pazienti Ricoverati
+        </a>
+        <a class="btn btn-success btn-lg" href="#">
+            <i class="bi bi-calendar-plus"></i> Pianificazione Nuovo Ricovero
+        </a>
+        <a class="btn btn-danger btn-lg" href="#">
+            <i class="bi bi-exclamation-triangle"></i> Ricovero Urgente
+        </a>
+        <a class="btn btn-info btn-lg" href="#">
+            <i class="bi bi-calendar-check"></i> Ricovero Programmato
+        </a>
+        <a class="btn btn-secondary btn-lg" href="#">
+            <i class="bi bi-box-arrow-left"></i> Dimissioni Pazienti
+        </a>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2>Elenco Pazienti Ricoverati</h2>
+
+    @if (pazienti != null && pazienti.Any())
+    {
+        <table class="table table-hover table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Codice Fiscale</th>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Data Nascita</th>
+                    <th>Data Ricovero</th>
+                    <th>Data Dimissione</th>
+                    <th>Motivo Ricovero</th>
+                    <th>Letto</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in pazienti)
+                {
+                    <tr>
+                        <td>@p.CF</td>
+                        <td>@p.Nome</td>
+                        <td>@p.Cognome</td>
+                        <td>@p.DataNascita.ToString("dd/MM/yyyy")</td>
+                        <td>@p.DataRicovero.ToString("dd/MM/yyyy")</td>
+                        <td>@(p.DataDimissione?.ToString("dd/MM/yyyy") ?? "Non dimesso")</td>
+                        <td>@p.MotivoRicovero</td>
+                        <td>@(p.NumeroLetto?.ToString() ?? "-")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (pazienti != null)
+    {
+        <div class="alert alert-info mt-3">Nessun paziente ricoverato trovato per questo reparto.</div>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-3">Dati dei pazienti non disponibili.</div>
+    }
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
