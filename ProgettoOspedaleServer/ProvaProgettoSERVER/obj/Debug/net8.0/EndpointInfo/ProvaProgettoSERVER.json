@@ -1,0 +1,983 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Ospedale API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Pazienti": {
+      "get": {
+        "tags": [
+          "Pazienti"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/{IDPaziente}": {
+      "get": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDPaziente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/aggiungi": {
+      "post": {
+        "tags": [
+          "Pazienti"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Paziente"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Paziente"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Paziente"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/Reparto/{IDReparto}": {
+      "get": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/modifica_dati_medici": {
+      "put": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDPaziente",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiMedici"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiMedici"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiMedici"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/da_ricoverare": {
+      "get": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "IDReparto",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/da_dimettere": {
+      "get": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "IDReparto",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/modifica": {
+      "put": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDPaziente",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiPaziente"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiPaziente"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiPaziente"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/ricovera_paziente": {
+      "put": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDPaziente",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiReparto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiReparto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiReparto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/dimetti": {
+      "delete": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDPaziente",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reparti": {
+      "get": {
+        "tags": [
+          "Reparti"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reparti/{IDReparto}": {
+      "get": {
+        "tags": [
+          "Reparti"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reparti/letti_liberi/{IDReparto}": {
+      "get": {
+        "tags": [
+          "Reparti"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reparti/{IDReparto}/{NumeroLetto}": {
+      "get": {
+        "tags": [
+          "Reparti"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "NumeroLetto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Somministrazioni": {
+      "get": {
+        "tags": [
+          "Somministrazioni"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Somministrazioni/verifica": {
+      "get": {
+        "tags": [
+          "Somministrazioni"
+        ],
+        "parameters": [
+          {
+            "name": "idTerapia",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Somministrazioni/aggiungi": {
+      "post": {
+        "tags": [
+          "Somministrazioni"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Somministrazione"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Somministrazione"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Somministrazione"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Terapie/assegna": {
+      "post": {
+        "tags": [
+          "Terapie"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Terapia"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Terapia"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Terapia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Terapie/modifica": {
+      "put": {
+        "tags": [
+          "Terapie"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matricolaMedico",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Terapia"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Terapia"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Terapia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Terapie/{idPaziente}": {
+      "get": {
+        "tags": [
+          "Terapie"
+        ],
+        "parameters": [
+          {
+            "name": "idPaziente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Terapie/rimuovi": {
+      "delete": {
+        "tags": [
+          "Terapie"
+        ],
+        "parameters": [
+          {
+            "name": "idTerapia",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "matricolaMedico",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Utenti/registrazione": {
+      "post": {
+        "tags": [
+          "Utenti"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Utente"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Utente"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Utente"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Utenti/login": {
+      "post": {
+        "tags": [
+          "Utenti"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginData"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginData"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Utenti": {
+      "get": {
+        "tags": [
+          "Utenti"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DatiMedici": {
+        "type": "object",
+        "properties": {
+          "dataDimissione": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "patologie": {
+            "type": "string",
+            "nullable": true
+          },
+          "allergie": {
+            "type": "string",
+            "nullable": true
+          },
+          "altreNote": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatiPaziente": {
+        "type": "object",
+        "properties": {
+          "cf": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "cognome": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataNascita": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "luogoNascita": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataRicovero": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "motivoRicovero": {
+            "type": "string",
+            "nullable": true
+          },
+          "idReparto": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numeroLetto": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatiReparto": {
+        "type": "object",
+        "properties": {
+          "idReparto": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numeroLetto": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginData": {
+        "required": [
+          "matricola",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "matricola": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Paziente": {
+        "required": [
+          "cf",
+          "cognome",
+          "dataNascita",
+          "dataRicovero",
+          "idReparto",
+          "luogoNascita",
+          "motivoRicovero",
+          "nome"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cf": {
+            "maxLength": 16,
+            "minLength": 16,
+            "type": "string"
+          },
+          "nome": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "cognome": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dataNascita": {
+            "type": "string",
+            "format": "date"
+          },
+          "luogoNascita": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dataRicovero": {
+            "type": "string",
+            "format": "date"
+          },
+          "motivoRicovero": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dataDimissione": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "idReparto": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numeroLetto": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "patologie": {
+            "type": "string",
+            "nullable": true
+          },
+          "allergie": {
+            "type": "string",
+            "nullable": true
+          },
+          "altreNote": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Somministrazione": {
+        "required": [
+          "data",
+          "idTerapia",
+          "matricolaInfermiere"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "matricolaInfermiere": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTerapia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Terapia": {
+        "required": [
+          "dataFine",
+          "dataInizio",
+          "dosaggio",
+          "farmaco",
+          "idPaziente",
+          "matricolaMedico",
+          "orarioSomministrazione"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idPaziente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "farmaco": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dosaggio": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "orarioSomministrazione": {
+            "type": "string",
+            "format": "time"
+          },
+          "dataInizio": {
+            "type": "string",
+            "format": "date"
+          },
+          "dataFine": {
+            "type": "string",
+            "format": "date"
+          },
+          "matricolaMedico": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Utente": {
+        "required": [
+          "cf",
+          "cognome",
+          "idReparto",
+          "nome",
+          "password",
+          "ruolo"
+        ],
+        "type": "object",
+        "properties": {
+          "matricola": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "cf": {
+            "maxLength": 16,
+            "minLength": 16,
+            "type": "string"
+          },
+          "nome": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "cognome": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "ruolo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "idReparto": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "basic": {
+        "type": "http",
+        "description": "Inserisci matricola e password come header Authorization",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "basic": [ ]
+    }
+  ]
+}

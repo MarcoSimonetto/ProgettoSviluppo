@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var pazienti = ViewBag.Pazienti as List<ProvaMVC.Models.Paziente>;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Benvenuto in @ViewBag.Reparto</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div>
+    <h2>Lista Pazienti del Reparto</h2>
+
+@if (pazienti != null && pazienti.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Codice Fiscale</th>
+                <th>Data Ricovero</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in pazienti)
+            {
+                <tr>
+                    <td>@p.Nome</td>
+                    <td>@p.Cognome</td>
+                    <td>@p.CF</td>
+                    <td>@p.DataRicovero</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nessun paziente trovato.</p>
+}
+
+@if (TempData["LogError"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["LogError"]
+    </div>
+}
+</div>
