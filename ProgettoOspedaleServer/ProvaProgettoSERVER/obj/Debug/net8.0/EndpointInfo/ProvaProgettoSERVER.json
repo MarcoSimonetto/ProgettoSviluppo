@@ -94,7 +94,7 @@
         }
       }
     },
-    "/api/Pazienti/modifica_dati_medici": {
+    "/api/Pazienti/modifica_dati_medici/{IDPaziente}": {
       "put": {
         "tags": [
           "Pazienti"
@@ -102,7 +102,8 @@
         "parameters": [
           {
             "name": "IDPaziente",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -135,7 +136,49 @@
         }
       }
     },
-    "/api/Pazienti/da_ricoverare": {
+    "/api/Pazienti/modifica/{IDPaziente}": {
+      "put": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDPaziente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiPaziente"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiPaziente"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiPaziente"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/da_ricoverare/{IDReparto}/{data}": {
       "get": {
         "tags": [
           "Pazienti"
@@ -143,7 +186,8 @@
         "parameters": [
           {
             "name": "data",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "format": "date"
@@ -151,7 +195,8 @@
           },
           {
             "name": "IDReparto",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -165,7 +210,30 @@
         }
       }
     },
-    "/api/Pazienti/da_dimettere": {
+    "/api/Pazienti/da_ricoverare/{IDReparto}/oggi": {
+      "get": {
+        "tags": [
+          "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pazienti/da_dimettere/{IDReparto}/{data}": {
       "get": {
         "tags": [
           "Pazienti"
@@ -173,7 +241,8 @@
         "parameters": [
           {
             "name": "data",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "format": "date"
@@ -181,7 +250,8 @@
           },
           {
             "name": "IDReparto",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -195,40 +265,22 @@
         }
       }
     },
-    "/api/Pazienti/modifica": {
-      "put": {
+    "/api/Pazienti/da_dimettere/{IDReparto}/oggi": {
+      "get": {
         "tags": [
           "Pazienti"
         ],
         "parameters": [
           {
-            "name": "IDPaziente",
-            "in": "query",
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DatiPaziente"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DatiPaziente"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DatiPaziente"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -236,7 +288,7 @@
         }
       }
     },
-    "/api/Pazienti/ricovera_paziente": {
+    "/api/Pazienti/ricovera_paziente/{IDPaziente}": {
       "put": {
         "tags": [
           "Pazienti"
@@ -244,7 +296,8 @@
         "parameters": [
           {
             "name": "IDPaziente",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -277,7 +330,7 @@
         }
       }
     },
-    "/api/Pazienti/dimetti": {
+    "/api/Pazienti/dimetti/{IDPaziente}": {
       "delete": {
         "tags": [
           "Pazienti"
@@ -285,7 +338,8 @@
         "parameters": [
           {
             "name": "IDPaziente",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -389,6 +443,29 @@
         }
       }
     },
+    "/api/Reparti/lista_letti_liberi/{IDReparto}": {
+      "get": {
+        "tags": [
+          "Reparti"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Somministrazioni": {
       "get": {
         "tags": [
@@ -401,7 +478,7 @@
         }
       }
     },
-    "/api/Somministrazioni/verifica": {
+    "/api/Somministrazioni/verifica/{idTerapia}/{data}": {
       "get": {
         "tags": [
           "Somministrazioni"
@@ -409,7 +486,8 @@
         "parameters": [
           {
             "name": "idTerapia",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -417,7 +495,8 @@
           },
           {
             "name": "data",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "format": "date"
@@ -462,6 +541,75 @@
         }
       }
     },
+    "/api/Somministrazioni/oggi/{IDReparto}": {
+      "get": {
+        "tags": [
+          "Somministrazioni"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Somministrazioni/oggi/ancora_in_orario/{IDReparto}": {
+      "get": {
+        "tags": [
+          "Somministrazioni"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Somministrazioni/oggi/in_ritardo/{IDReparto}": {
+      "get": {
+        "tags": [
+          "Somministrazioni"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Terapie/assegna": {
       "post": {
         "tags": [
@@ -493,23 +641,16 @@
         }
       }
     },
-    "/api/Terapie/modifica": {
+    "/api/Terapie/modifica/{IDTerapia}": {
       "put": {
         "tags": [
           "Terapie"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "matricolaMedico",
-            "in": "query",
+            "name": "IDTerapia",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -520,17 +661,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Terapia"
+                "$ref": "#/components/schemas/DatiTerapia"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Terapia"
+                "$ref": "#/components/schemas/DatiTerapia"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Terapia"
+                "$ref": "#/components/schemas/DatiTerapia"
               }
             }
           }
@@ -565,7 +706,7 @@
         }
       }
     },
-    "/api/Terapie/rimuovi": {
+    "/api/Terapie/rimuovi/{idTerapia}": {
       "delete": {
         "tags": [
           "Terapie"
@@ -573,15 +714,8 @@
         "parameters": [
           {
             "name": "idTerapia",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "matricolaMedico",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -595,10 +729,21 @@
         }
       }
     },
-    "/api/Terapie/oggi": {
+    "/api/Terapie/oggi/{IDReparto}": {
       "get": {
         "tags": [
           "Terapie"
+        ],
+        "parameters": [
+          {
+            "name": "IDReparto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -768,6 +913,35 @@
         },
         "additionalProperties": false
       },
+      "DatiTerapia": {
+        "type": "object",
+        "properties": {
+          "farmaco": {
+            "type": "string",
+            "nullable": true
+          },
+          "dosaggio": {
+            "type": "string",
+            "nullable": true
+          },
+          "orarioSomministrazione": {
+            "type": "string",
+            "format": "time",
+            "nullable": true
+          },
+          "dataInizio": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "dataFine": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LoginData": {
         "required": [
           "matricola",
@@ -865,7 +1039,7 @@
         "required": [
           "data",
           "idTerapia",
-          "matricolaInfermiere"
+          "matricolaUtente"
         ],
         "type": "object",
         "properties": {
@@ -873,7 +1047,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "matricolaInfermiere": {
+          "matricolaUtente": {
             "type": "integer",
             "format": "int32"
           },

@@ -6,7 +6,7 @@ namespace ProvaProgettoSERVER.Models
         [Key]
         public int ID { get; set; }
         [Required]
-        public int MatricolaInfermiere { get; set; }
+        public int MatricolaUtente { get; set; }
         [Required]
         public int IDTerapia { get; set; }
         [Required]

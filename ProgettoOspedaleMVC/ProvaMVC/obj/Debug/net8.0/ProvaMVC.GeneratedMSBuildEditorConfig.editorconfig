@@ -32,10 +32,6 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBbGVydFRlcmFwaWVTY2FkZW56YS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/botto/Desktop/ProgettoSviluppo-main/ProgettoOspedaleMVC/ProvaMVC/Views/Home/CalcoloLettiDisponibili.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYWxjb2xvTGV0dGlEaXNwb25pYmlsaS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/botto/Desktop/ProgettoSviluppo-main/ProgettoOspedaleMVC/ProvaMVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -68,8 +64,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/botto/Desktop/ProgettoSviluppo-main/ProgettoOspedaleMVC/ProvaMVC/Views/Terapie/Terapie.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVyYXBpZVxUZXJhcGllLmNzaHRtbA==
+[C:/Users/botto/Desktop/ProgettoSviluppo-main/ProgettoOspedaleMVC/ProvaMVC/Views/Terapie/Assegna.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVyYXBpZVxBc3NlZ25hLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/botto/Desktop/ProgettoSviluppo-main/ProgettoOspedaleMVC/ProvaMVC/Views/Terapie/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVyYXBpZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/botto/Desktop/ProgettoSviluppo-main/ProgettoOspedaleMVC/ProvaMVC/Views/Utenti/Login.cshtml]

@@ -1,0 +1,60 @@
+﻿@model List<ProvaMVC.Models.Terapia>
+@{
+    ViewData["Title"] = "Terapie di Oggi";
+    var ruolo = ViewBag.RuoloUtente as string;
+    var pazientiMap = ViewBag.PazientiMapPerTabella as Dictionary<int, string> ?? new();
+}
+
+<a asp-action="Assegna" class="btn btn-success mb-3">➕ Nuova Terapia</a>
+<h2>Terapie di oggi</h2>
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+@if (TempData["AccessDenied"] != null)
+{
+    <div class="alert alert-warning">@TempData["AccessDenied"]</div>
+}
+
+
+@if (!Model.Any())
+{
+   
+    <p>Nessuna terapia trovata per oggi.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Paziente</th>
+                <th>Farmaco</th>
+                <th>Dosaggio</th>
+                <th>Orario</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th>Prescritta da</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@(pazientiMap.ContainsKey(t.IDPaziente) ? pazientiMap[t.IDPaziente] : $"ID: {t.IDPaziente}")</td>
+                    <td>@t.Farmaco</td>
+                    <td>@t.Dosaggio</td>
+                    <td>@t.OrarioSomministrazione.ToString("HH\\:mm")</td>
+                    <td>@t.DataInizio.ToString("dd/MM/yyyy")</td>
+                    <td>@t.DataFine.ToString("dd/MM/yyyy")</td>
+                    <td>@t.MatricolaMedico</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

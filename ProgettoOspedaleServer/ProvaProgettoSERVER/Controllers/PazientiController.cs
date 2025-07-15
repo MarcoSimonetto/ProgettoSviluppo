@@ -13,6 +13,7 @@ namespace ProvaProgettoSERVER.Controllers;
 public class PazientiController : ControllerBase
 {
     private readonly OspedaleContext _context;
+    public DateOnly oggi = DateOnly.FromDateTime(DateTime.Today);
 
     public PazientiController(OspedaleContext context)
     {
@@ -64,11 +65,42 @@ public class PazientiController : ControllerBase
     {
         try
         {
+            var matricolaClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(matricolaClaim, out var matricola))
+            {
+                return Unauthorized("Matricola non valida nei claims.");
+            }
+
+            var utente = await _context.Utenti.FindAsync(matricola);
+            if (utente == null) return NotFound("Utente non trovato.");
+
             var esiste = await _context.Pazienti.AnyAsync(u => u.CF == paziente.CF);
             if (esiste) return BadRequest("Paziente già registrato.");
+            
+            if (paziente.IDReparto!=utente.IDReparto) 
+                return BadRequest("Non puoi modificare i dati dei pazienti di un altro reparto!");
+
+            var reparto = await _context.Reparti.FindAsync(paziente.IDReparto);
+            if (reparto == null) return NotFound("Reparto non trovato.");
+
+            if(paziente.DataDimissione!=null && (paziente.DataRicovero>paziente.DataDimissione))
+                return BadRequest("Hai una inserito una data di inizio che viene dopo la data di fine!");
 
             if (paziente.NumeroLetto == null)
-                paziente.NumeroLetto = 0;
+                if (paziente.DataRicovero <= oggi)
+                    return BadRequest("Devi inserire il numero del letto!");
+                else paziente.NumeroLetto = 0;
+            else
+            {
+                if (paziente.NumeroLetto < 1 || paziente.NumeroLetto > reparto.NumeroLetti)
+                    return BadRequest($"Numero letto non valido. Per questo reparto devi inserire un numero da 1 a {reparto.NumeroLetti}.");
+
+                var occupato = await _context.Pazienti.AnyAsync(p => p.IDReparto == paziente.IDReparto &&
+                    p.NumeroLetto == paziente.NumeroLetto &&
+                    (p.DataDimissione == null || p.DataDimissione >= oggi) &&
+                    p.ID != paziente.ID);
+                if (occupato) return BadRequest("Il letto è già occupato da un altro paziente.");
+            }
 
             _context.Pazienti.Add(paziente);
             await _context.SaveChangesAsync();
@@ -86,13 +118,18 @@ public class PazientiController : ControllerBase
 
     [Authorize]
     [HttpGet("Reparto/{IDReparto}")]
-    public async Task<IActionResult> GetReparto(int IDReparto)
+    public async Task<IActionResult> PazientiRicoverati(int IDReparto)
     {
         try
         {
             var reparto = await _context.Reparti.FindAsync(IDReparto);
             if (reparto==null) return NotFound("Reparto non trovato.");
-            var pazienti = await _context.Pazienti.Where(p => p.IDReparto == reparto.ID).ToListAsync();
+
+            var pazienti = await _context.Pazienti
+            .Where(p => p.IDReparto == reparto.ID &&
+                        p.DataRicovero <= oggi &&
+                        (p.DataDimissione == null || p.DataDimissione >= oggi))
+            .ToListAsync();
             if (!pazienti.Any()) return NotFound("Nessun paziente ricoverato in questo reparto.");
 
             return Ok(pazienti);
@@ -108,9 +145,8 @@ public class PazientiController : ControllerBase
     }
 
     [Authorize(Roles = "Medico")]
-    [HttpPut("modifica_dati_medici")]
-    public async Task<IActionResult> ModificaDatiMedico([FromBody] DatiMedici pazienteModifica,
-    [FromQuery] int IDPaziente)
+    [HttpPut("modifica_dati_medici/{IDPaziente}")]
+    public async Task<IActionResult> ModificaDatiMedici([FromBody] DatiMedici pazienteModifica, int IDPaziente)
     {
         try
         {
@@ -129,7 +165,13 @@ public class PazientiController : ControllerBase
             if (paziente.IDReparto != utente.IDReparto)
                 return BadRequest("Non puoi modificare i dati dei pazienti di un altro reparto!");
 
-            if (pazienteModifica.DataDimissione!=null) paziente.DataDimissione = pazienteModifica.DataDimissione;
+            if (pazienteModifica.DataDimissione != null)
+            {
+                if (paziente.DataRicovero>paziente.DataDimissione)
+                    return BadRequest("Hai una inserito la data di dimissione che viene prima di quella di ricovero!");
+
+                paziente.DataDimissione = pazienteModifica.DataDimissione;
+            }
             if(pazienteModifica.Patologie!=null) paziente.Patologie = pazienteModifica.Patologie;
             if (pazienteModifica.Allergie!=null) paziente.Allergie = pazienteModifica.Allergie;
             if (pazienteModifica.AltreNote!=null) paziente.AltreNote = pazienteModifica.AltreNote;
@@ -149,59 +191,8 @@ public class PazientiController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("da_ricoverare")]
-    public async Task<IActionResult> GetPazientiDaRicoverare([FromQuery] DateOnly data, 
-        [FromQuery] int IDReparto)
-    {
-        try
-        {
-            var reparto = await _context.Reparti.FindAsync(IDReparto);
-            if (reparto == null) return NotFound("Reparto non trovato.");
-            var pazienti = await _context.Pazienti
-                .Where(p => p.DataRicovero == data && p.NumeroLetto == 0 && p.IDReparto == reparto.ID).ToListAsync();
-            if (pazienti == null) return NotFound("Nessun paziente da ricoverare per la data specificata.");
-
-            return Ok(pazienti);
-        }
-        catch (SqlException ex)
-        {
-            return BadRequest("Errore nel database: " + ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, "Errore imprevisto: " + ex.Message);
-        }
-    }
-
-    [Authorize]
-    [HttpGet("da_dimettere")]
-    public async Task<IActionResult> GetPazientiDaDimettere([FromQuery] DateOnly data,
-        [FromQuery] int IDReparto)
-    {
-        try
-        {
-            var reparto = await _context.Reparti.FindAsync(IDReparto);
-            if (reparto == null) return NotFound("Reparto non trovato.");
-            var pazienti = await _context.Pazienti
-                .Where(p => p.DataRicovero == data && p.IDReparto == reparto.ID).ToListAsync();
-            if (pazienti == null) return NotFound("Nessun paziente da dimettere per la data specificata.");
-
-            return Ok(pazienti);
-        }
-        catch (SqlException ex)
-        {
-            return BadRequest("Errore nel database: " + ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, "Errore imprevisto: " + ex.Message);
-        }
-    }
-
-    [Authorize(Roles = "Medico,Infermiere")]
-    [HttpPut("modifica")]
-    public async Task<IActionResult> ModificaDati([FromBody] DatiPaziente pazienteModifica, 
-        [FromQuery] int IDPaziente)
+    [HttpPut("modifica/{IDPaziente}")]
+    public async Task<IActionResult> ModificaDati([FromBody] DatiPaziente pazienteModifica, int IDPaziente)
     {
         try
         {
@@ -218,15 +209,19 @@ public class PazientiController : ControllerBase
             if (paziente.IDReparto != utente.IDReparto)
                 return BadRequest("Non puoi modificare i dati dei pazienti di un altro reparto.");
 
-            if(pazienteModifica.DataNascita!=null) paziente.DataNascita = pazienteModifica.DataNascita.Value;
-            if(pazienteModifica.CF!=null) paziente.CF = pazienteModifica.CF;
-            if(pazienteModifica.Nome!=null) paziente.Nome = pazienteModifica.Nome;
-            if(pazienteModifica.Cognome!=null) paziente.Cognome = pazienteModifica.Cognome;
-            if(pazienteModifica.NumeroLetto!=null) paziente.NumeroLetto = pazienteModifica.NumeroLetto;
-            if(pazienteModifica.IDReparto!=null) paziente.IDReparto = pazienteModifica.IDReparto.Value;
-            if(pazienteModifica.LuogoNascita!=null) paziente.LuogoNascita = pazienteModifica.LuogoNascita;
-            if(pazienteModifica.DataRicovero!=null) paziente.DataRicovero = pazienteModifica.DataRicovero.Value;
-            if(pazienteModifica.MotivoRicovero!=null) paziente.MotivoRicovero = pazienteModifica.MotivoRicovero;
+            if (pazienteModifica.DataNascita != null) paziente.DataNascita = pazienteModifica.DataNascita.Value;
+            if (pazienteModifica.CF != null) paziente.CF = pazienteModifica.CF;
+            if (pazienteModifica.Nome != null) paziente.Nome = pazienteModifica.Nome;
+            if (pazienteModifica.Cognome != null) paziente.Cognome = pazienteModifica.Cognome;
+            if (pazienteModifica.NumeroLetto != null) paziente.NumeroLetto = pazienteModifica.NumeroLetto;
+            if (pazienteModifica.IDReparto != null) paziente.IDReparto = pazienteModifica.IDReparto.Value;
+            if (pazienteModifica.LuogoNascita != null) paziente.LuogoNascita = pazienteModifica.LuogoNascita;
+            if (pazienteModifica.DataRicovero != null) { 
+                if((paziente.DataRicovero>paziente.DataDimissione) && paziente.DataDimissione!=null)
+                    return BadRequest("Hai una inserito la data di ricovero che viene dopo quella di dimissione!");
+                paziente.DataRicovero = pazienteModifica.DataRicovero.Value;
+            } 
+            if (pazienteModifica.MotivoRicovero != null) paziente.MotivoRicovero = pazienteModifica.MotivoRicovero;
             await _context.SaveChangesAsync();
 
             return Ok("Paziente modificato con successo.");
@@ -242,10 +237,105 @@ public class PazientiController : ControllerBase
         }
     }
 
+    [Authorize]
+    [HttpGet("da_ricoverare/{IDReparto}/{data}")]
+    public async Task<IActionResult> GetPazientiDaRicoverare(DateOnly data, int IDReparto)
+    {
+        try
+        {
+            var reparto = await _context.Reparti.FindAsync(IDReparto);
+            if (reparto == null) return NotFound("Reparto non trovato.");
+            var pazienti = await _context.Pazienti
+                .Where(p => p.DataRicovero == data && p.NumeroLetto == 0 && p.IDReparto == reparto.ID).ToListAsync();
+            if (!pazienti.Any()) return NotFound("Nessun paziente da ricoverare per la data specificata.");
+
+            return Ok(pazienti);
+        }
+        catch (SqlException ex)
+        {
+            return BadRequest("Errore nel database: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("da_ricoverare/{IDReparto}/oggi")]
+    public async Task<IActionResult> GetPazientiDaRicoverareOggi(int IDReparto)
+    {
+        try
+        {
+            var reparto = await _context.Reparti.FindAsync(IDReparto);
+            if (reparto == null) return NotFound("Reparto non trovato.");
+            var pazienti = await _context.Pazienti
+                .Where(p => p.DataRicovero == oggi && p.NumeroLetto == 0 && p.IDReparto == reparto.ID).ToListAsync();
+            if (!pazienti.Any()) return NotFound("Nessun paziente da ricoverare oggi.");
+
+            return Ok(pazienti);
+        }
+        catch (SqlException ex)
+        {
+            return BadRequest("Errore nel database: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("da_dimettere/{IDReparto}/{data}")]
+    public async Task<IActionResult> GetPazientiDaDimettere(DateOnly data, int IDReparto)
+    {
+        try
+        {
+            var reparto = await _context.Reparti.FindAsync(IDReparto);
+            if (reparto == null) return NotFound("Reparto non trovato.");
+            var pazienti = await _context.Pazienti
+                .Where(p => p.DataRicovero == data && p.IDReparto == reparto.ID).ToListAsync();
+            if (!pazienti.Any()) return NotFound("Nessun paziente da dimettere per la data specificata.");
+
+            return Ok(pazienti);
+        }
+        catch (SqlException ex)
+        {
+            return BadRequest("Errore nel database: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("da_dimettere/{IDReparto}/oggi")]
+    public async Task<IActionResult> GetPazientiDaDimettereOggi(int IDReparto)
+    {
+        try
+        {
+            var reparto = await _context.Reparti.FindAsync(IDReparto);
+            if (reparto == null) return NotFound("Reparto non trovato.");
+            var pazienti = await _context.Pazienti
+                .Where(p => p.DataRicovero == oggi && p.IDReparto == reparto.ID).ToListAsync();
+            if (!pazienti.Any()) return NotFound("Nessun paziente da dimettere oggi.");
+
+            return Ok(pazienti);
+        }
+        catch (SqlException ex)
+        {
+            return BadRequest("Errore nel database: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
     [Authorize(Roles = "Medico")]
-    [HttpPut("ricovera_paziente")]
-    public async Task<IActionResult> RicoveraPaziente([FromBody] DatiReparto ricoverato,
-        [FromQuery] int IDPaziente)
+    [HttpPut("ricovera_paziente/{IDPaziente}")]
+    public async Task<IActionResult> RicoveraPaziente([FromBody] DatiReparto ricoverato, int IDPaziente)
     {
         try
         {
@@ -273,7 +363,6 @@ public class PazientiController : ControllerBase
             if (ricoverato.NumeroLetto < 1 || ricoverato.NumeroLetto > reparto.NumeroLetti)
                 return BadRequest($"Numero letto non valido. Per questo reparto devi inserire un numero da 1 a {reparto.NumeroLetti}.");
 
-            var oggi = DateOnly.FromDateTime(DateTime.Today);
             var occupato = await _context.Pazienti.AnyAsync(p => p.IDReparto == ricoverato.IDReparto &&
                 p.NumeroLetto == ricoverato.NumeroLetto &&
                 (p.DataDimissione == null || p.DataDimissione >= oggi) &&
@@ -296,8 +385,8 @@ public class PazientiController : ControllerBase
     }
 
     [Authorize(Roles = "Medico")]
-    [HttpDelete("dimetti")]
-    public async Task<IActionResult> EliminaPaziente([FromQuery] int IDPaziente)
+    [HttpDelete("dimetti/{IDPaziente}")]
+    public async Task<IActionResult> EliminaPaziente(int IDPaziente)
     {
         try
         {
@@ -315,6 +404,9 @@ public class PazientiController : ControllerBase
 
             if (paziente.IDReparto != utente.IDReparto)
                 return BadRequest("Non puoi dimettere i pazienti di un altro reparto!");
+
+            if (paziente.DataDimissione!=null && paziente.DataDimissione>oggi)
+                return BadRequest("Non puoi dimettere questo paziente perchè la sua data di dimissione non è oggi!");
 
             _context.Pazienti.Remove(paziente);
             await _context.SaveChangesAsync();

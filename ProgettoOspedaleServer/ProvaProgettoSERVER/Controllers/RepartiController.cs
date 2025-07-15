@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProvaProgettoSERVER.Models;
 using ProvaProgettoSERVER.Services;
+using System.Linq;
 
 namespace ProvaProgettoSERVER.Controllers;
 
@@ -104,6 +105,44 @@ public class RepartiController:ControllerBase
                 return Ok("Questo letto non è occupato.");
 
             return Ok(paziente);
+        }
+        catch (SqlException ex)
+        {
+            return StatusCode(500, "Errore nel database: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("lista_letti_liberi/{IDReparto}")]
+    public async Task<IActionResult> ListaLettiLiberi(int IDReparto)
+    {
+        try
+        {
+            var reparto = await _context.Reparti.FindAsync(IDReparto);
+            if (reparto == null)
+                return NotFound("Reparto non trovato.");
+
+            var oggi = DateOnly.FromDateTime(DateTime.Today);
+
+            // Estrai solo i numeri letto occupati (non nulli)
+            var lettiOccupati = await _context.Pazienti
+                .Where(p => p.IDReparto == reparto.ID &&
+                            p.DataRicovero <= oggi &&
+                            (p.DataDimissione == null || p.DataDimissione >= oggi))
+                .Select(p => p.NumeroLetto)
+                .Where(x => x.HasValue)
+                .Select(x => x.Value)
+                .ToListAsync();
+
+            var tuttiLetti = Enumerable.Range(1, reparto.NumeroLetti);
+
+            var lettiLiberi = tuttiLetti.Except(lettiOccupati).ToList();
+
+            return Ok(lettiLiberi);
         }
         catch (SqlException ex)
         {

@@ -79,7 +79,7 @@ namespace ProvaMVC.Controllers
                 }
 
                 // 2. Recupera le terapie (e filtra per i pazienti del reparto)
-                var responseTerapie = await Client.GetAsync("api/Terapie/oggi");
+                var responseTerapie = await Client.GetAsync($"api/Terapie/oggi/{idReparto}");
                 if (responseTerapie.IsSuccessStatusCode)
                 {
                     var allTerapie = await responseTerapie.Content.ReadAsStringAsync();
@@ -124,47 +124,81 @@ namespace ProvaMVC.Controllers
 
 
         // --- AZIONE POST: Invia i dati del form per assegnare una nuova terapia ---
+        // (Questa azione ora è dedicata alla lista/principale. L'assegnazione è gestita da Assegna POST)
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Terapie(Terapia nuovaTerapia) 
+        // {
+        //     // Removed, as Assegna POST will handle the form submission
+        // }
+
+        // Mostra elenco (GET /Terapie)
+        public async Task<IActionResult> Index()
+        {
+            return await Terapie(); // Usa già il metodo esistente che popola ViewBag e model
+        }
+
+        // GET: Mostra form per nuova terapia (solo Medico)
+        [HttpGet]
+        public async Task<IActionResult> Assegna()
+        {
+            var ruolo = HttpContext.Session.GetString("Ruolo");
+            if (ruolo != "Medico")
+            {
+                TempData["AccessDenied"] = "Accesso negato. Solo i medici possono assegnare nuove terapie.";
+                return RedirectToAction("Index");
+            }
+
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
+            var reparto = HttpContext.Session.GetInt32("Reparto");
+
+            // Check for null session values before passing to helper
+            if (!matricola.HasValue || string.IsNullOrEmpty(password) || !reparto.HasValue)
+            {
+                TempData["LoginError"] = "Sessione scaduta o dati utente mancanti. Effettuare nuovamente il login.";
+                return RedirectToAction("Login", "Utenti");
+            }
+
+            await RepopulateViewBagData(matricola.Value, password, reparto.Value, ruolo);
+            return View(new Terapia());
+        }
+
+        // POST: Salva terapia
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Terapie(Terapia nuovaTerapia) // Riceve i dati del form direttamente in un oggetto Terapia
+        public async Task<IActionResult> Assegna(Terapia nuovaTerapia)
         {
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
 
+            // Ensure session data is available
+            if (!matricola.HasValue || string.IsNullOrEmpty(password) || !idReparto.HasValue)
+            {
+                TempData["LoginError"] = "Sessione scaduta o dati utente mancanti. Effettuare nuovamente il login.";
+                return RedirectToAction("Login", "Utenti");
+            }
 
             // Imposta la MatricolaMedico dalla sessione per sicurezza, ignorando quella che potrebbe arrivare dal form
             nuovaTerapia.MatricolaMedico = matricola.Value;
 
             if (!ModelState.IsValid)
             {
-                // Se la validazione fallisce, dobbiamo ripopolare ViewBag e ricaricare l'elenco delle terapie
-                // Passiamo matricola.Value e idReparto.Value che sono già controllati come non null
+                // If validation fails, repopulate ViewBag data and return the *same* view with the invalid model
                 await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
                 TempData["ErrorMessage"] = "Errore di validazione nel form di assegnazione terapia. Controlla i campi.";
-                // Ricarica le terapie esistenti per la tabella
-                List<Terapia> terapieEsistenti = await GetExistingTerapie(matricola.Value, password, idReparto.Value);
-                return View(terapieEsistenti); // Ritorna alla stessa vista con gli errori
+                return View(nuovaTerapia); // Return the view with the current invalid model
             }
 
             try
             {
-                // Solo se matricola e password non sono null per l'autenticazione Basic
-                if (matricola.HasValue && !string.IsNullOrEmpty(password))
-                {
-                    string authString = $"{matricola.Value}:{password}";
-                    string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-                    Client.DefaultRequestHeaders.Authorization = null;
-                    Client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
-                }
-                else
-                {
-                    TempData["LoginError"] = "Sessione API scaduta o non autorizzata. Effettuare nuovamente il login.";
-                    return RedirectToAction("Login", "Utenti");
-                }
+                string authString = $"{matricola.Value}:{password}";
+                string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+                Client.DefaultRequestHeaders.Authorization = null;
+                Client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
 
-                // Serializza l'oggetto Terapia ricevuto dal form
                 var jsonContent = JsonConvert.SerializeObject(nuovaTerapia);
                 var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
@@ -173,11 +207,11 @@ namespace ProvaMVC.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["SuccessMessage"] = "Terapia assegnata con successo!";
-                    return RedirectToAction("Terapie"); // Reindirizza per evitare il problema del rinvio del form
+                    return RedirectToAction("Index"); // Redirect to the main Terapie list
                 }
                 else
                 {
-                    var errorContent = await response.Content.ReadAsStringAsync(); // Corretto ReadAsStringAsync
+                    var errorContent = await response.Content.ReadAsStringAsync();
                     _logger.LogError("Errore API nell'assegnazione terapia (POST): {StatusCode} - {Error}", response.StatusCode, errorContent);
                     TempData["ErrorMessage"] = $"Errore durante l'assegnazione della terapia: {response.StatusCode} - {errorContent}";
 
@@ -187,10 +221,9 @@ namespace ProvaMVC.Controllers
                         TempData["LoginError"] = "Sessione API scaduta o non autorizzata. Effettuare nuovamente il login.";
                         return RedirectToAction("Login", "Utenti");
                     }
-                    // Se l'API restituisce errore, ricarica i dati e ritorna alla vista
+                    // If API returns an error, repopulate ViewBag data and return the *same* view with the invalid model
                     await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
-                    List<Terapia> terapieEsistenti = await GetExistingTerapie(matricola.Value, password, idReparto.Value);
-                    return View(terapieEsistenti);
+                    return View(nuovaTerapia); // Return the view with the current invalid model
                 }
             }
             catch (HttpRequestException ex)
@@ -198,18 +231,17 @@ namespace ProvaMVC.Controllers
                 _logger.LogError(ex, "Errore di rete durante l'assegnazione della terapia.");
                 TempData["ErrorMessage"] = "Impossibile connettersi al server per assegnare la terapia.";
                 await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
-                List<Terapia> terapieEsistenti = await GetExistingTerapie(matricola.Value, password, idReparto.Value);
-                return View(terapieEsistenti);
+                return View(nuovaTerapia); // Return the view with the current invalid model
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Errore imprevisto durante l'assegnazione della terapia.");
                 TempData["ErrorMessage"] = "Si è verificato un errore imprevisto.";
                 await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
-                List<Terapia> terapieEsistenti = await GetExistingTerapie(matricola.Value, password, idReparto.Value);
-                return View(terapieEsistenti);
+                return View(nuovaTerapia); // Return the view with the current invalid model
             }
         }
+
 
         // --- Metodo Helper per ripopolare i dati di ViewBag (pazienti, ecc.) ---
         private async Task RepopulateViewBagData(int matricola, string? password, int idReparto, string? ruolo)

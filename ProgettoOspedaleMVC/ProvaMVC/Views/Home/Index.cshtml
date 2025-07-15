@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Dashboard di Benvenuto";
     var ruolo = ViewBag.Ruolo as string;
     var reparto = ViewBag.Reparto as int?; // O il tipo corretto del tuo Reparto
@@ -30,24 +30,20 @@
             </a>
 
             @* Bottone Terapie: visibile solo per Medici e Infermieri *@
-            @if (ruolo == "Medico" || ruolo == "Infermieri")
+            @if (ruolo == "Medico" || ruolo == "Infermiere")
             {
-                <a class="btn btn-info btn-lg" asp-area="" asp-controller="Terapie" asp-action="Terapie">
+                <a class="btn btn-info btn-lg" asp-area="" asp-controller="Terapie" asp-action="Index">
                     <i class="bi bi-capsule"></i> Terapie (Visualizza, Aggiungi, Somministra)
                 </a>
             }
 
             @* Bottone Alert Terapie in Scadenza: visibile solo per Infermieri *@
-            @if (ruolo == "Infermieri")
+            @if (ruolo == "Infermiere")
             {
                 <a class="btn btn-warning btn-lg" asp-area="" asp-controller="Home" asp-action="AlertTerapieScadenza">
                     <i class="bi bi-bell"></i> Alert Terapie in Scadenza
                 </a>
             }
-
-            <a class="btn btn-secondary btn-lg" asp-area="" asp-controller="Home" asp-action="CalcoloLettiDisponibili">
-                <i class="bi bi-bed"></i> Calcolo Letti Disponibili
-            </a>
 
             <a class="btn btn-secondary btn-lg" asp-area="" asp-controller="Home" asp-action="RichiestaTrasferimentoPaziente">
                 <i class="bi bi-arrow-right-square"></i> Richiesta Trasferimento Paziente

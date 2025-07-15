@@ -44,7 +44,7 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "GetPazientiDaDimettere",
-    "RelativePath": "api/Pazienti/da_dimettere",
+    "RelativePath": "api/Pazienti/da_dimettere/{IDReparto}/{data}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -52,12 +52,28 @@
       {
         "Name": "data",
         "Type": "System.DateOnly",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "IDReparto",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
+    "Method": "GetPazientiDaDimettereOggi",
+    "RelativePath": "api/Pazienti/da_dimettere/{IDReparto}/oggi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IDReparto",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -65,7 +81,7 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "GetPazientiDaRicoverare",
-    "RelativePath": "api/Pazienti/da_ricoverare",
+    "RelativePath": "api/Pazienti/da_ricoverare/{IDReparto}/{data}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -73,12 +89,28 @@
       {
         "Name": "data",
         "Type": "System.DateOnly",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "IDReparto",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
+    "Method": "GetPazientiDaRicoverareOggi",
+    "RelativePath": "api/Pazienti/da_ricoverare/{IDReparto}/oggi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IDReparto",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -86,7 +118,7 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "EliminaPaziente",
-    "RelativePath": "api/Pazienti/dimetti",
+    "RelativePath": "api/Pazienti/dimetti/{IDPaziente}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -94,36 +126,15 @@
       {
         "Name": "IDPaziente",
         "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
-    "Method": "ModificaDati",
-    "RelativePath": "api/Pazienti/modifica",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "pazienteModifica",
-        "Type": "ProvaProgettoSERVER.Controllers.DatiPaziente",
         "IsRequired": true
-      },
-      {
-        "Name": "IDPaziente",
-        "Type": "System.Int32",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
-    "Method": "ModificaDatiMedico",
-    "RelativePath": "api/Pazienti/modifica_dati_medici",
+    "Method": "ModificaDatiMedici",
+    "RelativePath": "api/Pazienti/modifica_dati_medici/{IDPaziente}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -136,14 +147,35 @@
       {
         "Name": "IDPaziente",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
-    "Method": "GetReparto",
+    "Method": "ModificaDati",
+    "RelativePath": "api/Pazienti/modifica/{IDPaziente}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pazienteModifica",
+        "Type": "ProvaProgettoSERVER.Controllers.DatiPaziente",
+        "IsRequired": true
+      },
+      {
+        "Name": "IDPaziente",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
+    "Method": "PazientiRicoverati",
     "RelativePath": "api/Pazienti/Reparto/{IDReparto}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -160,7 +192,7 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "RicoveraPaziente",
-    "RelativePath": "api/Pazienti/ricovera_paziente",
+    "RelativePath": "api/Pazienti/ricovera_paziente/{IDPaziente}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -173,7 +205,7 @@
       {
         "Name": "IDPaziente",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -242,6 +274,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.RepartiController",
+    "Method": "ListaLettiLiberi",
+    "RelativePath": "api/Reparti/lista_letti_liberi/{IDReparto}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IDReparto",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProvaProgettoSERVER.Controllers.SomministrazioniController",
     "Method": "GetAll",
     "RelativePath": "api/Somministrazioni",
@@ -269,8 +317,56 @@
   },
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.SomministrazioniController",
+    "Method": "SomministrazioniOdierne",
+    "RelativePath": "api/Somministrazioni/oggi/{IDReparto}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IDReparto",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.SomministrazioniController",
+    "Method": "SomministrazioniNonEseguiteMaAncoraInTempo",
+    "RelativePath": "api/Somministrazioni/oggi/ancora_in_orario/{IDReparto}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IDReparto",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.SomministrazioniController",
+    "Method": "SomministrazioniNonEseguiteInRitardo",
+    "RelativePath": "api/Somministrazioni/oggi/in_ritardo/{IDReparto}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IDReparto",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.SomministrazioniController",
     "Method": "GetSomministrazione",
-    "RelativePath": "api/Somministrazioni/verifica",
+    "RelativePath": "api/Somministrazioni/verifica/{idTerapia}/{data}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -278,12 +374,12 @@
       {
         "Name": "idTerapia",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "data",
         "Type": "System.DateOnly",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -323,24 +419,19 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.TerapieController",
     "Method": "ModificaTerapia",
-    "RelativePath": "api/Terapie/modifica",
+    "RelativePath": "api/Terapie/modifica/{IDTerapia}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "IDTerapia",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "matricolaMedico",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "nuovaTerapia",
-        "Type": "ProvaProgettoSERVER.Models.Terapia",
+        "Type": "ProvaProgettoSERVER.Controllers.TerapieController\u002BDatiTerapia",
         "IsRequired": true
       }
     ],
@@ -349,17 +440,23 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.TerapieController",
     "Method": "TerapieDelGiorno",
-    "RelativePath": "api/Terapie/oggi",
+    "RelativePath": "api/Terapie/oggi/{IDReparto}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "IDReparto",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.TerapieController",
     "Method": "EliminaTerapia",
-    "RelativePath": "api/Terapie/rimuovi",
+    "RelativePath": "api/Terapie/rimuovi/{idTerapia}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -367,12 +464,7 @@
       {
         "Name": "idTerapia",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "matricolaMedico",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

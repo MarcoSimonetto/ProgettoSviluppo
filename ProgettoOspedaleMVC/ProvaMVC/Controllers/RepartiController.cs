@@ -1,7 +1,8 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using ProvaMVC.Models;
+﻿// ... existing usings ...
+using System.Text; // Ensure this is present
+using Microsoft.AspNetCore.Mvc; // Ensure this is present
+using Newtonsoft.Json; // Ensure this is present
+using ProvaMVC.Models; // Ensure this is present
 
 namespace ProvaMVC.Controllers;
 
@@ -32,60 +33,66 @@ public class RepartiController : Controller
         ViewBag.Ruolo = ruolo;
         ViewBag.Matricola = matricola;
 
+        // Initialize ViewBag.Reparto for error handling in the view
+        ViewBag.Reparto = null;
+        ViewBag.Pazienti = new List<ProvaMVC.Models.Paziente>(); // Ensure Pazienti is initialized
+        ViewBag.LettiTotali = 0;
+        ViewBag.LettiOccupati = 0;
+        ViewBag.LettiDisponibili = 0;
+        ViewBag.DataAggiornamento = DateTime.Now;
+
         try
         {
             string authString = $"{matricola}:{password}";
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-            _client.DefaultRequestHeaders.Authorization = null;
+            _client.DefaultRequestHeaders.Authorization = null; // Clear previous auth headers
             _client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
 
-            var response = await _client.GetAsync($"api/reparti/{repartoId}");
+            // Reparto
+            var repartoResponse = await _client.GetAsync($"api/reparti/{repartoId}");
+            repartoResponse.EnsureSuccessStatusCode(); // This will throw if status is not 2xx
 
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                var reparto = JsonConvert.DeserializeObject<Reparto>(json)!;
+            var repartoJson = await repartoResponse.Content.ReadAsStringAsync();
+            var reparto = JsonConvert.DeserializeObject<ProvaMVC.Models.Reparto>(repartoJson)!; // Cast to ProvaMVC.Models.Reparto
 
-                ViewBag.Reparto = reparto;
+            // Pazienti
+            // *** CORRECTION HERE: Change 'reparto' to 'Reparto' to match API route casing ***
+            var pazientiResponse = await _client.GetAsync($"api/pazienti/Reparto/{repartoId}");
+            pazientiResponse.EnsureSuccessStatusCode(); // Add this to catch errors here too
 
-                return View();
-            }
-            else
-            {
-                var errore = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Errore API reparto: {StatusCode} - {Errore}", response.StatusCode, errore);
-                TempData["LogError"] = $"Errore nel recupero del reparto: {response.StatusCode} - {errore}";
+            var pazientiJson = await pazientiResponse.Content.ReadAsStringAsync();
+            var pazienti = JsonConvert.DeserializeObject<List<ProvaMVC.Models.Paziente>>(pazientiJson) ?? new List<ProvaMVC.Models.Paziente>();
 
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
-                    response.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                {
-                    TempData["LoginError"] = "Accesso negato. Effettua di nuovo il login.";
-                    return RedirectToAction("Login", "Utenti");
-                }
+            // Conteggio letti
+            int lettiTotali = reparto.NumeroLetti;
+            int lettiOccupati = pazienti.Count;
+            int lettiDisponibili = lettiTotali - lettiOccupati;
 
-                return View();
-            }
-        }
-        catch (HttpRequestException ex)
-        {
-            _logger.LogError(ex, "Errore di rete nel recupero del reparto");
-            TempData["LogError"] = "Errore di connessione al server. Riprova più tardi.";
+            // Passaggio dati alla view
+            ViewBag.Reparto = reparto;
+            ViewBag.Pazienti = pazienti;
+            ViewBag.LettiTotali = lettiTotali;
+            ViewBag.LettiOccupati = lettiOccupati;
+            ViewBag.LettiDisponibili = lettiDisponibili;
+            ViewBag.DataAggiornamento = DateTime.Now;
+
             return View();
         }
-        catch (JsonSerializationException ex)
+        catch (HttpRequestException httpEx)
         {
-            _logger.LogError(ex, "Errore deserializzazione JSON del reparto");
-            TempData["LogError"] = "Errore nella lettura dei dati del reparto.";
-            return View();
+            _logger.LogError(httpEx, "Errore HTTP durante il caricamento del reparto o dei pazienti: {StatusCode}", httpEx.StatusCode);
+            TempData["LogError"] = $"Errore di connessione all'API: {httpEx.Message}. Assicurati che il server API sia in esecuzione.";
+            return View(); // Return view with error data
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Errore imprevisto durante il recupero del reparto");
-            TempData["LogError"] = "Errore imprevisto durante il recupero del reparto.";
-            return View();
+            _logger.LogError(ex, "Errore generico durante il caricamento del reparto o dei pazienti");
+            TempData["LogError"] = "Errore durante il caricamento dei dati del reparto.";
+            return View(); // Return view with error data
         }
     }
 
+    // ... other actions like VisualizzaLetto ...
     public async Task<IActionResult> VisualizzaLetto(int numero)
     {
         var repartoId = HttpContext.Session.GetInt32("Reparto");
@@ -105,42 +112,49 @@ public class RepartiController : Controller
             _client.DefaultRequestHeaders.Authorization = null;
             _client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
 
-            var response = await _client.GetAsync($"api/pazienti/reparto/{repartoId}/{numero}");
+            // This API call is correct as per your API RepartiController: [HttpGet("{IDReparto}/{NumeroLetto}")]
+            var response = await _client.GetAsync($"api/reparti/{repartoId}/{numero}");
+
+            var json = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync();
-                var paziente = JsonConvert.DeserializeObject<Paziente>(json);
+                var paziente = JsonConvert.DeserializeObject<ProvaMVC.Models.Paziente>(json);
 
                 if (paziente != null)
-                {
-                    return View("VisualizzaLetto", paziente); // View personalizzata
-                }
-                else
-                {
-                    TempData["LogInfo"] = "Nessun paziente è attualmente ricoverato in questo letto.";
-                    return View("VisualizzaLetto", null); // oppure passare un flag
-                }
+                    return View("VisualizzaLetto", paziente);
+
+                TempData["LogInfo"] = "Nessun paziente trovato per questo letto.";
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                TempData["LogInfo"] = "Letto libero.";
-                return View("VisualizzaLetto", null);
+                // This will catch the "Reparto non trovato" or "Questo letto non è occupato."
+                // from your API's GetPazientePerLetto
+                if (json.Contains("Reparto non trovato."))
+                {
+                    TempData["LogError"] = "Reparto non trovato per visualizzare il letto.";
+                }
+                else
+                {
+                    TempData["LogInfo"] = "Letto libero.";
+                }
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                TempData["LogError"] = $"Errore nel recupero del letto: {json}";
             }
             else
             {
-                var errore = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Errore API letto: {StatusCode} - {Errore}", response.StatusCode, errore);
-                TempData["LogError"] = $"Errore nel recupero del letto: {errore}";
-                return View("VisualizzaLetto", null);
+                TempData["LogError"] = $"Errore nel recupero del letto: {response.StatusCode} - {json}";
             }
+
+            return View("VisualizzaLetto", null);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Errore durante la chiamata a VisualizzaLetto");
+            _logger.LogError(ex, "Errore durante il recupero del paziente per letto");
             TempData["LogError"] = "Errore durante il recupero del letto.";
             return View("VisualizzaLetto", null);
         }
     }
-
 }
