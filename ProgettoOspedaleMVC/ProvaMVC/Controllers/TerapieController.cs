@@ -77,9 +77,9 @@ namespace ProvaMVC.Controllers
                     _logger.LogError("Errore API nel recupero pazienti per Terapie (GET): {StatusCode} - {Error}", responsePazienti.StatusCode, errorPazienti);
                     TempData["ErrorMessage"] = $"Impossibile caricare i pazienti del reparto: {errorPazienti}";
                 }
-
+                
                 // 2. Recupera le terapie (e filtra per i pazienti del reparto)
-                var responseTerapie = await Client.GetAsync($"api/Terapie/oggi/{idReparto}");
+                var responseTerapie = await Client.GetAsync($"api/Terapie/reparto/{idReparto}");
                 if (responseTerapie.IsSuccessStatusCode)
                 {
                     var allTerapie = await responseTerapie.Content.ReadAsStringAsync();
@@ -460,7 +460,7 @@ namespace ProvaMVC.Controllers
 
         /// GET tutte le terapie:
         [HttpGet]
-        public async Task<IActionResult> TutteLeTerapie()
+        public async Task<IActionResult> TerapieDiOggi()
         {
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
@@ -481,7 +481,7 @@ namespace ProvaMVC.Controllers
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
                 // Chiamata all'API
-                var response = await Client.GetAsync($"api/terapie/reparto/{idReparto}");
+                var response = await Client.GetAsync($"api/terapie/oggi/{idReparto}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -503,7 +503,7 @@ namespace ProvaMVC.Controllers
                     ViewBag.RuoloUtente = ruolo;
                     ViewBag.MatricolaMedico = matricola;
 
-                    return View("TutteLeTerapie", terapie);
+                    return View("TerapieDiOggi", terapie);
                 }
                 else
                 {
@@ -520,8 +520,6 @@ namespace ProvaMVC.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-
 
     }
 }

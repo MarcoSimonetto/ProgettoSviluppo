@@ -89,8 +89,8 @@ public class RepartiController:ControllerBase
             var paziente = await _context.Pazienti
                 .FirstOrDefaultAsync(p => p.IDReparto == IDReparto && p.NumeroLetto == NumeroLetto);
 
-            if (paziente == null)
-                return Ok("Questo letto non è occupato.");
+            /*if (paziente == null)
+                return Ok("Questo letto non è occupato.");*/
 
             return Ok(paziente);
         }

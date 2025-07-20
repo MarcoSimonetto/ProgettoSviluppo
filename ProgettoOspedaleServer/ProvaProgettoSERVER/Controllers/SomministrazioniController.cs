@@ -149,8 +149,6 @@ public class SomministrazioniController : ControllerBase
                 })
                 .ToList();
 
-            if (!somministrazioniFiltrate.Any())
-                return Ok("Nessuna terapia somministrata oggi.");
 
             return Ok(somministrazioniFiltrate);
         }
@@ -199,9 +197,6 @@ public class SomministrazioniController : ControllerBase
                 })
                 .ToList();
 
-            if (!daSomministrareInTempo.Any())
-                return Ok("Sono state somministrate tutte le terapie per oggi.");
-
             return Ok(daSomministrareInTempo);
         }
         catch (Exception ex)
@@ -249,9 +244,6 @@ public class SomministrazioniController : ControllerBase
                     };
                 })
                 .ToList();
-
-            if (!terapieScadute.Any())
-                return Ok("Non ci sono terapie da somministrare in ritardo.");
 
             return Ok(terapieScadute);
         }

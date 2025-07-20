@@ -162,7 +162,7 @@ public class TerapieController : ControllerBase
             var pazientiIDs = await _context.Pazienti.Where(p => p.IDReparto==idReparto)
                 .Select(p => p.ID)
                 .ToListAsync();
-            if (!pazientiIDs.Any()) return Ok("Nessun paziente ricoverato in questo reparto!");
+            if (!pazientiIDs.Any()) return Ok();
 
             var terapie = await _context.Terapie.Where(t => pazientiIDs.Contains(t.IDPaziente))
                 .ToListAsync();
@@ -242,7 +242,7 @@ public class TerapieController : ControllerBase
                 .ToListAsync();
 
             if (!terapieAttiveOggi.Any())
-                return Ok("Nessuna terapia da somministrare oggi.");
+                return Ok();
 
             var pazienteIds = terapieAttiveOggi.Select(t => t.IDPaziente).Distinct().ToList();
 
@@ -255,9 +255,6 @@ public class TerapieController : ControllerBase
             var terapieFiltrate = terapieAttiveOggi
                 .Where(t => pazienteIdsNelReparto.Contains(t.IDPaziente))
                 .ToList();
-
-            if (!terapieFiltrate.Any())
-                return Ok("Nessuna terapia da somministrare oggi per il reparto specificato.");
 
             return Ok(terapieFiltrate);
         }

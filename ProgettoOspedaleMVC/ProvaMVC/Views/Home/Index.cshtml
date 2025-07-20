@@ -40,7 +40,7 @@
             @* Bottone Alert Terapie in Scadenza: visibile solo per Infermieri *@
             @if (ruolo == "Infermiere")
             {
-                <a class="btn btn-warning btn-lg" asp-area="" asp-controller="Home" asp-action="AlertTerapieScadenza">
+                <a class="btn btn-warning btn-lg" asp-area="" asp-controller="Somministrazioni" asp-action="AlertTerapia">
                     <i class="bi bi-bell"></i> Alert Terapie in Scadenza
                 </a>
             }
@@ -57,10 +57,12 @@
                 <i class="bi bi-info-circle"></i> Privacy
             </a>
 
-            @* Bottone Logout *@
-            <a class="btn btn-danger btn-lg mt-4" asp-area="" asp-controller="Utenti" asp-action="Logout">
-                <i class="bi bi-box-arrow-right"></i> Esci
-            </a>
+            <form asp-controller="Utenti" asp-action="Logout" method="post" class="mt-4">
+                <button type="submit" class="btn btn-danger btn-lg w-100">
+                    <i class="bi bi-box-arrow-right"></i> Esci
+                </button>
+            </form>
+
         </div>
     </div>
 </div>

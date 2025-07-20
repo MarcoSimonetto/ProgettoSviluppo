@@ -1,16 +1,15 @@
 ﻿@model List<ProvaMVC.Models.Terapia>
 @{
-    ViewData["Title"] = "Tutte le Terapie";
+    ViewData["Title"] = "Terapie di Oggi";
     var ruolo = ViewBag.RuoloUtente as string;
     var pazientiMap = ViewBag.PazientiMapPerTabella as Dictionary<int, string> ?? new();
 }
 
-<h2>Tutte le Terapie</h2>
+<h2>Terapie di oggi</h2>
 
 <div class="mb-3 d-flex gap-2">
     <a asp-action="Assegna" class="btn btn-success">➕ Nuova Terapia</a>
-    <a asp-action="TutteLeTerapie" class="btn btn-primary">🔄 Ricarica</a>
-    <a asp-action="Index" class="btn btn-secondary">📅 Terapie di Oggi</a>
+    <a asp-action="Index" class="btn btn-secondary">📋 Tutte le Terapie</a>
 </div>
 
 @if (TempData["SuccessMessage"] != null)
@@ -28,7 +27,7 @@
 
 @if (!Model.Any())
 {
-    <p>Nessuna terapia trovata.</p>
+    <p>Nessuna terapia trovata per oggi.</p>
 }
 else
 {

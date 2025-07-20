@@ -62,36 +62,8 @@ public class HomeController : Controller
         }
     }
 
-    public IActionResult AlertTerapieScadenza()
-    {
-        var ruolo = HttpContext.Session.GetString("Ruolo");
-        if (ruolo == "Infermieri")
-        {
-            return View();
-        }
-        else
-        {
-            TempData["AccessDenied"] = "Funzionalità riservata agli infermieri.";
-            return RedirectToAction("Index");
-        }
-    }
-
     public IActionResult RichiestaTrasferimentoPaziente()
     {
-        return View();
-    }
-
-    public IActionResult ModificaDati()
-    {
-        var ruolo = HttpContext.Session.GetString("Ruolo");
-        if (ruolo == "Medico")
-        {
-            ViewBag.CanEditMedicoData = true;
-        }
-        else
-        {
-            ViewBag.CanEditMedicoData = false;
-        }
         return View();
     }
 

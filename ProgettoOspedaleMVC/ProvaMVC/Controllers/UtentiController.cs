@@ -94,4 +94,17 @@ public class UtentiController : Controller
         TempData["RegError"] = $"Errore durante la registrazione: {errore}";
         return View(model);
     }
+    [HttpPost]
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Remove("Matricola");
+        HttpContext.Session.Remove("Ruolo");
+        HttpContext.Session.Remove("Reparto");
+        HttpContext.Session.Remove("Password");
+
+        HttpContext.Session.Clear();
+
+        TempData["LogoutSuccess"] = "Logout effettuato con successo.";
+        return RedirectToAction("Login");
+    }
 }

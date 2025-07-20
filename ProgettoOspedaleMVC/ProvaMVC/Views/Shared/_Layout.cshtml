@@ -38,16 +38,17 @@
                             }
                             else
                             {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <li>
+                                    <a>
                                         Ciao, @(ruolo ?? "Utente")!
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ModificaDati">Modifica Dati Personali</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Utenti" asp-action="Logout">Logout</a></li>
-                                    </ul>
+                                 
                                 </li>
+                                <form asp-area="" asp-controller="Utenti" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit">
+                                        Logout
+                                    </button>
+                                </form>
                             }
                         }
                     </ul>

@@ -192,18 +192,18 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "RicoveraPaziente",
-    "RelativePath": "api/Pazienti/ricovera_paziente/{IDPaziente}",
+    "RelativePath": "api/Pazienti/ricovera_paziente/{IDPaziente}/{NumeroLetto}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ricoverato",
-        "Type": "ProvaProgettoSERVER.Controllers.DatiReparto",
+        "Name": "IDPaziente",
+        "Type": "System.Int32",
         "IsRequired": true
       },
       {
-        "Name": "IDPaziente",
+        "Name": "NumeroLetto",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -213,14 +213,19 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "TrasferimentoPaziente",
-    "RelativePath": "api/Pazienti/trasferimento",
+    "RelativePath": "api/Pazienti/trasferimento/{IDPaziente}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "trasferimento",
-        "Type": "ProvaProgettoSERVER.Controllers.DatiTrasferimento",
+        "Type": "ProvaProgettoSERVER.Controllers.DatiReparto",
+        "IsRequired": true
+      },
+      {
+        "Name": "IDPaziente",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

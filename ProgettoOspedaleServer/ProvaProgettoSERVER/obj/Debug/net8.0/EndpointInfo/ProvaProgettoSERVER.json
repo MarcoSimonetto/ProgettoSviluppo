@@ -288,7 +288,7 @@
         }
       }
     },
-    "/api/Pazienti/ricovera_paziente/{IDPaziente}": {
+    "/api/Pazienti/ricovera_paziente/{IDPaziente}/{NumeroLetto}": {
       "put": {
         "tags": [
           "Pazienti"
@@ -302,27 +302,17 @@
               "type": "integer",
               "format": "int32"
             }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DatiReparto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DatiReparto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DatiReparto"
-              }
+          },
+          {
+            "name": "NumeroLetto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -353,26 +343,37 @@
         }
       }
     },
-    "/api/Pazienti/trasferimento": {
+    "/api/Pazienti/trasferimento/{IDPaziente}": {
       "put": {
         "tags": [
           "Pazienti"
+        ],
+        "parameters": [
+          {
+            "name": "IDPaziente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DatiTrasferimento"
+                "$ref": "#/components/schemas/DatiReparto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DatiTrasferimento"
+                "$ref": "#/components/schemas/DatiReparto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DatiTrasferimento"
+                "$ref": "#/components/schemas/DatiReparto"
               }
             }
           }
@@ -921,6 +922,15 @@
       "DatiMedici": {
         "type": "object",
         "properties": {
+          "dataRicovero": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "motivoRicovero": {
+            "type": "string",
+            "nullable": true
+          },
           "dataDimissione": {
             "type": "string",
             "format": "date",
@@ -962,15 +972,6 @@
             "nullable": true
           },
           "luogoNascita": {
-            "type": "string",
-            "nullable": true
-          },
-          "dataRicovero": {
-            "type": "string",
-            "format": "date",
-            "nullable": true
-          },
-          "motivoRicovero": {
             "type": "string",
             "nullable": true
           }
@@ -1017,25 +1018,6 @@
             "type": "string",
             "format": "date",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DatiTrasferimento": {
-        "type": "object",
-        "properties": {
-          "idPaziente": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "idReparto": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "numeroLetto": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
