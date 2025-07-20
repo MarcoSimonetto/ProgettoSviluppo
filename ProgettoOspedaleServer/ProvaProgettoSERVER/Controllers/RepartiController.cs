@@ -28,10 +28,6 @@ public class RepartiController:ControllerBase
             var reparti = await _context.Reparti.ToListAsync();
             return Ok(reparti);
         }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
-        }
         catch (Exception ex)
         {
             return StatusCode(500, "Errore imprevisto: " + ex.Message);
@@ -45,13 +41,9 @@ public class RepartiController:ControllerBase
         try
         {
             var reparto = await _context.Reparti.FindAsync(IDReparto);
-            if (reparto == null) return NotFound("Reparto non trovato.");
+            if (reparto == null) return NotFound("Reparto non trovato!");
 
             return Ok(reparto);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -67,16 +59,12 @@ public class RepartiController:ControllerBase
         {
             var reparto = await _context.Reparti.FindAsync(IDReparto);
             if (reparto == null)
-                return NotFound("Reparto non trovato");
+                return NotFound("Reparto non trovato!");
 
             int pazientiOccupanti = await _context.Pazienti.CountAsync(p => p.IDReparto == reparto.ID);
             int lettiDisponibili = reparto.NumeroLetti - pazientiOccupanti;
 
             return Ok(lettiDisponibili);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -93,10 +81,10 @@ public class RepartiController:ControllerBase
         {
             var reparto = await _context.Reparti.FindAsync(IDReparto);
             if (reparto == null)
-                return NotFound("Reparto non trovato.");
+                return NotFound("Reparto non trovato!");
 
             if (NumeroLetto < 1 || NumeroLetto > reparto.NumeroLetti)
-                return BadRequest($"Numero letto non valido. Devi inserire un numero da 1 a {reparto.NumeroLetti}.");
+                return BadRequest($"Numero letto non valido! Devi inserire un numero da 1 a {reparto.NumeroLetti}.");
 
             var paziente = await _context.Pazienti
                 .FirstOrDefaultAsync(p => p.IDReparto == IDReparto && p.NumeroLetto == NumeroLetto);
@@ -105,10 +93,6 @@ public class RepartiController:ControllerBase
                 return Ok("Questo letto non è occupato.");
 
             return Ok(paziente);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -124,11 +108,10 @@ public class RepartiController:ControllerBase
         {
             var reparto = await _context.Reparti.FindAsync(IDReparto);
             if (reparto == null)
-                return NotFound("Reparto non trovato.");
+                return NotFound("Reparto non trovato!");
 
             var oggi = DateOnly.FromDateTime(DateTime.Today);
 
-            // Estrai solo i numeri letto occupati (non nulli)
             var lettiOccupati = await _context.Pazienti
                 .Where(p => p.IDReparto == reparto.ID &&
                             p.DataRicovero <= oggi &&
@@ -143,10 +126,6 @@ public class RepartiController:ControllerBase
             var lettiLiberi = tuttiLetti.Except(lettiOccupati).ToList();
 
             return Ok(lettiLiberi);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
         }
         catch (Exception ex)
         {

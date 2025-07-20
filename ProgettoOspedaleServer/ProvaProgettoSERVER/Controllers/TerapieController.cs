@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProvaProgettoSERVER.Models;
 using ProvaProgettoSERVER.Services;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace ProvaProgettoSERVER.Controllers;
 
@@ -15,11 +12,26 @@ namespace ProvaProgettoSERVER.Controllers;
 public class TerapieController : ControllerBase
 {
     private readonly OspedaleContext _context;
-    public DateOnly oggi = DateOnly.FromDateTime(DateTime.Today);
+    public readonly DateOnly oggi = DateOnly.FromDateTime(DateTime.Today);
 
     public TerapieController(OspedaleContext context)
     {
         _context = context;
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        try
+        {
+            var terapie = await _context.Terapie.ToListAsync();
+            return Ok(terapie);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
     }
 
     [Authorize(Roles = "Medico")]
@@ -30,18 +42,16 @@ public class TerapieController : ControllerBase
         {
             var matricolaClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(matricolaClaim, out var matricola))
-            {
-                return Unauthorized("Matricola non valida nei claims.");
-            }
+                return Unauthorized("Matricola non valida nei claims!");
 
             var utente = await _context.Utenti.FindAsync(matricola);
-            if (utente == null) return NotFound("Matricola errata.");
+            if (utente == null) return NotFound("Matricola errata!");
 
             if(matricola!=terapia.MatricolaMedico)
                 return BadRequest("Devi passare la tua matricola quando assegni una terapia!");
 
             var paziente = await _context.Pazienti.FindAsync(terapia.IDPaziente);
-            if (paziente == null) return NotFound("ID errato.");
+            if (paziente == null) return NotFound("Paziente non trovato!");
             if (utente.IDReparto != paziente.IDReparto) 
                 return BadRequest("Non puoi assegnare una terapia ad un paziente di un altro reparto!");
 
@@ -60,7 +70,7 @@ public class TerapieController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
-            return BadRequest("Errore nel salvataggio: " + ex.Message);
+            return StatusCode(500, "Errore nel salvataggio dei dati: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -77,11 +87,11 @@ public class TerapieController : ControllerBase
             var matricolaClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(matricolaClaim, out var matricola))
             {
-                return Unauthorized("Matricola non valida nei claims.");
+                return Unauthorized("Matricola non valida nei claims!");
             }
 
             var terapia = await _context.Terapie.FindAsync(IDTerapia);
-            if (terapia == null) return NotFound("Terapia non trovata");
+            if (terapia == null) return NotFound("Terapia non trovata!");
 
             if (matricola != terapia.MatricolaMedico)
                 terapia.MatricolaMedico = matricola;
@@ -97,7 +107,7 @@ public class TerapieController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
-            return BadRequest("Errore nel salvataggio: " + ex.Message);
+            return StatusCode(500, "Errore nel salvataggio dei dati: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -107,20 +117,57 @@ public class TerapieController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("{idPaziente}")]
+    [HttpGet("paziente/{idPaziente}")]
     public async Task<IActionResult> TerapiePaziente(int idPaziente)
     {
         try
         {
             var paziente = await _context.Pazienti.FindAsync(idPaziente);
-            if (paziente == null) return NotFound("Paziente non trovato.");
+            if (paziente == null) return NotFound("Paziente non trovato!");
             var terapie = await _context.Terapie.Where(t => t.IDPaziente == idPaziente).ToListAsync();
-            if (!terapie.Any()) return NotFound("Non ci sono terapie assegnate a questo paziente");
+            
             return Ok(terapie);
         }
-        catch (SqlException ex)
+        catch (Exception ex)
         {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("{idTerapia}")]
+    public async Task<IActionResult> GetTerapia(int idTerapia)
+    {
+        try
+        {
+            var terapia = await _context.Terapie.FindAsync(idTerapia);
+            if (terapia == null) return NotFound("Terapia non trovata!");
+            return Ok(terapia);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Errore imprevisto: " + ex.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpGet("reparto/{idReparto}")]
+    public async Task<IActionResult> TerapieReparto(int idReparto)
+    {
+        try
+        {
+            var reparto = await _context.Reparti.FindAsync(idReparto);
+            if (reparto == null) return NotFound("Reparto non trovato!");
+
+            var pazientiIDs = await _context.Pazienti.Where(p => p.IDReparto==idReparto)
+                .Select(p => p.ID)
+                .ToListAsync();
+            if (!pazientiIDs.Any()) return Ok("Nessun paziente ricoverato in questo reparto!");
+
+            var terapie = await _context.Terapie.Where(t => pazientiIDs.Contains(t.IDPaziente))
+                .ToListAsync();
+
+            return Ok(terapie);
         }
         catch (Exception ex)
         {
@@ -137,37 +184,45 @@ public class TerapieController : ControllerBase
             var matricolaClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(matricolaClaim, out var matricola))
             {
-                return Unauthorized("Matricola non valida nei claims.");
+                return Unauthorized("Matricola non valida nei claims!");
             }
 
             var utente = await _context.Utenti.FindAsync(matricola);
-            if (utente == null) return NotFound("Matricola non trovata.");
+            if (utente == null) return NotFound("Matricola non trovata!");
 
             var terapia = await _context.Terapie.FindAsync(idTerapia);
-            if (terapia == null) return NotFound("Terapia non trovata.");
+            if (terapia == null) return NotFound("Terapia non trovata!");
 
             var paziente = await _context.Pazienti.FindAsync(terapia.IDPaziente);
-            if (paziente==null) return NotFound("Paziente non trovato.");
-            if (paziente.IDReparto!=utente.IDReparto) 
-                return BadRequest("Non puoi rimuovere le terapia di pazienti di altri reparti.");
+            if (paziente == null) return NotFound("Paziente non trovato!");
+            if (paziente.IDReparto != utente.IDReparto)
+                return BadRequest("Non puoi rimuovere le terapie di pazienti di altri reparti!");
 
-            /*var somministrazioni = await _context.Somministrazioni
-                .Where(s => s.IDTerapia == idTerapia)
-                .ToListAsync();
-            _context.Somministrazioni.RemoveRange(somministrazioni);*/
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            _context.Terapie.Remove(terapia);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var somministrazioni = await _context.Somministrazioni
+                    .Where(s => s.IDTerapia == idTerapia)
+                    .ToListAsync();
 
-            return Ok("Terapia eliminata con successo.");
+                _context.Somministrazioni.RemoveRange(somministrazioni);
+                _context.Terapie.Remove(terapia);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return Ok("Terapia e relative somministrazioni eliminate con successo.");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return StatusCode(500, "Errore nella transazione: " + ex.Message);
+            }
         }
         catch (DbUpdateException ex)
         {
-            return StatusCode(500, "Errore nel salvataggio: " + ex.Message);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
+            return StatusCode(500, "Errore nel salvataggio dei dati: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -181,37 +236,30 @@ public class TerapieController : ControllerBase
     {
         try
         {
-            // Step 1: Ottieni tutte le terapie attive oggi
+            
             var terapieAttiveOggi = await _context.Terapie
                 .Where(t => t.DataInizio <= oggi && t.DataFine >= oggi)
                 .ToListAsync();
 
             if (!terapieAttiveOggi.Any())
-                return NotFound("Nessuna terapia da somministrare oggi.");
+                return Ok("Nessuna terapia da somministrare oggi.");
 
-            // Step 2: Ottieni ID dei pazienti coinvolti
             var pazienteIds = terapieAttiveOggi.Select(t => t.IDPaziente).Distinct().ToList();
 
-            // Step 3: Carica solo i pazienti del reparto richiesto
             var pazientiDelReparto = await _context.Pazienti
                 .Where(p => pazienteIds.Contains(p.ID) && p.IDReparto == IDReparto)
                 .ToListAsync();
 
             var pazienteIdsNelReparto = pazientiDelReparto.Select(p => p.ID).ToHashSet();
 
-            // Step 4: Filtra le terapie i cui pazienti sono nel reparto indicato
             var terapieFiltrate = terapieAttiveOggi
                 .Where(t => pazienteIdsNelReparto.Contains(t.IDPaziente))
                 .ToList();
 
             if (!terapieFiltrate.Any())
-                return NotFound("Nessuna terapia da somministrare oggi per il reparto specificato.");
+                return Ok("Nessuna terapia da somministrare oggi per il reparto specificato.");
 
             return Ok(terapieFiltrate);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
         }
         catch (Exception ex)
         {

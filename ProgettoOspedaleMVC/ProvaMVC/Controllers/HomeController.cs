@@ -16,7 +16,6 @@ public class HomeController : Controller
     {
         _logger = logger;
         Client = client;
-        //Client.BaseAddress = new Uri("http://localhost:5099");
         Client.BaseAddress = new Uri("http://localhost:5002");
     }
 

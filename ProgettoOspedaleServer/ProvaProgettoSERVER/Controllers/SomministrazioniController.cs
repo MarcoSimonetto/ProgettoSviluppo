@@ -14,7 +14,7 @@ namespace ProvaProgettoSERVER.Controllers;
 public class SomministrazioniController : ControllerBase
 {
     private readonly OspedaleContext _context;
-    public DateOnly oggi = DateOnly.FromDateTime(DateTime.Today);
+    public readonly DateOnly oggi = DateOnly.FromDateTime(DateTime.Today);
 
     public SomministrazioniController(OspedaleContext context)
     {
@@ -30,10 +30,6 @@ public class SomministrazioniController : ControllerBase
             var somministrazioni = await _context.Somministrazioni.ToListAsync();
             return Ok(somministrazioni);
         }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
-        }
         catch (Exception ex)
         {
             return StatusCode(500, "Errore imprevisto: " + ex.Message);
@@ -47,16 +43,14 @@ public class SomministrazioniController : ControllerBase
         try
         {
             var terapia = await _context.Terapie.FindAsync(idTerapia);
-            if (terapia == null) return NotFound("ID Terapia errato.");
+            if (terapia == null) return NotFound("Terapia non trovata!");
 
             var paziente = await _context.Pazienti.FirstOrDefaultAsync(p => p.ID == terapia.IDPaziente);
-            if (paziente == null) return NotFound("Paziente non trovato.");
+            if (paziente == null) return NotFound("Paziente non trovato!");
 
             if (data < paziente.DataRicovero ||
                 (paziente.DataDimissione.HasValue && data > paziente.DataDimissione.Value))
-            {
-                return BadRequest("La data specificata non è compresa tra quella di ricovero e quella di dimissione.");
-            }
+                return BadRequest("La data specificata non è compresa tra quella di ricovero e quella di dimissione!");
 
             var somministrazione = await _context.Somministrazioni
                 .Where(s => s.IDTerapia==idTerapia && s.Data==data)
@@ -66,10 +60,6 @@ public class SomministrazioniController : ControllerBase
                 return NotFound("La terapia non è stata somministrata nella data specificata.");
             
             return Ok("La terapia è stata somministrata nella data specificata." + somministrazione);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -85,29 +75,30 @@ public class SomministrazioniController : ControllerBase
         {
             var matricolaClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(matricolaClaim, out var matricola))
-            {
-                return Unauthorized("Matricola non valida nei claims.");
-            }
+                return Unauthorized("Matricola non valida nei claims!");
             
             var utente = await _context.Utenti.FindAsync(matricola);
-            if (utente == null) return NotFound("Matricola non trovata.");
+            if (utente == null) return NotFound("Matricola non trovata!");
 
             if (nuova.MatricolaUtente != matricola)
-                return BadRequest("Non puoi passare la matricola di un altro Infermiere!");
+                nuova.MatricolaUtente = matricola;
 
             var terapia = await _context.Terapie.FindAsync(nuova.IDTerapia);
-            if (terapia == null) return NotFound("Terapia non trovata.");
+            if (terapia == null) return NotFound("Terapia non trovata!");
 
             var paziente = await _context.Pazienti.FindAsync(terapia.IDPaziente);
-            if (paziente == null) return NotFound("Paziente non trovato.");
+            if (paziente == null) return NotFound("Paziente non trovato!");
 
             if (paziente.IDReparto != utente.IDReparto)
                 return BadRequest("Non puoi somministrare la terapia di pazienti di altri reparti!");
 
+            if (nuova.Data < terapia.DataInizio || nuova.Data>terapia.DataFine)
+                return BadRequest("Non puoi somministrare questa terapia. Data inserita non valida!");
+
             var somministrazioneEsiste = await _context.Somministrazioni
                 .AnyAsync(s => s.Data == nuova.Data && s.IDTerapia == nuova.IDTerapia);
             if (somministrazioneEsiste)
-                return BadRequest("La terapia è già stata somministrata.");
+                return Conflict("La terapia è già stata somministrata.");
 
             _context.Somministrazioni.Add(nuova);
             await _context.SaveChangesAsync();
@@ -116,7 +107,7 @@ public class SomministrazioniController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
-            return BadRequest("Errore nel salvataggio: " + ex.Message);
+            return StatusCode(500, "Errore nel salvataggio dei dati: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -130,6 +121,9 @@ public class SomministrazioniController : ControllerBase
     {
         try
         {
+            var reparto = await _context.Reparti.AnyAsync(r => r.ID == IDReparto);
+            if (!reparto) return BadRequest("Reparto non trovato!");
+
             var somministrazioni = await _context.Somministrazioni
                 .Where(s => s.Data == oggi)
                 .ToListAsync();
@@ -142,13 +136,11 @@ public class SomministrazioniController : ControllerBase
                 .Where(t => terapiaIds.Contains(t.ID))
                 .ToListAsync();
 
-            // Carico tutti i pazienti relativi alle terapie
             var pazienteIds = terapie.Select(t => t.IDPaziente).Distinct().ToList();
             var pazienti = await _context.Pazienti
                 .Where(p => pazienteIds.Contains(p.ID) && p.IDReparto == IDReparto)
                 .ToListAsync();
 
-            // Filtra le somministrazioni legate a terapie dei pazienti del reparto
             var somministrazioniFiltrate = somministrazioni
                 .Where(s =>
                 {
@@ -174,8 +166,10 @@ public class SomministrazioniController : ControllerBase
     {
         try
         {
-            var oggi = DateOnly.FromDateTime(DateTime.Today);
             var oraCorrente = TimeOnly.FromDateTime(DateTime.Now);
+
+            var reparto = await _context.Reparti.AnyAsync(r => r.ID == IDReparto);
+            if (!reparto) return BadRequest("Reparto non trovato!");
 
             var terapieAncoraInTempo = await _context.Terapie
                 .Where(t => t.DataInizio <= oggi && oggi <= t.DataFine && t.OrarioSomministrazione > oraCorrente)
@@ -200,8 +194,7 @@ public class SomministrazioniController : ControllerBase
                         NomeFarmaco = t.Farmaco,
                         Paziente = $"{paziente.Nome} {paziente.Cognome}",
                         Letto = paziente.NumeroLetto,
-                        OrarioPrevisto = t.OrarioSomministrazione.ToString("HH:mm"),
-                        Stato = "In Orario"
+                        OrarioPrevisto = t.OrarioSomministrazione.ToString("HH:mm")
                     };
                 })
                 .ToList();
@@ -224,8 +217,10 @@ public class SomministrazioniController : ControllerBase
     {
         try
         {
-            var oggi = DateOnly.FromDateTime(DateTime.Today);
             var oraAttuale = TimeOnly.FromDateTime(DateTime.Now);
+
+            var reparto = await _context.Reparti.AnyAsync(r => r.ID == IDReparto);
+            if (!reparto) return BadRequest("Reparto non trovato!");
 
             var terapieAttive = await _context.Terapie
                 .Where(t => t.DataInizio <= oggi && oggi <= t.DataFine && t.OrarioSomministrazione < oraAttuale)
@@ -250,8 +245,7 @@ public class SomministrazioniController : ControllerBase
                         NomeFarmaco = t.Farmaco,
                         Paziente = $"{paziente.Nome} {paziente.Cognome}",
                         Letto = paziente.NumeroLetto,
-                        OrarioPrevisto = t.OrarioSomministrazione.ToString("HH:mm"),
-                        Stato = "In Ritardo"
+                        OrarioPrevisto = t.OrarioSomministrazione.ToString("HH:mm")
                     };
                 })
                 .ToList();

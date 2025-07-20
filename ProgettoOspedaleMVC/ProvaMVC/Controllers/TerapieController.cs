@@ -353,5 +353,175 @@ namespace ProvaMVC.Controllers
             }
             return terapie;
         }
+
+        // --- MODIFICA TERAPIA ----
+        // GET: Mostra form per modifica terapia (solo Medico)
+        [HttpGet]
+        public async Task<IActionResult> Modifica(int id)
+        {
+            var ruolo = HttpContext.Session.GetString("Ruolo");
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
+
+            if (ruolo == null || !matricola.HasValue || string.IsNullOrEmpty(password))
+                return RedirectToAction("Login", "Utenti");
+
+            string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
+
+            var response = await Client.GetAsync($"api/terapie/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                TempData["ErrorMessage"] = "Errore nel caricamento della terapia.";
+                return RedirectToAction("Index");
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var terapia = JsonConvert.DeserializeObject<Terapia>(json);
+            return View("Modifica", terapia);
+        }
+
+
+
+        // POST: Salva modifica terapia
+        [HttpPost]
+        public async Task<IActionResult> Modifica(int id, Terapia terapia)
+        {
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
+
+            string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
+
+            var json = JsonConvert.SerializeObject(new
+            {
+                farmaco = terapia.Farmaco,
+                dosaggio = terapia.Dosaggio,
+                orarioSomministrazione = terapia.OrarioSomministrazione.ToString(@"hh\:mm"),
+                dataInizio = terapia.DataInizio,
+                dataFine = terapia.DataFine
+            });
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await Client.PutAsync($"api/terapie/modifica/{id}", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Terapia modificata con successo.";
+                return RedirectToAction("Index");
+            }
+
+            TempData["ErrorMessage"] = "Errore nella modifica della terapia.";
+            return View("Modifica", terapia);
+        }
+
+
+        /// -- ELIMINIA TERAPIA --
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Elimina(int id)
+        {
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
+
+            if (!matricola.HasValue || string.IsNullOrEmpty(password))
+            {
+                TempData["LoginError"] = "Sessione scaduta.";
+                return RedirectToAction("Login", "Utenti");
+            }
+
+            try
+            {
+                string authString = $"{matricola}:{password}";
+                string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+                var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["SuccessMessage"] = "Terapia eliminata con successo.";
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    TempData["ErrorMessage"] = $"Errore durante l'eliminazione: {response.StatusCode} - {error}";
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Errore durante l'eliminazione della terapia.");
+                TempData["ErrorMessage"] = "Errore durante l'eliminazione.";
+                return RedirectToAction("Index");
+            }
+        }
+
+        /// GET tutte le terapie:
+        [HttpGet]
+        public async Task<IActionResult> TutteLeTerapie()
+        {
+            var ruolo = HttpContext.Session.GetString("Ruolo");
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
+            var idReparto = HttpContext.Session.GetInt32("Reparto");
+
+            if (!matricola.HasValue || string.IsNullOrEmpty(password) || !idReparto.HasValue)
+            {
+                TempData["LoginError"] = "Sessione scaduta o dati utente mancanti. Effettuare nuovamente il login.";
+                return RedirectToAction("Login", "Utenti");
+            }
+
+            try
+            {
+                // Autenticazione Basic
+                string authString = $"{matricola}:{password}";
+                string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+                // Chiamata all'API
+                var response = await Client.GetAsync($"api/terapie/reparto/{idReparto}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var terapie = JsonConvert.DeserializeObject<List<Terapia>>(json) ?? new List<Terapia>();
+
+                    // Eventuale visualizzazione dei pazienti associati
+                    var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
+                    Dictionary<int, string> pazientiMap = new Dictionary<int, string>();
+
+                    if (responsePazienti.IsSuccessStatusCode)
+                    {
+                        var jsonPazienti = await responsePazienti.Content.ReadAsStringAsync();
+                        var pazienti = JsonConvert.DeserializeObject<List<Paziente>>(jsonPazienti) ?? new List<Paziente>();
+                        pazientiMap = pazienti.ToDictionary(p => p.ID, p => $"{p.Nome} {p.Cognome} ({p.CF})");
+                    }
+
+                    ViewBag.PazientiMapPerTabella = pazientiMap;
+                    ViewBag.RuoloUtente = ruolo;
+                    ViewBag.MatricolaMedico = matricola;
+
+                    return View("TutteLeTerapie", terapie);
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    _logger.LogError("Errore nel recupero di tutte le terapie: {StatusCode} - {Error}", response.StatusCode, error);
+                    TempData["ErrorMessage"] = $"Errore nel caricamento delle terapie: {response.StatusCode} - {error}";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Eccezione nel recupero di tutte le terapie.");
+                TempData["ErrorMessage"] = "Errore imprevisto durante il recupero delle terapie.";
+                return RedirectToAction("Index");
+            }
+        }
+
+
+
     }
 }

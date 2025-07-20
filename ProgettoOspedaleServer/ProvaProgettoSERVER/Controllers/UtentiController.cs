@@ -24,7 +24,7 @@ public class UtentiController : ControllerBase
         try
         {
             var esiste = await _context.Utenti.AnyAsync(u => u.CF == nuovoUtente.CF);
-            if (esiste) return BadRequest("Utente già registrato.");
+            if (esiste) return BadRequest("Utente già registrato!");
 
             _context.Utenti.Add(nuovoUtente);
             await _context.SaveChangesAsync();
@@ -33,7 +33,7 @@ public class UtentiController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
-            return BadRequest("Errore nel salvataggio: " + ex.Message);
+            return StatusCode(500, "Errore nel salvataggio dei dati: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -50,7 +50,7 @@ public class UtentiController : ControllerBase
             var utente = await _context.Utenti
             .FirstOrDefaultAsync(u => u.Matricola == utenteLogin.Matricola && u.Password == utenteLogin.Password);
 
-            if (utente == null) return Unauthorized("Credenziali non valide.");
+            if (utente == null) return Unauthorized("Credenziali non valide!");
 
             var loggato = new
             {   
@@ -62,9 +62,9 @@ public class UtentiController : ControllerBase
 
             return Ok(loggato);
         }
-        catch (SqlException ex)
+        catch (DbUpdateException ex)
         {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
+            return StatusCode(500, "Errore nel salvataggio dei dati: " + ex.Message);
         }
         catch (Exception ex)
         {
@@ -79,10 +79,6 @@ public class UtentiController : ControllerBase
         {
             var utenti = await _context.Utenti.ToListAsync();
             return Ok(utenti);
-        }
-        catch (SqlException ex)
-        {
-            return StatusCode(500, "Errore nel database: " + ex.Message);
         }
         catch (Exception ex)
         {

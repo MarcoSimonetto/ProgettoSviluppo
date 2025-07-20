@@ -1,0 +1,75 @@
+﻿@model List<ProvaMVC.Models.Terapia>
+@{
+    ViewData["Title"] = "Tutte le Terapie";
+    var ruolo = ViewBag.RuoloUtente as string;
+    var pazientiMap = ViewBag.PazientiMapPerTabella as Dictionary<int, string> ?? new();
+}
+
+<h2>Tutte le Terapie</h2>
+
+<div class="mb-3 d-flex gap-2">
+    <a asp-action="Assegna" class="btn btn-success">➕ Nuova Terapia</a>
+    <a asp-action="TutteLeTerapie" class="btn btn-primary">🔄 Ricarica</a>
+    <a asp-action="Index" class="btn btn-secondary">📅 Terapie di Oggi</a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+@if (TempData["AccessDenied"] != null)
+{
+    <div class="alert alert-warning">@TempData["AccessDenied"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>Nessuna terapia trovata.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Paziente</th>
+                <th>Farmaco</th>
+                <th>Dosaggio</th>
+                <th>Orario</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th>Prescritta da</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@(pazientiMap.ContainsKey(t.IDPaziente) ? pazientiMap[t.IDPaziente] : $"ID: {t.IDPaziente}")</td>
+                    <td>@t.Farmaco</td>
+                    <td>@t.Dosaggio</td>
+                    <td>@t.OrarioSomministrazione.ToString("HH\\:mm")</td>
+                    <td>@t.DataInizio.ToString("dd/MM/yyyy")</td>
+                    <td>@t.DataFine.ToString("dd/MM/yyyy")</td>
+                    <td>@t.MatricolaMedico</td>
+
+                    <td class="d-flex flex-wrap gap-2">
+                        @if (ruolo == "Medico")
+                        {
+                            <a asp-action="Modifica" asp-route-id="@t.ID" class="btn btn-warning btn-sm">✏️ Modifica</a>
+                            <form asp-action="Elimina" asp-route-id="@t.ID" method="post" onsubmit="return confirm('Confermi l\'eliminazione della terapia?');">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm">🗑️ Elimina</button>
+                            </form>
+                        }
+                        <a asp-controller="Somministrazioni" asp-action="Dettaglio" asp-route-idTerapia="@t.ID" class="btn btn-info btn-sm">📋 Dettaglio Somministrazioni</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

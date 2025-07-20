@@ -353,6 +353,37 @@
         }
       }
     },
+    "/api/Pazienti/trasferimento": {
+      "put": {
+        "tags": [
+          "Pazienti"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiTrasferimento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiTrasferimento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatiTrasferimento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Reparti": {
       "get": {
         "tags": [
@@ -610,6 +641,18 @@
         }
       }
     },
+    "/api/Terapie": {
+      "get": {
+        "tags": [
+          "Terapie"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Terapie/assegna": {
       "post": {
         "tags": [
@@ -683,7 +726,7 @@
         }
       }
     },
-    "/api/Terapie/{idPaziente}": {
+    "/api/Terapie/paziente/{idPaziente}": {
       "get": {
         "tags": [
           "Terapie"
@@ -691,6 +734,52 @@
         "parameters": [
           {
             "name": "idPaziente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Terapie/{idTerapia}": {
+      "get": {
+        "tags": [
+          "Terapie"
+        ],
+        "parameters": [
+          {
+            "name": "idTerapia",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Terapie/reparto/{idReparto}": {
+      "get": {
+        "tags": [
+          "Terapie"
+        ],
+        "parameters": [
+          {
+            "name": "idReparto",
             "in": "path",
             "required": true,
             "schema": {
@@ -884,16 +973,6 @@
           "motivoRicovero": {
             "type": "string",
             "nullable": true
-          },
-          "idReparto": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "numeroLetto": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -938,6 +1017,25 @@
             "type": "string",
             "format": "date",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatiTrasferimento": {
+        "type": "object",
+        "properties": {
+          "idPaziente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idReparto": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numeroLetto": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

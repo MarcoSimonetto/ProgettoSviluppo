@@ -10,11 +10,9 @@ using ProvaProgettoSERVER;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔌 Aggiungi servizi
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// ✅ Swagger con autenticazione Basic
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ospedale API", Version = "v1" });
@@ -42,11 +40,10 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// ✅ Connessione ad Azure SQL con Azure AD (DefaultAzureCredential)
 builder.Services.AddDbContext<OspedaleContext>(options =>
 {
-    var dataSource = "serverospedale.database.windows.net"; // 🔁 Sostituisci con il tuo server
-    var database = "Ospedale"; // 🔁 Sostituisci con il tuo database
+    var dataSource = "serverospedale.database.windows.net";
+    var database = "Ospedale";
 
     var connection = new SqlConnection
     {
@@ -61,26 +58,22 @@ builder.Services.AddDbContext<OspedaleContext>(options =>
     options.UseSqlServer(connection);
 });
 
-// 🔐 Basic Authentication
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-// ✅ Claims Transformation
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IClaimsTransformation, ClaimsTransformationService>();
 
 var app = builder.Build();
 
-// 🌍 Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection(); COMMENTATO PERCHE LA REDIRECTION SBALLA LA AUTH
+//app.UseHttpsRedirection(); COMMENTATO PERCHE DA' PROBLEMI DI AUTORIZZAZIONE
 
-// 🔐 Ordine: Auth → Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
