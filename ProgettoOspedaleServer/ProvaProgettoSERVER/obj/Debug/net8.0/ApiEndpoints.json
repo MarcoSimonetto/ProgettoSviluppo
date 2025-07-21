@@ -192,7 +192,7 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "RicoveraPaziente",
-    "RelativePath": "api/Pazienti/ricovera_paziente/{IDPaziente}/{NumeroLetto}",
+    "RelativePath": "api/Pazienti/ricovera/{IDPaziente}/{NumeroLetto}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,

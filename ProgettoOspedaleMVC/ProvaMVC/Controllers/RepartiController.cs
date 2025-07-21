@@ -1,4 +1,5 @@
 ﻿// ... existing usings ...
+using System.Net.Http.Headers;
 using System.Text; // Ensure this is present
 using Microsoft.AspNetCore.Mvc; // Ensure this is present
 using Newtonsoft.Json; // Ensure this is present
@@ -157,4 +158,25 @@ public class RepartiController : Controller
             return View("VisualizzaLetto", null);
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetLettiLiberi(int idReparto)
+    {
+        var matricola = HttpContext.Session.GetInt32("Matricola");
+        var password = HttpContext.Session.GetString("Password");
+
+        if (matricola == null || password == null)
+            return Unauthorized();
+
+        string authString = $"{matricola}:{password}";
+        string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+        var response = await _client.GetAsync($"api/reparti/lista_letti_liberi/{idReparto}");
+        var result = await response.Content.ReadAsStringAsync();
+
+        return Content(result, "application/json");
+    }
+
+
 }

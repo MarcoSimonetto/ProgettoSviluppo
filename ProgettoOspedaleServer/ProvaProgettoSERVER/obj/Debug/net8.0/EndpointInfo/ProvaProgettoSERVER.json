@@ -288,7 +288,7 @@
         }
       }
     },
-    "/api/Pazienti/ricovera_paziente/{IDPaziente}/{NumeroLetto}": {
+    "/api/Pazienti/ricovera/{IDPaziente}/{NumeroLetto}": {
       "put": {
         "tags": [
           "Pazienti"

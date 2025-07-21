@@ -1,93 +1,93 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\",
+  "WorkspaceRootPath": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\terapie\\terapiedioggi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\terapiedioggi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\terapie\\modifica.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\modifica.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\terapie\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\somministrazioni\\dettaglio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\somministrazioni\\dettaglio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\somministrazioni\\alertterapia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\somministrazioni\\alertterapia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\models\\somministrazione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\models\\somministrazione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\models\\terapia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\models\\terapia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\terapie\\assegna.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\assegna.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\home\\richiestatrasferimentopaziente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\home\\richiestatrasferimentopaziente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\models\\paziente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\models\\paziente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\reparti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\reparti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\reparti\\visualizzaletto.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\reparti\\visualizzaletto.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\pazienti\\pazienti.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\pazienti\\pazienti.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\pazienti\\pazienti.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\botto\\desktop\\progettosviluppo-main\\progettoospedalemvc\\provamvc\\views\\utenti\\registrazione.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\pazienti\\richiestatrasferimentopaziente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\pazienti\\richiestatrasferimentopaziente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\terapie\\terapiedioggi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\terapiedioggi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\terapie\\modifica.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\modifica.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\terapie\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\somministrazioni\\dettaglio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\somministrazioni\\dettaglio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\somministrazioni\\alertterapia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\somministrazioni\\alertterapia.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\models\\somministrazione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\models\\somministrazione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\models\\terapia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\models\\terapia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\terapie\\assegna.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\assegna.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\models\\paziente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\models\\paziente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\reparti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\reparti\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\reparti\\visualizzaletto.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\reparti\\visualizzaletto.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedalemvc\\provamvc\\views\\utenti\\registrazione.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\utenti\\registrazione.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
@@ -98,184 +98,171 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 20,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAAC4AAAB9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-20T13:57:03.822Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "ProvaMVC\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAA5wCUAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T13:54:18.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Dettaglio.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-17T12:55:52.851Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Somministrazione.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Somministrazione.cs",
-              "RelativeDocumentMoniker": "ProvaMVC\\Models\\Somministrazione.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Somministrazione.cs",
-              "RelativeToolTip": "ProvaMVC\\Models\\Somministrazione.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T13:19:31.022Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Index.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\Index.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Index.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\Index.cshtml",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-15T14:44:15.627Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Modifica.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAuAAAAAAAAAA==",
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAB9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-17T12:22:48.033Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TerapieDiOggi.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-17T14:00:01.15Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UtentiController.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\UtentiController.cs",
-              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\UtentiController.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\UtentiController.cs",
-              "RelativeToolTip": "ProvaMVC\\Controllers\\UtentiController.cs",
-              "ViewState": "AgIAAE8AAAAAAAAAAAAAAGIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T13:59:36.739Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-15T14:37:26.664Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-20T13:57:03.822Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "SomministrazioniController.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\SomministrazioniController.cs",
-              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\SomministrazioniController.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\SomministrazioniController.cs",
-              "RelativeToolTip": "ProvaMVC\\Controllers\\SomministrazioniController.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAADwv10AAAAsAAAAAAAAAA==",
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "ProvaMVC\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAA5wCUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T12:58:41.571Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "TerapieController.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\TerapieController.cs",
-              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\TerapieController.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\TerapieController.cs",
-              "RelativeToolTip": "ProvaMVC\\Controllers\\TerapieController.cs",
-              "ViewState": "AgIAANsBAAAAAAAAAAAAAAoCAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T13:52:22.995Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AlertTerapia.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-20T13:19:45.941Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-14T13:54:18.67Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "Terapia.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Terapia.cs",
-              "RelativeDocumentMoniker": "ProvaMVC\\Models\\Terapia.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Terapia.cs",
-              "RelativeToolTip": "ProvaMVC\\Models\\Terapia.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Title": "Dettaglio.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Somministrazioni\\Dettaglio.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T12:55:52.851Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Somministrazione.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Somministrazione.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Models\\Somministrazione.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Somministrazione.cs",
+              "RelativeToolTip": "ProvaMVC\\Models\\Somministrazione.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T13:56:36.928Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-17T13:19:31.022Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Index.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Index.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\Index.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-15T14:44:15.627Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Modifica.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\Modifica.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T12:22:48.033Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TerapieDiOggi.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T14:00:01.15Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UtentiController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\UtentiController.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\UtentiController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\UtentiController.cs",
+              "RelativeToolTip": "ProvaMVC\\Controllers\\UtentiController.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAAAGIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:59:36.739Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAC8AAACAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-15T14:37:26.664Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SomministrazioniController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\SomministrazioniController.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\SomministrazioniController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\SomministrazioniController.cs",
+              "RelativeToolTip": "ProvaMVC\\Controllers\\SomministrazioniController.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAADwv10AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T12:58:41.571Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "TerapieController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\TerapieController.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\TerapieController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\TerapieController.cs",
+              "RelativeToolTip": "ProvaMVC\\Controllers\\TerapieController.cs",
+              "ViewState": "AgIAANsBAAAAAAAAAAAAAAoCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:52:22.995Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
+              "Title": "AlertTerapia.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Somministrazioni\\AlertTerapia.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-20T13:19:45.941Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Terapia.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Terapia.cs",
+              "RelativeDocumentMoniker": "ProvaMVC\\Models\\Terapia.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Terapia.cs",
+              "RelativeToolTip": "ProvaMVC\\Models\\Terapia.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:56:36.928Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "Assegna.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Assegna.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Assegna.cshtml",
               "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\Assegna.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Assegna.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Assegna.cshtml",
               "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\Assegna.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -283,23 +270,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 2,
               "Title": "RichiestaTrasferimentoPaziente.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Home\\RichiestaTrasferimentoPaziente.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Home\\RichiestaTrasferimentoPaziente.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Home\\RichiestaTrasferimentoPaziente.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Home\\RichiestaTrasferimentoPaziente.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Pazienti\\RichiestaTrasferimentoPaziente.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Pazienti\\RichiestaTrasferimentoPaziente.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Pazienti\\RichiestaTrasferimentoPaziente.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Pazienti\\RichiestaTrasferimentoPaziente.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-20T08:28:25.599Z"
+              "WhenOpened": "2025-07-20T08:28:25.599Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "VisualizzaLetto.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\VisualizzaLetto.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\VisualizzaLetto.cshtml",
               "RelativeDocumentMoniker": "ProvaMVC\\Views\\Reparti\\VisualizzaLetto.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\VisualizzaLetto.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\VisualizzaLetto.cshtml",
               "RelativeToolTip": "ProvaMVC\\Views\\Reparti\\VisualizzaLetto.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -307,35 +295,36 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 4,
               "Title": "RepartiController.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\RepartiController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\RepartiController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\RepartiController.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\RepartiController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\RepartiController.cs",
               "RelativeToolTip": "ProvaMVC\\Controllers\\RepartiController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwJUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAKIAAAAAAAAAAAAzwLMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-14T15:43:07.615Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 1,
               "Title": "PazientiController.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\PazientiController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\PazientiController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\PazientiController.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\PazientiController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\PazientiController.cs",
               "RelativeToolTip": "ProvaMVC\\Controllers\\PazientiController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAADkAAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAAJABAAAAAAAAAAAcwJkBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T15:46:24.362Z"
+              "WhenOpened": "2025-07-14T15:46:24.362Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "Paziente.cs",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Paziente.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Paziente.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Models\\Paziente.cs",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Paziente.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Models\\Paziente.cs",
               "RelativeToolTip": "ProvaMVC\\Models\\Paziente.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -343,11 +332,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\Index.cshtml",
               "RelativeDocumentMoniker": "ProvaMVC\\Views\\Reparti\\Index.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Reparti\\Index.cshtml",
               "RelativeToolTip": "ProvaMVC\\Views\\Reparti\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -355,23 +344,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 0,
               "Title": "Pazienti.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Pazienti\\Pazienti.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Pazienti\\Pazienti.cshtml",
               "RelativeDocumentMoniker": "ProvaMVC\\Views\\Pazienti\\Pazienti.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Pazienti\\Pazienti.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Pazienti\\Pazienti.cshtml",
               "RelativeToolTip": "ProvaMVC\\Views\\Pazienti\\Pazienti.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-14T15:47:26.464Z"
+              "WhenOpened": "2025-07-14T15:47:26.464Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 21,
               "Title": "Registrazione.cshtml",
-              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
               "RelativeDocumentMoniker": "ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
-              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
               "RelativeToolTip": "ProvaMVC\\Views\\Utenti\\Registrazione.cshtml",
               "ViewState": "AgIAACUAAAAAAAAAAAAcwDAAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",

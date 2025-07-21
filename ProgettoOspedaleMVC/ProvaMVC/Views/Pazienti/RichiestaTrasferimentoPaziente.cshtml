@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Richiesta Trasferimento Paziente";
+    var pazienti = ViewBag.Pazienti as List<ProvaMVC.Models.Paziente>;
+    var reparti = ViewBag.Reparti as List<ProvaMVC.Models.Reparto>;
+}
+
+<h2>Richiesta Trasferimento Paziente</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form asp-action="RichiestaTrasferimentoPaziente" method="post">
+    <div class="form-group">
+        <label for="idPaziente">Seleziona Paziente</label>
+        <select class="form-control" id="idPaziente" name="idPaziente" required>
+            <option value="">-- Seleziona --</option>
+            @foreach (var p in pazienti)
+            {
+                <option value="@p.ID">@p.Nome @p.Cognome (@p.CF)</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="idRepartoDestinazione">Reparto di Destinazione</label>
+        <select class="form-control" id="idRepartoDestinazione" name="idRepartoDestinazione" required>
+            <option value="">-- Seleziona --</option>
+            @foreach (var r in reparti)
+            {
+                <option value="@r.ID">@r.Nome</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="numeroLetto">Letto disponibile</label>
+        <select class="form-control" id="numeroLetto" name="numeroLetto" required>
+            <option value="">-- Seleziona reparto prima --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-4">Conferma Trasferimento</button>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById("idRepartoDestinazione").addEventListener("change", function () {
+            const repartoId = this.value;
+            const lettoSelect = document.getElementById("numeroLetto");
+            lettoSelect.innerHTML = '<option value="">Caricamento...</option>';
+
+            if (!repartoId) {
+                lettoSelect.innerHTML = '<option value="">-- Seleziona reparto prima --</option>';
+                return;
+            }
+
+            fetch(`/Reparti/GetLettiLiberi?idReparto=${repartoId}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Errore durante il recupero dei letti liberi.");
+                    return res.json();
+                })
+                .then(letti => {
+                    if (letti.length === 0) {
+                        lettoSelect.innerHTML = '<option value="">Nessun letto disponibile</option>';
+                    } else {
+                        lettoSelect.innerHTML = '';
+                        letti.forEach(n => {
+                            const option = document.createElement("option");
+                            option.value = n;
+                            option.textContent = `Letto n. ${n}`;
+                            lettoSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch(err => {
+                    lettoSelect.innerHTML = '<option value="">Errore nel caricamento</option>';
+                    console.error(err);
+                });
+        });
+    </script>
+}

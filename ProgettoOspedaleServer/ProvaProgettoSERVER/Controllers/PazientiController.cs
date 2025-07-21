@@ -125,7 +125,8 @@ public class PazientiController : ControllerBase
             var pazienti = await _context.Pazienti
             .Where(p => p.IDReparto == reparto.ID &&
                         p.DataRicovero <= oggi &&
-                        (p.DataDimissione == null || p.DataDimissione >= oggi))
+                        (p.DataDimissione == null || p.DataDimissione >= oggi) &&
+                        p.NumeroLetto!=0)
             .ToListAsync();
 
             return Ok(pazienti);
@@ -270,7 +271,7 @@ public class PazientiController : ControllerBase
             var reparto = await _context.Reparti.FindAsync(IDReparto);
             if (reparto == null) return NotFound("Reparto non trovato!");
             var pazienti = await _context.Pazienti
-                .Where(p => p.DataRicovero == data && p.IDReparto == reparto.ID).ToListAsync();
+                .Where(p => p.DataDimissione == data && p.IDReparto == reparto.ID).ToListAsync();
 
             return Ok(pazienti);
         }
@@ -289,7 +290,7 @@ public class PazientiController : ControllerBase
             var reparto = await _context.Reparti.FindAsync(IDReparto);
             if (reparto == null) return NotFound("Reparto non trovato!");
             var pazienti = await _context.Pazienti
-                .Where(p => p.DataRicovero == oggi && p.IDReparto == reparto.ID).ToListAsync();
+                .Where(p => p.DataDimissione == oggi && p.IDReparto == reparto.ID).ToListAsync();
 
             return Ok(pazienti);
         }
@@ -300,7 +301,7 @@ public class PazientiController : ControllerBase
     }
 
     [Authorize(Roles = "Medico")]
-    [HttpPut("ricovera_paziente/{IDPaziente}/{NumeroLetto}")]
+    [HttpPut("ricovera/{IDPaziente}/{NumeroLetto}")]
     public async Task<IActionResult> RicoveraPaziente(int IDPaziente, int NumeroLetto)
     {
         try
@@ -319,6 +320,9 @@ public class PazientiController : ControllerBase
 
             var reparto = await _context.Reparti.FindAsync(paziente.IDReparto);
             if (reparto == null) return NotFound("Reparto non trovato!");
+
+            if (paziente.NumeroLetto != 0)
+                return BadRequest("Il paziente è già stato ricoverato!");
 
             if (NumeroLetto < 1 || NumeroLetto > reparto.NumeroLetti)
                 return BadRequest($"Numero letto non valido! Per questo reparto devi inserire un numero da 1 a {reparto.NumeroLetti}.");

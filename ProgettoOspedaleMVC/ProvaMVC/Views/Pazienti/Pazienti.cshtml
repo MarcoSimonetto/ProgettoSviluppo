@@ -17,20 +17,23 @@
 
 <div class="mt-4">
     <div class="d-grid gap-3">
-        <a class="btn btn-primary btn-lg" href="#">
-            <i class="bi bi-person-lines-fill"></i> Elenco Pazienti Ricoverati
-        </a>
-        <a class="btn btn-success btn-lg" href="#">
+        <a class="btn btn-success btn-lg" href=@Url.Action("Prenota", "Pazienti")>
             <i class="bi bi-calendar-plus"></i> Pianificazione Nuovo Ricovero
         </a>
-        <a class="btn btn-danger btn-lg" href="#">
+        <a class="btn btn-danger btn-lg" href=@Url.Action("RicoveroUrgente", "Pazienti")>
             <i class="bi bi-exclamation-triangle"></i> Ricovero Urgente
         </a>
-        <a class="btn btn-info btn-lg" href="#">
-            <i class="bi bi-calendar-check"></i> Ricovero Programmato
+        <a class="btn btn-info btn-lg" href=@Url.Action("DaRicoverareOggi", "Pazienti")>
+            <i class="bi bi-calendar-check"></i> Ricovera Paziente
         </a>
-        <a class="btn btn-secondary btn-lg" href="#">
+        <a class="btn btn-secondary btn-lg" href=@Url.Action("DaDimettere", "Pazienti")>
             <i class="bi bi-box-arrow-left"></i> Dimissioni Pazienti
+        </a>
+        <a class="btn btn-secondary btn-lg" href=@Url.Action("ModificaDatiMedici", "Pazienti")>
+            <i class="bi bi-box-arrow-left"></i> Modifica dati medici
+        </a>
+        <a class="btn btn-secondary btn-lg" href=@Url.Action("ModificaDatiPersonali", "Pazienti")>
+            <i class="bi bi-box-arrow-left"></i> Modifica dati personali
         </a>
     </div>
 </div>

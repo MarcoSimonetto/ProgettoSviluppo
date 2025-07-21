@@ -1,0 +1,61 @@
+﻿@model List<ProvaMVC.Models.Paziente>
+
+@{
+    ViewData["Title"] = "Modifica Dati Medici";
+}
+
+<h2>Modifica Dati Medici</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div style="color: red;">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div style="color: green;">@TempData["Success"]</div>
+}
+
+<form asp-action="InviaModificaDatiMedici" method="post">
+    <label for="IDPaziente">Seleziona Paziente (ID):</label>
+    <select name="IDPaziente" required>
+        <option value="">-- Seleziona --</option>
+        @foreach (var p in Model)
+        {
+            <option value="@p.ID">@p.ID - @p.Nome @p.Cognome</option>
+        }
+    </select>
+
+    <br /><br />
+
+    <label for="DataRicovero">Data Ricovero:</label>
+    <input type="date" name="DataRicovero" />
+
+    <br />
+
+    <label for="DataDimissione">Data Dimissione:</label>
+    <input type="date" name="DataDimissione" />
+
+    <br />
+
+    <label for="MotivoRicovero">Motivo Ricovero:</label>
+    <input type="text" name="MotivoRicovero" />
+
+    <br />
+
+    <label for="Patologie">Patologie:</label>
+    <input type="text" name="Patologie" />
+
+    <br />
+
+    <label for="Allergie">Allergie:</label>
+    <input type="text" name="Allergie" />
+
+    <br />
+
+    <label for="AltreNote">Altre Note:</label>
+    <textarea name="AltreNote"></textarea>
+
+    <br /><br />
+
+    <button type="submit">Conferma Modifica</button>
+</form>

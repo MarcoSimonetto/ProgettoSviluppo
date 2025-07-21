@@ -1,0 +1,55 @@
+﻿@model List<Paziente>
+@{
+    ViewData["Title"] = "Modifica Dati Personali";
+}
+
+<h2>Modifica Dati Personali Paziente</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form method="post" asp-controller="Pazienti" asp-action="ModificaDatiPersonali">
+    <div class="form-group">
+        <label for="IDPaziente">Seleziona Paziente</label>
+        <select class="form-control" id="IDPaziente" name="IDPaziente" required>
+            <option value="">-- Seleziona --</option>
+            @foreach (var p in Model)
+            {
+                <option value="@p.ID">@p.ID - @p.Nome @p.Cognome</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Nome">Nome</label>
+        <input type="text" name="Nome" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <label for="Cognome">Cognome</label>
+        <input type="text" name="Cognome" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <label for="CF">Codice Fiscale</label>
+        <input type="text" name="CF" class="form-control" maxlength="16" minlength="16"/>
+    </div>
+
+    <div class="form-group">
+        <label for="DataNascita">Data di Nascita</label>
+        <input type="date" name="DataNascita" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <label for="LuogoNascita">Luogo di Nascita</label>
+        <input type="text" name="LuogoNascita" class="form-control"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Conferma Modifica</button>
+</form>
