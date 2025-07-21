@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj": {}
+    "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleManager\\ProxyManager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj": {
+    "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleManager\\ProxyManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj",
+        "projectUniqueName": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleManager\\ProxyManager.csproj",
         "projectName": "ProxyManager",
-        "projectPath": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj",
-        "packagesPath": "C:\\Users\\Marco\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleManager\\obj\\",
+        "projectPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleManager\\ProxyManager.csproj",
+        "packagesPath": "C:\\Users\\botto\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleManager\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Marco\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\botto\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

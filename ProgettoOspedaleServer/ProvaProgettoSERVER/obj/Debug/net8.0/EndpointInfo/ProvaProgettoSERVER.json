@@ -178,21 +178,12 @@
         }
       }
     },
-    "/api/Pazienti/da_ricoverare/{IDReparto}/{data}": {
+    "/api/Pazienti/da_ricoverare/{IDReparto}": {
       "get": {
         "tags": [
           "Pazienti"
         ],
         "parameters": [
-          {
-            "name": "data",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
           {
             "name": "IDReparto",
             "in": "path",

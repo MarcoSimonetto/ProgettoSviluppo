@@ -17,23 +17,20 @@
 
 <div class="mt-4">
     <div class="d-grid gap-3">
-        <a class="btn btn-success btn-lg" href=@Url.Action("Prenota", "Pazienti")>
+        <a asp-controller="Pazienti" asp-action="Prenota" class="btn btn-success btn-lg">
             <i class="bi bi-calendar-plus"></i> Pianificazione Nuovo Ricovero
         </a>
-        <a class="btn btn-danger btn-lg" href=@Url.Action("RicoveroUrgente", "Pazienti")>
+        <a asp-controller="Pazienti" asp-action="RicoveroUrgente" class="btn btn-danger btn-lg">
             <i class="bi bi-exclamation-triangle"></i> Ricovero Urgente
         </a>
-        <a class="btn btn-info btn-lg" href=@Url.Action("DaRicoverareOggi", "Pazienti")>
-            <i class="bi bi-calendar-check"></i> Ricovera Paziente
+        <a asp-controller="Pazienti" asp-action="DaRicoverareOggi" class="btn btn-info btn-lg">
+            <i class="bi bi-calendar-check"></i> Pazienti da ricoverare oggi
         </a>
-        <a class="btn btn-secondary btn-lg" href=@Url.Action("DaDimettere", "Pazienti")>
+        <a asp-controller="Pazienti" asp-action="ProssimiRicoveri" class="btn btn-secondary btn-lg">
+            <i class="bi bi-box-arrow-left"></i> Visualizza prossimi ricoveri
+        </a>
+        <a asp-controller="Pazienti" asp-action="DaDimettere" class="btn btn-secondary btn-lg">
             <i class="bi bi-box-arrow-left"></i> Dimissioni Pazienti
-        </a>
-        <a class="btn btn-secondary btn-lg" href=@Url.Action("ModificaDatiMedici", "Pazienti")>
-            <i class="bi bi-box-arrow-left"></i> Modifica dati medici
-        </a>
-        <a class="btn btn-secondary btn-lg" href=@Url.Action("ModificaDatiPersonali", "Pazienti")>
-            <i class="bi bi-box-arrow-left"></i> Modifica dati personali
         </a>
     </div>
 </div>
@@ -54,6 +51,8 @@
                     <th>Data Dimissione</th>
                     <th>Motivo Ricovero</th>
                     <th>Letto</th>
+                    <th>Modifica dati Medici</th>
+                    <th>Modifica dati Personali</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,6 +67,16 @@
                         <td>@(p.DataDimissione?.ToString("dd/MM/yyyy") ?? "Non dimesso")</td>
                         <td>@p.MotivoRicovero</td>
                         <td>@(p.NumeroLetto?.ToString() ?? "-")</td>
+                        <td>
+                            <a asp-action="ModificaDatiMedici" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-success btn-lg">
+                                Modifica dati Medici
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="ModificaDatiPersonali" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-success btn-lg">
+                                Modifica dati personali
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -83,6 +92,3 @@
     }
 </div>
 
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}

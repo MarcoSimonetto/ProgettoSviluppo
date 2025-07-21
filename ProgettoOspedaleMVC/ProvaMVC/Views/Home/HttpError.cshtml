@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Errore HTTP";
+    int statusCode = Convert.ToInt32(ViewContext.HttpContext.Request.Query["statusCode"]);
+    string defaultMessage = statusCode switch
+    {
+        400 => "La richiesta non è valida.",
+        401 => "Accesso non autorizzato. Effettua il login.",
+        403 => "Accesso negato. Non sei autorizzato ad accedere a questa sezione.",
+        404 => "La pagina richiesta non è stata trovata.",
+        409 => "Conflitto nella modifica.",
+        500 => "Errore interno del server.",
+        _ => "Si è verificato un errore imprevisto."
+    };
+
+    string? serverMessage = ViewData["ServerMessage"] as string;
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="display-4">Errore @statusCode</h1>
+    <p class="lead mt-3">@defaultMessage</p>
+
+    @if (!string.IsNullOrEmpty(serverMessage) && statusCode != 403)
+    {
+        <div class="alert alert-danger mt-4">
+            <strong>Messaggio del server:</strong> @serverMessage
+        </div>
+    }
+
+    <a class="btn btn-primary mt-4" href="@Url.Action("Index", "Home")">
+        Torna alla Home
+    </a>
+</div>

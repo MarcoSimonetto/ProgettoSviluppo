@@ -81,16 +81,11 @@
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "GetPazientiDaRicoverare",
-    "RelativePath": "api/Pazienti/da_ricoverare/{IDReparto}/{data}",
+    "RelativePath": "api/Pazienti/da_ricoverare/{IDReparto}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "data",
-        "Type": "System.DateOnly",
-        "IsRequired": true
-      },
       {
         "Name": "IDReparto",
         "Type": "System.Int32",

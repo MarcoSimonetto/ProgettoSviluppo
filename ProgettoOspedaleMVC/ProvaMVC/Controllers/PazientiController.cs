@@ -443,11 +443,10 @@ namespace ProvaMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ModificaDatiMedici()
+        public async Task<IActionResult> ModificaDatiMedici(int id)
         {
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
-            var idReparto = HttpContext.Session.GetInt32("Reparto");
 
             if (matricola == null || password == null)
                 return RedirectToAction("Login", "Utenti");
@@ -456,20 +455,19 @@ namespace ProvaMVC.Controllers
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
-            var response = await _client.GetAsync($"api/pazienti/reparto/{idReparto}");
+            var response = await _client.GetAsync($"api/pazienti/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
-                TempData["Error"] = "Errore nel caricamento dei pazienti.";
-                return View(new List<Paziente>());
+                TempData["Error"] = "Errore nel caricamento del paziente.";
+                return RedirectToAction("Index");
             }
 
             var json = await response.Content.ReadAsStringAsync();
-            var pazienti = JsonConvert.DeserializeObject<List<Paziente>>(json);
+            var paziente = JsonConvert.DeserializeObject<Paziente>(json);
 
-            return View(pazienti); // passi la lista dei pazienti alla view
+            return View(paziente);
         }
-
 
 
         [HttpPost]
@@ -508,15 +506,14 @@ namespace ProvaMVC.Controllers
                 TempData["Success"] = "Modifica avvenuta con successo.";
             }
 
-            return RedirectToAction("ModificaDatiMedici");
+            return RedirectToAction("Pazienti");
         }
 
         [HttpGet]
-        public async Task<IActionResult> ModificaDatiPersonali()
+        public async Task<IActionResult> ModificaDatiPersonali(int id)
         {
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
-            var idReparto = HttpContext.Session.GetInt32("Reparto");
 
             if (matricola == null || password == null)
                 return RedirectToAction("Login", "Utenti");
@@ -525,20 +522,20 @@ namespace ProvaMVC.Controllers
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
-            var response = await _client.GetAsync($"api/pazienti/reparto/{idReparto}");
+            var response = await _client.GetAsync($"api/pazienti/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
-                _logger.LogWarning("Errore nel recupero dei pazienti: {StatusCode}", response.StatusCode);
-                TempData["Error"] = "Errore nel recupero dei pazienti.";
-                return View(new List<Paziente>());
+                TempData["Error"] = "Errore nella modifica dei dati personali: " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
 
             var json = await response.Content.ReadAsStringAsync();
-            var pazienti = JsonConvert.DeserializeObject<List<Paziente>>(json) ?? new List<Paziente>();
+            var paziente = JsonConvert.DeserializeObject<Paziente>(json);
 
-            return View(pazienti);
+            return View(paziente);
         }
+
 
 
         [HttpPost]
@@ -569,14 +566,45 @@ namespace ProvaMVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                TempData["Error"] = "Errore nella modifica dei dati personali: " + await response.Content.ReadAsStringAsync();
+                TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
             else
             {
                 TempData["Success"] = "Modifica avvenuta con successo.";
             }
 
-            return RedirectToAction("ModificaDatiPersonali");
+            return RedirectToAction("Pazienti");
         }
+        [HttpGet]
+        public async Task<IActionResult> ProssimiRicoveri()
+        {
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
+            var idReparto = HttpContext.Session.GetInt32("Reparto");
+
+            if (matricola == null || password == null)
+                return RedirectToAction("Login", "Utenti");
+
+            string authString = $"{matricola}:{password}";
+            string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+            var response = await _client.GetAsync($"api/pazienti/da_ricoverare/{idReparto}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                TempData["Error"] = "Errore nel caricamento dei pazienti da ricoverare.";
+                return View(new List<Paziente>());
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var pazienti = JsonConvert.DeserializeObject<List<Paziente>>(json);
+
+            return View(pazienti);
+        }
+
+ 
+
     }
 }

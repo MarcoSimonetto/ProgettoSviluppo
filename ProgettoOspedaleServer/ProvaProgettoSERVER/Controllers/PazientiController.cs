@@ -225,15 +225,15 @@ public class PazientiController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("da_ricoverare/{IDReparto}/{data}")]
-    public async Task<IActionResult> GetPazientiDaRicoverare(DateOnly data, int IDReparto)
+    [HttpGet("da_ricoverare/{IDReparto}")]
+    public async Task<IActionResult> GetPazientiDaRicoverare(int IDReparto)
     {
         try
         {
             var reparto = await _context.Reparti.FindAsync(IDReparto);
             if (reparto == null) return NotFound("Reparto non trovato!");
             var pazienti = await _context.Pazienti
-                .Where(p => p.DataRicovero == data && p.NumeroLetto == 0 && p.IDReparto == reparto.ID).ToListAsync();
+                .Where(p => p.DataRicovero >= oggi && p.NumeroLetto == 0 && p.IDReparto == reparto.ID).ToListAsync();
 
             return Ok(pazienti);
         }

@@ -1,5 +1,4 @@
-﻿@model List<ProvaMVC.Models.Paziente>
-
+﻿@model ProvaMVC.Models.Paziente
 @{
     ViewData["Title"] = "Modifica Dati Medici";
 }
@@ -8,54 +7,47 @@
 
 @if (TempData["Error"] != null)
 {
-    <div style="color: red;">@TempData["Error"]</div>
+    <div class="alert alert-danger">@TempData["Error"]</div>
 }
 @if (TempData["Success"] != null)
 {
-    <div style="color: green;">@TempData["Success"]</div>
+    <div class="alert alert-success">@TempData["Success"]</div>
 }
 
 <form asp-action="InviaModificaDatiMedici" method="post">
-    <label for="IDPaziente">Seleziona Paziente (ID):</label>
-    <select name="IDPaziente" required>
-        <option value="">-- Seleziona --</option>
-        @foreach (var p in Model)
-        {
-            <option value="@p.ID">@p.ID - @p.Nome @p.Cognome</option>
-        }
-    </select>
+    <input type="hidden" name="IDPaziente" value="@Model.ID" />
 
-    <br /><br />
+    <div class="form-group">
+        <label for="DataRicovero">Data Ricovero</label>
+        <input type="date" name="DataRicovero" class="form-control"
+               value="@Model.DataRicovero.ToString("yyyy-MM-dd")" />
+    </div>
 
-    <label for="DataRicovero">Data Ricovero:</label>
-    <input type="date" name="DataRicovero" />
+    <div class="form-group">
+        <label for="DataDimissione">Data Dimissione</label>
+        <input type="date" name="DataDimissione" class="form-control"
+               value="@(Model.DataDimissione?.ToString("yyyy-MM-dd") ?? "")" />
+    </div>
 
-    <br />
+    <div class="form-group">
+        <label for="MotivoRicovero">Motivo Ricovero</label>
+        <input type="text" name="MotivoRicovero" class="form-control" value="@Model.MotivoRicovero" />
+    </div>
 
-    <label for="DataDimissione">Data Dimissione:</label>
-    <input type="date" name="DataDimissione" />
+    <div class="form-group">
+        <label for="Patologie">Patologie</label>
+        <input type="text" name="Patologie" class="form-control" value="@Model.Patologie" />
+    </div>
 
-    <br />
+    <div class="form-group">
+        <label for="Allergie">Allergie</label>
+        <input type="text" name="Allergie" class="form-control" value="@Model.Allergie" />
+    </div>
 
-    <label for="MotivoRicovero">Motivo Ricovero:</label>
-    <input type="text" name="MotivoRicovero" />
+    <div class="form-group">
+        <label for="AltreNote">Altre Note</label>
+        <textarea name="AltreNote" class="form-control">@Model.AltreNote</textarea>
+    </div>
 
-    <br />
-
-    <label for="Patologie">Patologie:</label>
-    <input type="text" name="Patologie" />
-
-    <br />
-
-    <label for="Allergie">Allergie:</label>
-    <input type="text" name="Allergie" />
-
-    <br />
-
-    <label for="AltreNote">Altre Note:</label>
-    <textarea name="AltreNote"></textarea>
-
-    <br /><br />
-
-    <button type="submit">Conferma Modifica</button>
+    <button type="submit" class="btn btn-primary mt-3">Conferma Modifica</button>
 </form>
