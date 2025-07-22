@@ -17,19 +17,21 @@
 
 <div class="mt-4">
     <div class="d-grid gap-3">
+        
         <a asp-controller="Pazienti" asp-action="Prenota" class="btn btn-success btn-lg">
             <i class="bi bi-calendar-plus"></i> Pianificazione Nuovo Ricovero
         </a>
-        <a asp-controller="Pazienti" asp-action="RicoveroUrgente" class="btn btn-danger btn-lg">
+        <a asp-controller="Pazienti" asp-action="RicoveroUrgente" class="btn btn-success btn-lg">
             <i class="bi bi-exclamation-triangle"></i> Ricovero Urgente
         </a>
-        <a asp-controller="Pazienti" asp-action="DaRicoverareOggi" class="btn btn-info btn-lg">
+        <a asp-controller="Pazienti" asp-action="DaRicoverareOggi" class="btn btn-success btn-lg">
             <i class="bi bi-calendar-check"></i> Pazienti da ricoverare oggi
         </a>
-        <a asp-controller="Pazienti" asp-action="ProssimiRicoveri" class="btn btn-secondary btn-lg">
+
+        <a asp-controller="Pazienti" asp-action="ProssimiRicoveri" class="btn btn-success btn-lg">
             <i class="bi bi-box-arrow-left"></i> Visualizza prossimi ricoveri
         </a>
-        <a asp-controller="Pazienti" asp-action="DaDimettere" class="btn btn-secondary btn-lg">
+        <a asp-controller="Pazienti" asp-action="DaDimettere" class="btn btn-success btn-lg">
             <i class="bi bi-box-arrow-left"></i> Dimissioni Pazienti
         </a>
     </div>
@@ -68,12 +70,12 @@
                         <td>@p.MotivoRicovero</td>
                         <td>@(p.NumeroLetto?.ToString() ?? "-")</td>
                         <td>
-                            <a asp-action="ModificaDatiMedici" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-success btn-lg">
+                            <a asp-action="ModificaDatiMedici" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-warning btn-lg">
                                 Modifica dati Medici
                             </a>
                         </td>
                         <td>
-                            <a asp-action="ModificaDatiPersonali" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-success btn-lg">
+                            <a asp-action="ModificaDatiPersonali" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-warning btn-lg">
                                 Modifica dati personali
                             </a>
                         </td>

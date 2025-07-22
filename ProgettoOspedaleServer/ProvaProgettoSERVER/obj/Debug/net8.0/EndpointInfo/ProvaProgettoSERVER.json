@@ -906,6 +906,42 @@
           }
         }
       }
+    },
+    "/api/Utenti/check_ruolo_medico": {
+      "get": {
+        "tags": [
+          "Utenti"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Utenti/check_ruolo_infermiere": {
+      "get": {
+        "tags": [
+          "Utenti"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Utenti/check_ruolo_medico_infermiere": {
+      "get": {
+        "tags": [
+          "Utenti"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {

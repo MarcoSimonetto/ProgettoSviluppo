@@ -539,6 +539,36 @@
   },
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.UtentiController",
+    "Method": "CheckInfermiere",
+    "RelativePath": "api/Utenti/check_ruolo_infermiere",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.UtentiController",
+    "Method": "CheckMedico",
+    "RelativePath": "api/Utenti/check_ruolo_medico",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.UtentiController",
+    "Method": "CheckMedicoInfermiere",
+    "RelativePath": "api/Utenti/check_ruolo_medico_infermiere",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProvaProgettoSERVER.Controllers.UtentiController",
     "Method": "Login",
     "RelativePath": "api/Utenti/login",
     "HttpMethod": "POST",

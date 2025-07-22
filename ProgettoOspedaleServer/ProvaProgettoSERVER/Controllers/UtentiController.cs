@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProvaProgettoSERVER.Models;
@@ -84,6 +85,27 @@ public class UtentiController : ControllerBase
         {
             return StatusCode(500, "Errore imprevisto: " + ex.Message);
         }
+    }
+
+    [HttpGet("check_ruolo_medico")]
+    [Authorize(Roles = "Medico")]
+    public IActionResult CheckMedico()
+    {
+        return Ok();
+    }
+
+    [HttpGet("check_ruolo_infermiere")]
+    [Authorize(Roles = "Infermiere")]
+    public IActionResult CheckInfermiere()
+    {
+        return Ok();
+    }
+
+    [HttpGet("check_ruolo_medico_infermiere")]
+    [Authorize(Roles = "Medico,Infermiere")]
+    public IActionResult CheckMedicoInfermiere()
+    {
+        return Ok();
     }
 }
 public class LoginData

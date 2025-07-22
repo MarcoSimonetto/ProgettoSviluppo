@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 using ProvaMVC.Models;
+using System.Net.Sockets;
 
 namespace ProvaMVC.Controllers;
 
@@ -22,11 +23,31 @@ public class UtentiController : Controller
     }
 
     [HttpGet]
-    public IActionResult Login() => View();
+    public IActionResult Login()
+    {
+        try { 
+        return View();
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
+    }
 
     [HttpPost]
     public async Task<IActionResult> Login(LoginData utente)
     {
+        try { 
 
         var matricola = HttpContext.Session.GetInt32("Matricola");
         var json = JsonConvert.SerializeObject(utente);
@@ -46,11 +67,27 @@ public class UtentiController : Controller
         var errore = await response.Content.ReadAsStringAsync();
         TempData["LogError"] = $"Errore durante il login: {errore}";
         return View();
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
     }
 
     [HttpGet]
     public async Task<IActionResult> Registrazione()
     {
+        try { 
         var model = new RegistrazioneData();
 
         var response = await Client.GetAsync("api/reparti");
@@ -62,23 +99,28 @@ public class UtentiController : Controller
         }
 
         return View(model);
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> Registrazione(RegistrazioneData model, Utente nuovoUtente)
     {
-        /*if (!ModelState.IsValid)
-        {
-            // Ricarica reparti se c'è un errore
-            var response = await Client.GetAsync("api/reparti");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                model.Reparti = JsonConvert.DeserializeObject<List<Reparto>>(json);
-            }
-            return View(model);
-        }*/
 
+        try { 
         var jsonBody = JsonConvert.SerializeObject(nuovoUtente);
         Console.WriteLine($"RepartoID ricevuto: {nuovoUtente.IDReparto}");
         var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
@@ -93,10 +135,26 @@ public class UtentiController : Controller
         var errore = await result.Content.ReadAsStringAsync();
         TempData["RegError"] = $"Errore durante la registrazione: {errore}";
         return View(model);
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
     }
     [HttpPost]
     public IActionResult Logout()
     {
+        try { 
         HttpContext.Session.Remove("Matricola");
         HttpContext.Session.Remove("Ruolo");
         HttpContext.Session.Remove("Reparto");
@@ -106,5 +164,20 @@ public class UtentiController : Controller
 
         TempData["LogoutSuccess"] = "Logout effettuato con successo.";
         return RedirectToAction("Login");
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
     }
 }

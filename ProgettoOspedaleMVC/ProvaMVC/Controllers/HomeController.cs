@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ProvaMVC.Models;
+using System.Net.Sockets;
 
 namespace ProvaMVC.Controllers;
 
@@ -21,6 +22,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index() ///cerca la view in una cartella Home (nome del controller) o Shared
     {
+        try { 
         var reparto = HttpContext.Session.GetInt32("Reparto");
         var ruolo = HttpContext.Session.GetString("Ruolo");
         var matricola = HttpContext.Session.GetInt32("Matricola");
@@ -36,52 +38,88 @@ public class HomeController : Controller
         ViewBag.Matricola = matricola;
 
         return View();
-    }
-
-    public IActionResult Reparto()
-    {
-        return View();
-    }
-
-    public IActionResult Pazienti()
-    {
-        return View();
-    }
-
-    public IActionResult Terapie()
-    {
-        var ruolo = HttpContext.Session.GetString("Ruolo");
-        if (ruolo == "Medico" || ruolo == "Infermieri")
-        {
-            return View();
         }
-        else
+        catch (HttpRequestException)
         {
-            TempData["AccessDenied"] = "Non si dispone delle autorizzazioni necessarie per accedere a questa sezione.";
-            return RedirectToAction("Index");
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
 
-    public IActionResult RichiestaTrasferimentoPaziente()
-    {
-        return View();
-    }
+
 
     public IActionResult Privacy()
     {
+        try { 
         return View();
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
+        try { 
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
     }
     public IActionResult HttpError(int statusCode)
     {
+        try { 
         ViewData["ServerMessage"] = TempData["ServerMessage"];
         return View(statusCode);
-            
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
+
     }
 
 }

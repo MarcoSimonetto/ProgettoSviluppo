@@ -21,34 +21,28 @@
 <div class="row justify-content-center mt-5">
     <div class="col-md-10">
         <div class="d-grid gap-3">
-            <a class="btn btn-primary btn-lg" asp-area="" asp-controller="Reparti" asp-action="Index">
+            <a class="btn btn-success btn-lg" asp-area="" asp-controller="Reparti" asp-action="Index">
                 <i class="bi bi-hospital"></i> Reparto - Griglia Letti
             </a>
 
-            <a class="btn btn-primary btn-lg" asp-area="" asp-controller="Pazienti" asp-action="Pazienti">
+            <a class="btn btn-success btn-lg" asp-area="" asp-controller="Pazienti" asp-action="Pazienti">
                 <i class="bi bi-people"></i> Pazienti (Elenco, Ricoveri, Dimissioni)
             </a>
 
-            @* Bottone Terapie: visibile solo per Medici e Infermieri *@
-            @if (ruolo == "Medico" || ruolo == "Infermiere")
-            {
-                <a class="btn btn-info btn-lg" asp-area="" asp-controller="Terapie" asp-action="Index">
-                    <i class="bi bi-capsule"></i> Terapie (Visualizza, Aggiungi, Somministra)
-                </a>
-            }
-
-            @* Bottone Alert Terapie in Scadenza: visibile solo per Infermieri *@
-            @if (ruolo == "Infermiere")
-            {
-                <a class="btn btn-warning btn-lg" asp-area="" asp-controller="Somministrazioni" asp-action="AlertTerapia">
-                    <i class="bi bi-bell"></i> Alert Terapie in Scadenza
-                </a>
-            }
-
-            <a class="btn btn-secondary btn-lg" asp-area="" asp-controller="Pazienti" asp-action="RichiestaTrasferimentoPaziente">
-                <i class="bi bi-arrow-right-square"></i> Richiesta Trasferimento Paziente
+            <a class="btn btn-success btn-lg" asp-area="" asp-controller="Terapie" asp-action="Index">
+                <i class="bi bi-capsule"></i> Terapie (Visualizza, Aggiungi, Somministra)
             </a>
 
+            <a class="btn btn-success btn-lg" asp-area="" asp-controller="Somministrazioni" asp-action="AlertTerapia">
+                <i class="bi bi-bell"></i> Alert Terapie in Scadenza
+            </a>
+
+             <a class="btn btn-success btn-lg" asp-area="" asp-controller="Pazienti" asp-action="RichiestaTrasferimentoPaziente">
+                <i class="bi bi-arrow-right-square"></i> Richiesta Trasferimento Paziente
+             </a>
+            
+            <br /><br />
+            <hr/>
             <a class="btn btn-light btn-lg" asp-area="" asp-controller="Home" asp-action="Privacy">
                 <i class="bi bi-info-circle"></i> Privacy
             </a>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj": {}
+    "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj": {}
   },
   "projects": {
-    "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj": {
+    "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj",
+        "projectUniqueName": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj",
         "projectName": "ProvaProgettoSERVER",
-        "projectPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj",
+        "projectPath": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj",
         "packagesPath": "C:\\Users\\botto\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo-main\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\obj\\",
+        "outputPath": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

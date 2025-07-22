@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ProvaMVC.Models; // Assicurati che questa riga sia presente
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 
 namespace ProvaMVC.Controllers
 {
@@ -26,6 +27,7 @@ namespace ProvaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Terapie()
         {
+            
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -101,47 +103,54 @@ namespace ProvaMVC.Controllers
                     _logger.LogError("Errore API nel recupero terapie per Terapie (GET): {StatusCode} - {Error}", responseTerapie.StatusCode, errorTerapie);
                     TempData["ErrorMessage"] = $"Impossibile caricare le terapie: {errorTerapie}";
                 }
+            
+                 // La vista riceverà una List<Terapia> come modello
+                return View(terapie);
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException)
             {
-                _logger.LogError(ex, "Errore di rete durante il recupero di pazienti/terapie.");
-                TempData["ErrorMessage"] = "Impossibile connettersi al server. Si prega di riprovare più tardi.";
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
-            catch (JsonSerializationException ex)
+
+            catch (SocketException)
             {
-                _logger.LogError(ex, "Errore durante la deserializzazione JSON di pazienti/terapie.");
-                TempData["ErrorMessage"] = "Errore nella lettura dei dati dal server.";
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore imprevisto durante il recupero di pazienti/terapie.");
-                TempData["ErrorMessage"] = "Si è verificato un errore imprevisto.";
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
-
-            // La vista riceverà una List<Terapia> come modello
-            return View(terapie);
         }
 
 
-        // --- AZIONE POST: Invia i dati del form per assegnare una nuova terapia ---
-        // (Questa azione ora è dedicata alla lista/principale. L'assegnazione è gestita da Assegna POST)
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Terapie(Terapia nuovaTerapia) 
-        // {
-        //     // Removed, as Assegna POST will handle the form submission
-        // }
 
-        // Mostra elenco (GET /Terapie)
         public async Task<IActionResult> Index()
         {
-            return await Terapie(); // Usa già il metodo esistente che popola ViewBag e model
+            try {
+            return await Terapie();
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         // GET: Mostra form per nuova terapia (solo Medico)
         [HttpGet]
         public async Task<IActionResult> Assegna()
         {
+            try { 
             var ruolo = HttpContext.Session.GetString("Ruolo");
             if (ruolo != "Medico")
             {
@@ -162,6 +171,21 @@ namespace ProvaMVC.Controllers
 
             await RepopulateViewBagData(matricola.Value, password, reparto.Value, ruolo);
             return View(new Terapia());
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         // POST: Salva terapia
@@ -169,6 +193,7 @@ namespace ProvaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Assegna(Terapia nuovaTerapia)
         {
+            
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -226,19 +251,19 @@ namespace ProvaMVC.Controllers
                     return View(nuovaTerapia); // Return the view with the current invalid model
                 }
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException)
             {
-                _logger.LogError(ex, "Errore di rete durante l'assegnazione della terapia.");
-                TempData["ErrorMessage"] = "Impossibile connettersi al server per assegnare la terapia.";
-                await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
-                return View(nuovaTerapia); // Return the view with the current invalid model
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore imprevisto durante l'assegnazione della terapia.");
-                TempData["ErrorMessage"] = "Si è verificato un errore imprevisto.";
-                await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
-                return View(nuovaTerapia); // Return the view with the current invalid model
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
         }
 
@@ -246,9 +271,7 @@ namespace ProvaMVC.Controllers
         // --- Metodo Helper per ripopolare i dati di ViewBag (pazienti, ecc.) ---
         private async Task RepopulateViewBagData(int matricola, string? password, int idReparto, string? ruolo)
         {
-            ViewBag.RuoloUtente = ruolo;
-            ViewBag.MatricolaMedico = matricola;
-
+           
             try
             {
                 // Solo se password non è null
@@ -288,11 +311,13 @@ namespace ProvaMVC.Controllers
                 ViewBag.PazientiDisponibili = new List<Paziente>();
                 ViewBag.PazientiMapPerTabella = new Dictionary<int, string>();
             }
+
         }
 
         // --- Metodo Helper per ottenere le terapie esistenti (per la tabella) ---
         private async Task<List<Terapia>> GetExistingTerapie(int matricola, string? password, int idReparto)
         {
+
             List<Terapia> terapie = new List<Terapia>();
             Dictionary<int, string> pazientiMapPerTabella = new Dictionary<int, string>();
 
@@ -359,6 +384,7 @@ namespace ProvaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Modifica(int id)
         {
+            try { 
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -379,6 +405,21 @@ namespace ProvaMVC.Controllers
             var json = await response.Content.ReadAsStringAsync();
             var terapia = JsonConvert.DeserializeObject<Terapia>(json);
             return View("Modifica", terapia);
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
 
@@ -387,6 +428,7 @@ namespace ProvaMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Modifica(int id, Terapia terapia)
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -413,6 +455,21 @@ namespace ProvaMVC.Controllers
 
             TempData["ErrorMessage"] = "Errore nella modifica della terapia.";
             return View("Modifica", terapia);
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
 
@@ -421,40 +478,49 @@ namespace ProvaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Elimina(int id)
         {
-            var matricola = HttpContext.Session.GetInt32("Matricola");
-            var password = HttpContext.Session.GetString("Password");
+                var matricola = HttpContext.Session.GetInt32("Matricola");
+                var password = HttpContext.Session.GetString("Password");
 
-            if (!matricola.HasValue || string.IsNullOrEmpty(password))
+                if (!matricola.HasValue || string.IsNullOrEmpty(password))
+                {
+                    TempData["LoginError"] = "Sessione scaduta.";
+                    return RedirectToAction("Login", "Utenti");
+                }
+
+                try
+                {
+                    string authString = $"{matricola}:{password}";
+                    string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+                    Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+                    var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["SuccessMessage"] = "Terapia eliminata con successo.";
+                    }
+                    else
+                    {
+                        var error = await response.Content.ReadAsStringAsync();
+                        TempData["ErrorMessage"] = $"Errore durante l'eliminazione: {response.StatusCode} - {error}";
+                    }
+
+                    return RedirectToAction("Index");
+                }
+               
+            catch (HttpRequestException)
             {
-                TempData["LoginError"] = "Sessione scaduta.";
-                return RedirectToAction("Login", "Utenti");
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
 
-            try
+            catch (SocketException)
             {
-                string authString = $"{matricola}:{password}";
-                string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
-
-                var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    TempData["SuccessMessage"] = "Terapia eliminata con successo.";
-                }
-                else
-                {
-                    var error = await response.Content.ReadAsStringAsync();
-                    TempData["ErrorMessage"] = $"Errore durante l'eliminazione: {response.StatusCode} - {error}";
-                }
-
-                return RedirectToAction("Index");
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore durante l'eliminazione della terapia.");
-                TempData["ErrorMessage"] = "Errore durante l'eliminazione.";
-                return RedirectToAction("Index");
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
         }
 
@@ -462,6 +528,7 @@ namespace ProvaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> TerapieDiOggi()
         {
+            
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -513,11 +580,19 @@ namespace ProvaMVC.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Eccezione nel recupero di tutte le terapie.");
-                TempData["ErrorMessage"] = "Errore imprevisto durante il recupero delle terapie.";
-                return RedirectToAction("Index");
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
         }
 

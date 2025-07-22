@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ProvaMVC.Models;
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Text;
 
 namespace ProvaMVC.Controllers
@@ -24,6 +25,7 @@ namespace ProvaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Dettaglio(int idTerapia)
         {
+            
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -97,17 +99,27 @@ namespace ProvaMVC.Controllers
 
                 return View();
             }
+            
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore nel dettaglio somministrazioni");
-                TempData["ErrorMessage"] = "Errore nel caricamento dei dettagli.";
-                return RedirectToAction("Index", "Terapie");
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> Somministra(int idTerapia)
         {
+             
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -140,19 +152,31 @@ namespace ProvaMVC.Controllers
                     TempData["SuccessMessage"] = "Somministrazione registrata con successo!";
                 else
                     TempData["ErrorMessage"] = "Errore durante la registrazione.";
+
+                return RedirectToAction("Index", "Terapie");
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore nella POST di somministrazione");
-                TempData["ErrorMessage"] = "Errore imprevisto durante la somministrazione.";
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
 
-            return RedirectToAction("Index", "Terapie");
+
         }
 
         [HttpGet]
         private async Task<bool> VerificaSomministrazione(int idTerapia, DateOnly data)
         {
+
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -176,11 +200,13 @@ namespace ProvaMVC.Controllers
                 _logger.LogError(ex, "Errore durante la verifica somministrazione");
                 return false;
             }
+            
         }
 
         [HttpGet]
         public async Task<IActionResult> AlertTerapia()
         {
+            
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
@@ -211,11 +237,19 @@ namespace ProvaMVC.Controllers
 
                 return View();
             }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore nel caricamento delle terapie in ritardo");
-                TempData["ErrorMessage"] = "Errore interno. Riprova più tardi.";
-                return RedirectToAction("Index", "Home");
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
         }
 

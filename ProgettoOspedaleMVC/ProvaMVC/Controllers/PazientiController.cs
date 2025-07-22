@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Net.Sockets;
 
 namespace ProvaMVC.Controllers
 {
@@ -25,6 +26,7 @@ namespace ProvaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Pazienti()
         {
+           
             // Recupera matricola e password dalla sessione
             int? matricolaInt = HttpContext.Session.GetInt32("Matricola");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
@@ -82,29 +84,27 @@ namespace ProvaMVC.Controllers
                     return View("Pazienti");
                 }
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException)
             {
-                _logger.LogError(ex, "Errore di rete o API non raggiungibile durante il recupero dei pazienti.");
-                TempData["LogError"] = "Impossibile connettersi al server. Riprovare più tardi.";
-                return View("Pazienti");
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
-            catch (JsonSerializationException ex)
+
+            catch (SocketException)
             {
-                _logger.LogError(ex, "Errore nella deserializzazione dei dati JSON dei pazienti.");
-                TempData["LogError"] = "Errore nella lettura dei dati dei pazienti.";
-                return View("Pazienti");
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore imprevisto durante la richiesta dei pazienti.");
-                TempData["LogError"] = "Errore imprevisto durante il recupero dei pazienti.";
-                return View("Pazienti");
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
+
         }
 
         [HttpGet]
         public async Task<IActionResult> RichiestaTrasferimentoPaziente()
         {
+            try { 
             var repartoId = HttpContext.Session.GetInt32("Reparto");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -118,12 +118,24 @@ namespace ProvaMVC.Controllers
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
+            var check = await _client.GetAsync("api/utenti/check_ruolo_medico_infermiere");
+            if (!check.IsSuccessStatusCode)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+            }
+
             // Ottieni pazienti nel reparto dell’utente loggato
             var pazientiResponse = await _client.GetAsync($"api/pazienti/reparto/{repartoId}");
             var repartiResponse = await _client.GetAsync("api/reparti");
 
             if (!pazientiResponse.IsSuccessStatusCode || !repartiResponse.IsSuccessStatusCode)
             {
+                if (!pazientiResponse.IsSuccessStatusCode)
+                {
+                    TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await pazientiResponse.Content.ReadAsStringAsync();
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)pazientiResponse.StatusCode });
+                }
+
                 TempData["Error"] = "Errore nel caricamento dei dati per il trasferimento.";
                 return RedirectToAction("Index", "Home");
             }
@@ -138,11 +150,28 @@ namespace ProvaMVC.Controllers
             ViewBag.Reparti = reparti;
 
             return View();
+
+            } 
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> RichiestaTrasferimentoPaziente(int idPaziente, int idRepartoDestinazione, int numeroLetto)
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -167,20 +196,75 @@ namespace ProvaMVC.Controllers
             if (response.IsSuccessStatusCode)
                 TempData["Success"] = "Trasferimento completato con successo.";
             else
-                TempData["Error"] = "Errore nel trasferimento: " + await response.Content.ReadAsStringAsync();
+            {
+                TempData["ServerMessage"] = "Errore nel trasferimento: " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+            }
 
             return RedirectToAction(nameof(RichiestaTrasferimentoPaziente));
+
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         [HttpGet]
-        public IActionResult Prenota()
+        public async Task<IActionResult> Prenota()
         {
+            try { 
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
+
+            if (matricola == null || password == null)
+            {
+                return RedirectToAction("Login", "Utenti");
+            }
+
+            string authString = $"{matricola}:{password}";
+            string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+            var check = await _client.GetAsync("api/utenti/check_ruolo_medico_infermiere");
+            if (!check.IsSuccessStatusCode)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+            }
+
             return View(new Paziente());
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Prenota(Paziente paziente)
         {
+            try { 
             int? matricola = HttpContext.Session.GetInt32("Matricola");
             int? idReparto = HttpContext.Session.GetInt32("Reparto");
             string? password = HttpContext.Session.GetString("Password");
@@ -208,15 +292,32 @@ namespace ProvaMVC.Controllers
                 TempData["Success"] = "Paziente prenotato con successo.";
                 return RedirectToAction("Pazienti"); // torna alla lista dei pazienti
             }
+            else
+            {
+                TempData["ServerMessage"] = "Errore nella prenotazione " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+            }
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
 
-            var error = await response.Content.ReadAsStringAsync();
-            ModelState.AddModelError(string.Empty, $"Errore: {error}");
-            return View(paziente);
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> RicoveroUrgente(int idPaziente)
         {
+            try { 
             var idReparto = HttpContext.Session.GetInt32("Reparto");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -228,14 +329,18 @@ namespace ProvaMVC.Controllers
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
+            var check = await _client.GetAsync("api/utenti/check_ruolo_medico_infermiere");
+            if (!check.IsSuccessStatusCode)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+            }
+
             var response = await _client.GetAsync($"/api/reparti/lista_letti_liberi/{idReparto}");
 
             if (!response.IsSuccessStatusCode)
             {
-                TempData["LogError"] = "Errore nel recupero letti.";
-                var errore = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Errore nel recupero letti: {Status} - {Msg}", response.StatusCode, errore);
-                return RedirectToAction("Pazienti");
+                TempData["ServerMessage"] = "Errore nel recupero letti " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
 
             var content = await response.Content.ReadAsStringAsync();
@@ -247,11 +352,29 @@ namespace ProvaMVC.Controllers
                 ID = idPaziente,
                 IDReparto = idReparto.Value
             });
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> RicoveroUrgente(Paziente paziente)
         {
+            try
+            {
+            
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -277,16 +400,30 @@ namespace ProvaMVC.Controllers
             }
             else
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Errore nel ricovero urgente: {0}", errorContent);
-                ModelState.AddModelError(string.Empty, "Errore durante il ricovero: " + errorContent);
-                return View(paziente);
+                TempData["ServerMessage"] = "\"Errore nel ricovero urgente " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+            }
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
         }
 
         [HttpGet]
         public async Task<IActionResult> DaRicoverareOggi()
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
@@ -298,6 +435,12 @@ namespace ProvaMVC.Controllers
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
+            var check = await _client.GetAsync("api/utenti/check_ruolo_medico");
+            if (!check.IsSuccessStatusCode)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+            }
+
             // Chiamata per pazienti da ricoverare
             var pazientiResponse = await _client.GetAsync($"api/pazienti/da_ricoverare/{idReparto}/oggi");
 
@@ -308,10 +451,10 @@ namespace ProvaMVC.Controllers
                 var pazientiJson = await pazientiResponse.Content.ReadAsStringAsync();
                 pazienti = JsonConvert.DeserializeObject<List<Paziente>>(pazientiJson);
             }
-            else if (pazientiResponse.StatusCode != System.Net.HttpStatusCode.NotFound)
+            else
             {
-                // Mostra errore solo se NON è un 404
-                TempData["Error"] = "Errore nel recupero dei pazienti.";
+                TempData["ServerMessage"] = "Errore nel recupero dei pazienti " + await pazientiResponse.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)pazientiResponse.StatusCode });
             }
 
             // Chiamata per letti liberi
@@ -326,17 +469,35 @@ namespace ProvaMVC.Controllers
             }
             else
             {
-                TempData["Error"] = "Errore nel recupero dei letti liberi.";
+                TempData["ServerMessage"] = "Errore nel recupero dei letti liberi " + await lettiResponse.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)lettiResponse.StatusCode });
             }
 
             ViewBag.LettiLiberi = lettiLiberi;
             return View(pazienti);
+
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
 
         [HttpPost]
         public async Task<IActionResult> DaRicoverareOggi(int ID, int NumeroLetto)
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
@@ -355,18 +516,34 @@ namespace ProvaMVC.Controllers
                 TempData["Success"] = "Paziente ricoverato.";
                 return RedirectToAction("DaRicoverareOggi");
             }
+            else
+            {
+                TempData["ServerMessage"] = "Errore nel ricovero " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
 
-            var error = await response.Content.ReadAsStringAsync();
-            _logger.LogError("Errore nel ricovero urgente: {0}", error);
-            TempData["Error"] = "Errore nel ricovero: " + error;
+            }
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
 
-            return RedirectToAction("DaRicoverareOggi");
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
 
         [HttpGet]
         public async Task<IActionResult> DaDimettere()
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
@@ -377,6 +554,12 @@ namespace ProvaMVC.Controllers
             string authString = $"{matricola}:{password}";
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+            var check = await _client.GetAsync("api/utenti/check_ruolo_medico");
+            if (!check.IsSuccessStatusCode)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+            }
 
             var response = await _client.GetAsync($"api/pazienti/da_dimettere/{idReparto}/oggi");
 
@@ -389,10 +572,8 @@ namespace ProvaMVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                // Altri errori (es. 500, 400...)
-                _logger.LogWarning("Errore nel recupero pazienti da dimettere: {0}", response.StatusCode);
-                TempData["Error"] = "Errore nel recupero dei pazienti.";
-                return View(new List<Paziente>());
+                TempData["ServerMessage"] = "Errore nel recupero pazienti da dimettere " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
 
             var json = await response.Content.ReadAsStringAsync();
@@ -410,12 +591,29 @@ namespace ProvaMVC.Controllers
             }
 
             return View(pazienti);
+
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
 
         [HttpPost]
         public async Task<IActionResult> DaDimettere(int ID)
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -434,45 +632,85 @@ namespace ProvaMVC.Controllers
             }
             else
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Errore nella dimissione: {0}", errorContent);
-                TempData["Error"] = "Errore nella dimissione: " + errorContent;
+                TempData["ServerMessage"] = "Errore nella dimissione " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
 
             return RedirectToAction("DaDimettere");
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> ModificaDatiMedici(int id)
         {
-            var matricola = HttpContext.Session.GetInt32("Matricola");
-            var password = HttpContext.Session.GetString("Password");
-
-            if (matricola == null || password == null)
-                return RedirectToAction("Login", "Utenti");
-
-            string authString = $"{matricola}:{password}";
-            string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
-
-            var response = await _client.GetAsync($"api/pazienti/{id}");
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                TempData["Error"] = "Errore nel caricamento del paziente.";
-                return RedirectToAction("Index");
+                var matricola = HttpContext.Session.GetInt32("Matricola");
+                var password = HttpContext.Session.GetString("Password");
+
+                if (matricola == null || password == null)
+                    return RedirectToAction("Login", "Utenti");
+
+                string authString = $"{matricola}:{password}";
+                string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+                var check = await _client.GetAsync("api/utenti/check_ruolo_medico");
+                if (!check.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+                }
+
+                var response = await _client.GetAsync($"api/pazienti/{id}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    TempData["ServerMessage"] = "Errore nel caricamento del paziente " + await response.Content.ReadAsStringAsync();
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+                }
+
+                var json = await response.Content.ReadAsStringAsync();
+                var paziente = JsonConvert.DeserializeObject<Paziente>(json);
+
+                return View(paziente);
+
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
             }
 
-            var json = await response.Content.ReadAsStringAsync();
-            var paziente = JsonConvert.DeserializeObject<Paziente>(json);
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
 
-            return View(paziente);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> InviaModificaDatiMedici(int IDPaziente, DateOnly? DataRicovero, DateOnly? DataDimissione, string? MotivoRicovero, string? Patologie, string? Allergie, string? AltreNote)
         {
+            try { 
+
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -499,7 +737,8 @@ namespace ProvaMVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                TempData["Error"] = "Errore nella modifica dei dati: " + await response.Content.ReadAsStringAsync();
+                TempData["ServerMessage"] = "Errore nella modifica dei dati medici " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
             else
             {
@@ -507,11 +746,30 @@ namespace ProvaMVC.Controllers
             }
 
             return RedirectToAction("Pazienti");
+
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> ModificaDatiPersonali(int id)
         {
+            try
+            {
+            
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -521,6 +779,12 @@ namespace ProvaMVC.Controllers
             string authString = $"{matricola}:{password}";
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+            var check = await _client.GetAsync("api/utenti/check_ruolo_medico_infermiere");
+            if (!check.IsSuccessStatusCode)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+            }
 
             var response = await _client.GetAsync($"api/pazienti/{id}");
 
@@ -534,6 +798,22 @@ namespace ProvaMVC.Controllers
             var paziente = JsonConvert.DeserializeObject<Paziente>(json);
 
             return View(paziente);
+
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
 
@@ -541,6 +821,7 @@ namespace ProvaMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ModificaDatiPersonali(int IDPaziente, string? CF, string? Nome, string? Cognome, string? LuogoNascita, DateOnly? DataNascita)
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -575,10 +856,28 @@ namespace ProvaMVC.Controllers
             }
 
             return RedirectToAction("Pazienti");
+
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
+
         [HttpGet]
         public async Task<IActionResult> ProssimiRicoveri()
         {
+            try { 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
@@ -594,17 +893,33 @@ namespace ProvaMVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                TempData["Error"] = "Errore nel caricamento dei pazienti da ricoverare.";
-                return View(new List<Paziente>());
+                TempData["ServerMessage"] = "Errore nel caricamento dei pazienti da ricoverare " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
 
             var json = await response.Content.ReadAsStringAsync();
             var pazienti = JsonConvert.DeserializeObject<List<Paziente>>(json);
 
             return View(pazienti);
+            }
+            catch (HttpRequestException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+
+            catch (SocketException)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+            }
+            catch (Exception ex)
+            {
+                TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+                return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+            }
         }
 
- 
+
+
 
     }
 }

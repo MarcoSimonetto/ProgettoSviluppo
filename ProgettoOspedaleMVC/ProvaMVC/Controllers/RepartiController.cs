@@ -1,5 +1,6 @@
 ﻿// ... existing usings ...
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Text; // Ensure this is present
 using Microsoft.AspNetCore.Mvc; // Ensure this is present
 using Newtonsoft.Json; // Ensure this is present
@@ -21,6 +22,7 @@ public class RepartiController : Controller
 
     public async Task<IActionResult> Index()
     {
+ 
         var repartoId = HttpContext.Session.GetInt32("Reparto");
         var matricola = HttpContext.Session.GetInt32("Matricola");
         var password = HttpContext.Session.GetString("Password");
@@ -79,23 +81,27 @@ public class RepartiController : Controller
 
             return View();
         }
-        catch (HttpRequestException httpEx)
+       
+        catch (HttpRequestException)
         {
-            _logger.LogError(httpEx, "Errore HTTP durante il caricamento del reparto o dei pazienti: {StatusCode}", httpEx.StatusCode);
-            TempData["LogError"] = $"Errore di connessione all'API: {httpEx.Message}. Assicurati che il server API sia in esecuzione.";
-            return View(); // Return view with error data
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Errore generico durante il caricamento del reparto o dei pazienti");
-            TempData["LogError"] = "Errore durante il caricamento dei dati del reparto.";
-            return View(); // Return view with error data
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
 
     // ... other actions like VisualizzaLetto ...
     public async Task<IActionResult> VisualizzaLetto(int numero)
     {
+        
         var repartoId = HttpContext.Session.GetInt32("Reparto");
         var matricola = HttpContext.Session.GetInt32("Matricola");
         var password = HttpContext.Session.GetString("Password");
@@ -150,18 +156,28 @@ public class RepartiController : Controller
             }
 
             return View("VisualizzaLetto", null);
+
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Errore durante il recupero del paziente per letto");
-            TempData["LogError"] = "Errore durante il recupero del letto.";
-            return View("VisualizzaLetto", null);
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
 
     [HttpGet]
     public async Task<IActionResult> GetLettiLiberi(int idReparto)
     {
+        try { 
         var matricola = HttpContext.Session.GetInt32("Matricola");
         var password = HttpContext.Session.GetString("Password");
 
@@ -176,6 +192,21 @@ public class RepartiController : Controller
         var result = await response.Content.ReadAsStringAsync();
 
         return Content(result, "application/json");
+        }
+        catch (HttpRequestException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+
+        catch (SocketException)
+        {
+            return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
+        }
+        catch (Exception ex)
+        {
+            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
+        }
     }
 
 

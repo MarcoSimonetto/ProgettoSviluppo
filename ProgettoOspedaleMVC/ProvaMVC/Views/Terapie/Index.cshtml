@@ -56,22 +56,13 @@ else
                     <td>@t.DataInizio.ToString("dd/MM/yyyy")</td>
                     <td>@t.DataFine.ToString("dd/MM/yyyy")</td>
                     <td>@t.MatricolaMedico</td>
-
-
-                    @if (ruolo == "Medico")
-                    {
-                        <td class="d-flex flex-wrap gap-2">
+                    <td class="d-flex flex-wrap gap-2">
                             <a asp-action="Modifica" asp-route-id="@t.ID" class="btn btn-warning btn-sm">✏️ Modifica</a>
                             <form asp-action="Elimina" asp-route-id="@t.ID" method="post" onsubmit="return confirm('Confermi l\'eliminazione della terapia?');">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-danger btn-sm">🗑️ Elimina</button>
                             </form>
                         </td>
-                    }
-                    else{
-                        <td></td>
-
-                    }
 
                 </tr>
             }
