@@ -893,6 +893,7 @@ namespace ProvaMVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
+                
                 TempData["ServerMessage"] = "Errore nel caricamento dei pazienti da ricoverare " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }

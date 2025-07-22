@@ -151,12 +151,8 @@ namespace ProvaMVC.Controllers
         public async Task<IActionResult> Assegna()
         {
             try { 
+
             var ruolo = HttpContext.Session.GetString("Ruolo");
-            if (ruolo != "Medico")
-            {
-                TempData["AccessDenied"] = "Accesso negato. Solo i medici possono assegnare nuove terapie.";
-                return RedirectToAction("Index");
-            }
 
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -167,6 +163,16 @@ namespace ProvaMVC.Controllers
             {
                 TempData["LoginError"] = "Sessione scaduta o dati utente mancanti. Effettuare nuovamente il login.";
                 return RedirectToAction("Login", "Utenti");
+            }
+
+            string authString = $"{matricola.Value}:{password}";
+            string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+            var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
+            if (!check.IsSuccessStatusCode)
+            {
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
             }
 
             await RepopulateViewBagData(matricola.Value, password, reparto.Value, ruolo);
@@ -221,8 +227,7 @@ namespace ProvaMVC.Controllers
             {
                 string authString = $"{matricola.Value}:{password}";
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-                Client.DefaultRequestHeaders.Authorization = null;
-                Client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
                 var jsonContent = JsonConvert.SerializeObject(nuovaTerapia);
                 var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
@@ -395,6 +400,12 @@ namespace ProvaMVC.Controllers
             string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
 
+            var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
+            if (!check.IsSuccessStatusCode)
+            {
+               return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+            }
+
             var response = await Client.GetAsync($"api/terapie/{id}");
             if (!response.IsSuccessStatusCode)
             {
@@ -435,7 +446,7 @@ namespace ProvaMVC.Controllers
             string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
 
-            var json = JsonConvert.SerializeObject(new
+                var json = JsonConvert.SerializeObject(new
             {
                 farmaco = terapia.Farmaco,
                 dosaggio = terapia.Dosaggio,
@@ -492,6 +503,12 @@ namespace ProvaMVC.Controllers
                     string authString = $"{matricola}:{password}";
                     string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                     Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+                    var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
+                    if (!check.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+                    }
 
                     var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
 

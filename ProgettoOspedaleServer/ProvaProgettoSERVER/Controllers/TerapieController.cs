@@ -50,6 +50,14 @@ public class TerapieController : ControllerBase
             if(matricola!=terapia.MatricolaMedico)
                 return BadRequest("Devi passare la tua matricola quando assegni una terapia!");
 
+            var authHeader = Request.Headers["Authorization"].ToString();
+            Console.WriteLine($"Authorization header: {authHeader}");
+
+            var user = User.Identity;
+            Console.WriteLine($"User authenticated: {user?.IsAuthenticated}");
+            Console.WriteLine($"Claims: {string.Join(", ", User.Claims.Select(c => $"{c.Type}={c.Value}"))}");
+
+
             var paziente = await _context.Pazienti.FindAsync(terapia.IDPaziente);
             if (paziente == null) return NotFound("Paziente non trovato!");
             if (utente.IDReparto != paziente.IDReparto) 
