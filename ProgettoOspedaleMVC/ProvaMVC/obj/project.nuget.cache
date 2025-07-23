@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TU7NUs9BnXA=",
+  "dgSpecHash": "RrM618Cmrew=",
   "success": true,
-  "projectFilePath": "D:\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj",
+  "projectFilePath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\botto\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\botto\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
