@@ -128,7 +128,6 @@ public class UtentiController : Controller
         var result = await Client.PostAsync("api/utenti/registrazione", content);
         if (result.IsSuccessStatusCode)
         {
-            TempData["RegSuccess"] = "Registrazione riuscita.";
             return RedirectToAction("Login");
         }
 
@@ -162,7 +161,6 @@ public class UtentiController : Controller
 
         HttpContext.Session.Clear();
 
-        TempData["LogoutSuccess"] = "Logout effettuato con successo.";
         return RedirectToAction("Login");
         }
         catch (HttpRequestException)

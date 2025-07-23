@@ -148,9 +148,7 @@ namespace ProvaMVC.Controllers
 
                 var response = await Client.PostAsync("api/Somministrazioni/aggiungi", content);
 
-                if (response.IsSuccessStatusCode)
-                    TempData["SuccessMessage"] = "Somministrazione registrata con successo!";
-                else
+                if (!response.IsSuccessStatusCode)
                     TempData["ErrorMessage"] = "Errore durante la registrazione.";
 
                 return RedirectToAction("Index", "Terapie");

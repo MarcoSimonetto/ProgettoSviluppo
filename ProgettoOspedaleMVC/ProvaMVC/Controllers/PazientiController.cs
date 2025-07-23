@@ -193,9 +193,7 @@ namespace ProvaMVC.Controllers
 
             var response = await _client.PutAsync($"api/pazienti/trasferimento/{idPaziente}", content);
 
-            if (response.IsSuccessStatusCode)
-                TempData["Success"] = "Trasferimento completato con successo.";
-            else
+            if (!response.IsSuccessStatusCode)
             {
                 TempData["ServerMessage"] = "Errore nel trasferimento: " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
@@ -289,7 +287,6 @@ namespace ProvaMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                TempData["Success"] = "Paziente prenotato con successo.";
                 return RedirectToAction("Pazienti"); // torna alla lista dei pazienti
             }
             else
@@ -395,7 +392,6 @@ namespace ProvaMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                TempData["Success"] = "Paziente ricoverato con successo.";
                 return RedirectToAction("Pazienti");
             }
             else
@@ -513,7 +509,6 @@ namespace ProvaMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                TempData["Success"] = "Paziente ricoverato.";
                 return RedirectToAction("DaRicoverareOggi");
             }
             else
@@ -626,11 +621,7 @@ namespace ProvaMVC.Controllers
 
             var response = await _client.DeleteAsync($"api/pazienti/dimetti/{ID}");
 
-            if (response.IsSuccessStatusCode)
-            {
-                TempData["Success"] = "Paziente dimesso con successo.";
-            }
-            else
+            if (!response.IsSuccessStatusCode)
             {
                 TempData["ServerMessage"] = "Errore nella dimissione " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
@@ -740,10 +731,6 @@ namespace ProvaMVC.Controllers
                 TempData["ServerMessage"] = "Errore nella modifica dei dati medici " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
-            else
-            {
-                TempData["Success"] = "Modifica avvenuta con successo.";
-            }
 
             return RedirectToAction("Pazienti");
 
@@ -849,10 +836,6 @@ namespace ProvaMVC.Controllers
             {
                 TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
-            }
-            else
-            {
-                TempData["Success"] = "Modifica avvenuta con successo.";
             }
 
             return RedirectToAction("Pazienti");

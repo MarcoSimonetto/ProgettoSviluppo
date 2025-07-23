@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\views\\terapie\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\views\\terapie\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|solutionrelative:provamvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E5BE7A96-0A8A-4F52-8A74-239ADD3CA02C}|ProvaMVC\\ProvaMVC.csproj|d:\\defalco-vs\\progettosviluppo7.0\\progettoospedalemvc\\provamvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -114,23 +114,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "TerapieDiOggi.cshtml",
-              "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "ToolTip": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAAsAAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-17T14:00:01.15Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "RepartiController.cs",
               "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\RepartiController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\RepartiController.cs",
@@ -138,12 +126,11 @@
               "RelativeToolTip": "ProvaMVC\\Controllers\\RepartiController.cs",
               "ViewState": "AgIAAKcAAAAAAAAAAAAuwAYAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T15:43:07.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-14T15:43:07.615Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "SomministrazioniController.cs",
               "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\SomministrazioniController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\SomministrazioniController.cs",
@@ -155,7 +142,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "UtentiController.cs",
               "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\UtentiController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\UtentiController.cs",
@@ -167,33 +154,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "PazientiController.cs",
               "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\PazientiController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\PazientiController.cs",
               "ToolTip": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\PazientiController.cs",
               "RelativeToolTip": "ProvaMVC\\Controllers\\PazientiController.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAADgvw8AAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAHIDAAAAAAAAAAApwIADAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-22T14:04:03.213Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "TerapieController.cs",
               "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\TerapieController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\TerapieController.cs",
               "ToolTip": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\TerapieController.cs",
               "RelativeToolTip": "ProvaMVC\\Controllers\\TerapieController.cs",
-              "ViewState": "AgIAAKIAAAAAAAAAAAAtwKkAAABxAAAAAAAAAA==",
+              "ViewState": "AgIAAO8AAAAAAAAAAIAwwLEAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-22T16:03:27.515Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\Index.cshtml",
               "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\Index.cshtml",
@@ -201,20 +188,32 @@
               "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-15T14:44:15.627Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-15T14:44:15.627Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "ProvaMVC\\Controllers\\HomeController.cs",
               "ToolTip": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Controllers\\HomeController.cs",
               "RelativeToolTip": "ProvaMVC\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAAwDkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAkwGgAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T13:54:18.67Z"
+              "WhenOpened": "2025-07-14T13:54:18.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TerapieDiOggi.cshtml",
+              "DocumentMoniker": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "RelativeDocumentMoniker": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "ToolTip": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "RelativeToolTip": "ProvaMVC\\Views\\Terapie\\TerapieDiOggi.cshtml",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAAsAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T14:00:01.15Z"
             },
             {
               "$type": "Document",

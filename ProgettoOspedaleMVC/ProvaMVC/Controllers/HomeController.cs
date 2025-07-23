@@ -102,7 +102,7 @@ public class HomeController : Controller
     public IActionResult HttpError(int statusCode)
     {
         try { 
-        ViewData["ServerMessage"] = TempData["ServerMessage"];
+        //ViewData["ServerMessage"] = TempData["ServerMessage"];
         return View(statusCode);
         }
         catch (HttpRequestException)

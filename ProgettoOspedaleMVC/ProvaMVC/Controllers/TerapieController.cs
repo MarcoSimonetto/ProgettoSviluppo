@@ -236,7 +236,6 @@ namespace ProvaMVC.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["SuccessMessage"] = "Terapia assegnata con successo!";
                     return RedirectToAction("Index"); // Redirect to the main Terapie list
                 }
                 else
@@ -460,7 +459,6 @@ namespace ProvaMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                TempData["SuccessMessage"] = "Terapia modificata con successo.";
                 return RedirectToAction("Index");
             }
 
@@ -512,11 +510,7 @@ namespace ProvaMVC.Controllers
 
                     var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        TempData["SuccessMessage"] = "Terapia eliminata con successo.";
-                    }
-                    else
+                    if (!response.IsSuccessStatusCode)
                     {
                         var error = await response.Content.ReadAsStringAsync();
                         TempData["ErrorMessage"] = $"Errore durante l'eliminazione: {response.StatusCode} - {error}";
