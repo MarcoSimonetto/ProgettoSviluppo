@@ -6,10 +6,6 @@
 
 <h1 class="display-4">Pazienti da Ricoverare</h1>
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
 
 @if (Model != null && Model.Any())
 {
@@ -37,12 +33,12 @@
                     <td>@p.DataRicovero.ToString("dd/MM/yyyy")</td>
                     <td>@p.MotivoRicovero</td>
                     <td>
-                        <a asp-action="ModificaDatiMedici" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-success btn-lg">
+                        <a asp-action="ModificaDatiMedici" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-warning btn-lg">
                             Modifica dati Medici
                         </a>
                     </td>
                     <td>
-                        <a asp-action="ModificaDatiPersonali" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-success btn-lg">
+                        <a asp-action="ModificaDatiPersonali" asp-controller="Pazienti" asp-route-id="@p.ID" class="btn btn-warning btn-lg">
                             Modifica dati personali
                         </a>
                     </td>

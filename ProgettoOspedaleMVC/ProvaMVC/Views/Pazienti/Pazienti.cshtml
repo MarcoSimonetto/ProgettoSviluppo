@@ -6,14 +6,6 @@
 <h1 class="display-4">Gestione Pazienti</h1>
 <p class="lead">Qui puoi gestire l'elenco dei pazienti, pianificare ricoveri e dimissioni.</p>
 
-@if (TempData["LogError"] != null)
-{
-    <div class="alert alert-danger">@TempData["LogError"]</div>
-}
-@if (TempData["LoginError"] != null)
-{
-    <div class="alert alert-warning">@TempData["LoginError"]</div>
-}
 
 <div class="mt-4">
     <div class="d-grid gap-3">
@@ -29,7 +21,7 @@
         </a>
 
         <a asp-controller="Pazienti" asp-action="ProssimiRicoveri" class="btn btn-success btn-lg">
-            <i class="bi bi-box-arrow-left"></i> Visualizza prossimi ricoveri
+            <i class="bi bi-box-arrow-right"></i> Visualizza prossimi ricoveri
         </a>
         <a asp-controller="Pazienti" asp-action="DaDimettere" class="btn btn-success btn-lg">
             <i class="bi bi-box-arrow-left"></i> Dimissioni Pazienti
@@ -88,9 +80,6 @@
     {
         <div class="alert alert-info mt-3">Nessun paziente ricoverato trovato per questo reparto.</div>
     }
-    else
-    {
-        <div class="alert alert-warning mt-3">Dati dei pazienti non disponibili.</div>
-    }
+
 </div>
 

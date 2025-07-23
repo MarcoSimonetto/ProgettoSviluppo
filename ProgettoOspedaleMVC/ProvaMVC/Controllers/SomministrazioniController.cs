@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ProvaMVC.Models;
 using System.Net.Http.Headers;
@@ -17,7 +16,7 @@ namespace ProvaMVC.Controllers
         {
             _logger = logger;
             Client = client;
-            Client.BaseAddress = new Uri("http://localhost:5002"); // URL backend
+            Client.BaseAddress = new Uri("http://localhost:5002");
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -41,7 +40,7 @@ namespace ProvaMVC.Controllers
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
-                // Recupero terapia
+                
                 var responseTerapia = await Client.GetAsync($"api/terapie/{idTerapia}");
                 if (!responseTerapia.IsSuccessStatusCode)
                     return RedirectToAction("Index", "Terapie");
@@ -49,7 +48,7 @@ namespace ProvaMVC.Controllers
                 var jsonTerapia = await responseTerapia.Content.ReadAsStringAsync();
                 var terapia = JsonConvert.DeserializeObject<Terapia>(jsonTerapia);
 
-                // Recupero paziente
+                
                 var responsePaziente = await Client.GetAsync($"api/pazienti/{terapia.IDPaziente}");
                 if (!responsePaziente.IsSuccessStatusCode)
                     return RedirectToAction("Index", "Terapie");
@@ -57,12 +56,12 @@ namespace ProvaMVC.Controllers
                 var jsonPaziente = await responsePaziente.Content.ReadAsStringAsync();
                 var paziente = JsonConvert.DeserializeObject<Paziente>(jsonPaziente);
 
-                // Recupero somministrazioni odierne
+               
                 var responseSomministrazioni = await Client.GetAsync($"api/somministrazioni/oggi/terapia/{idTerapia}");
                 var jsonSomministrazioni = await responseSomministrazioni.Content.ReadAsStringAsync();
                 var somministrazioni = JsonConvert.DeserializeObject<List<Somministrazione>>(jsonSomministrazioni) ?? new();
 
-                // Stato e calcolo della differenza oraria precisa
+                
                 string stato;
                 string tempoRimanenteOltre = string.Empty;
 
@@ -74,7 +73,7 @@ namespace ProvaMVC.Controllers
                 {
                     var orarioPrevisto = terapia.OrarioSomministrazione.ToTimeSpan();
                     var oraAttuale = DateTime.Now.TimeOfDay;
-                    var differenza = orarioPrevisto - oraAttuale; // This is a TimeSpan
+                    var differenza = orarioPrevisto - oraAttuale;
 
                     if (differenza.TotalMinutes > 0)
                     {
@@ -84,12 +83,11 @@ namespace ProvaMVC.Controllers
                     else
                     {
                         stato = "In ritardo";
-                        // Use absolute value for display, as it's a "delay"
+                       
                         tempoRimanenteOltre = $"In ritardo di {Math.Floor(Math.Abs(differenza.TotalHours))} ore e {Math.Abs(differenza.Minutes)} minuti";
                     }
                 }
 
-                // Verifica via API
                 var giaSomministrata = await VerificaSomministrazione(idTerapia, DateOnly.FromDateTime(DateTime.Today));
 
                 ViewBag.Terapia = terapia;
@@ -149,7 +147,9 @@ namespace ProvaMVC.Controllers
                 var response = await Client.PostAsync("api/Somministrazioni/aggiungi", content);
 
                 if (!response.IsSuccessStatusCode)
-                    TempData["ErrorMessage"] = "Errore durante la registrazione.";
+                {
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+                }
 
                 return RedirectToAction("Index", "Terapie");
             }
@@ -224,8 +224,12 @@ namespace ProvaMVC.Controllers
                 var response = await Client.GetAsync($"api/Somministrazioni/oggi/in_ritardo/{idReparto}");
                 if (!response.IsSuccessStatusCode)
                 {
-                    TempData["ErrorMessage"] = "Errore nel recupero delle terapie in ritardo.";
-                    return View(new List<dynamic>());
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        TempData["ServerMessage"] = await response.Content.ReadAsStringAsync();
+                        return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+                    }
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
                 }
 
                 var json = await response.Content.ReadAsStringAsync();

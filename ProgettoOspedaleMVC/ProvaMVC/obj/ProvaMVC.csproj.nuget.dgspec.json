@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj": {}
+    "D:\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj": {}
   },
   "projects": {
-    "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj": {
+    "D:\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj",
+        "projectUniqueName": "D:\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj",
         "projectName": "ProvaMVC",
-        "projectPath": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj",
-        "packagesPath": "C:\\Users\\Lazza\\.nuget\\packages\\",
-        "outputPath": "D:\\deFalco-vs\\ProgettoSviluppo7.0\\ProgettoOspedaleMVC\\ProvaMVC\\obj\\",
+        "projectPath": "D:\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\ProvaMVC.csproj",
+        "packagesPath": "C:\\Users\\botto\\.nuget\\packages\\",
+        "outputPath": "D:\\ProgettoSviluppo\\ProgettoOspedaleMVC\\ProvaMVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lazza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\botto\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -74,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

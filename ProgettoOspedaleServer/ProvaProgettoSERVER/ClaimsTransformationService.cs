@@ -19,7 +19,6 @@ namespace ProvaProgettoSERVER
             var matricolaClaim = principal.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(matricolaClaim, out var matricolaInt))
             {
-                // Se la conversione fallisce, restituisco comunque il principal
                 return principal;
             }
 

@@ -1,10 +1,8 @@
-﻿// ... existing usings ...
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Net.Sockets;
-using System.Text; // Ensure this is present
-using Microsoft.AspNetCore.Mvc; // Ensure this is present
-using Newtonsoft.Json; // Ensure this is present
-using ProvaMVC.Models; // Ensure this is present
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ProvaMVC.Controllers;
 
@@ -17,7 +15,7 @@ public class RepartiController : Controller
     {
         _logger = logger;
         _client = client;
-        _client.BaseAddress = new Uri("http://localhost:5002"); // URL API
+        _client.BaseAddress = new Uri("http://localhost:5002");
     }
 
     public async Task<IActionResult> Index()
@@ -36,9 +34,9 @@ public class RepartiController : Controller
         ViewBag.Ruolo = ruolo;
         ViewBag.Matricola = matricola;
 
-        // Initialize ViewBag.Reparto for error handling in the view
+        
         ViewBag.Reparto = null;
-        ViewBag.Pazienti = new List<ProvaMVC.Models.Paziente>(); // Ensure Pazienti is initialized
+        ViewBag.Pazienti = new List<ProvaMVC.Models.Paziente>();
         ViewBag.LettiTotali = 0;
         ViewBag.LettiOccupati = 0;
         ViewBag.LettiDisponibili = 0;
@@ -48,30 +46,25 @@ public class RepartiController : Controller
         {
             string authString = $"{matricola}:{password}";
             string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-            _client.DefaultRequestHeaders.Authorization = null; // Clear previous auth headers
+            _client.DefaultRequestHeaders.Authorization = null;
             _client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
 
-            // Reparto
             var repartoResponse = await _client.GetAsync($"api/reparti/{repartoId}");
-            repartoResponse.EnsureSuccessStatusCode(); // This will throw if status is not 2xx
+            repartoResponse.EnsureSuccessStatusCode();
 
             var repartoJson = await repartoResponse.Content.ReadAsStringAsync();
-            var reparto = JsonConvert.DeserializeObject<ProvaMVC.Models.Reparto>(repartoJson)!; // Cast to ProvaMVC.Models.Reparto
+            var reparto = JsonConvert.DeserializeObject<ProvaMVC.Models.Reparto>(repartoJson)!; 
 
-            // Pazienti
-            // *** CORRECTION HERE: Change 'reparto' to 'Reparto' to match API route casing ***
             var pazientiResponse = await _client.GetAsync($"api/pazienti/Reparto/{repartoId}");
-            pazientiResponse.EnsureSuccessStatusCode(); // Add this to catch errors here too
+            pazientiResponse.EnsureSuccessStatusCode();
 
             var pazientiJson = await pazientiResponse.Content.ReadAsStringAsync();
             var pazienti = JsonConvert.DeserializeObject<List<ProvaMVC.Models.Paziente>>(pazientiJson) ?? new List<ProvaMVC.Models.Paziente>();
 
-            // Conteggio letti
             int lettiTotali = reparto.NumeroLetti;
             int lettiOccupati = pazienti.Count;
             int lettiDisponibili = lettiTotali - lettiOccupati;
 
-            // Passaggio dati alla view
             ViewBag.Reparto = reparto;
             ViewBag.Pazienti = pazienti;
             ViewBag.LettiTotali = lettiTotali;
@@ -98,7 +91,7 @@ public class RepartiController : Controller
         }
     }
 
-    // ... other actions like VisualizzaLetto ...
+    
     public async Task<IActionResult> VisualizzaLetto(int numero)
     {
         
@@ -119,7 +112,6 @@ public class RepartiController : Controller
             _client.DefaultRequestHeaders.Authorization = null;
             _client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
 
-            // This API call is correct as per your API RepartiController: [HttpGet("{IDReparto}/{NumeroLetto}")]
             var response = await _client.GetAsync($"api/reparti/{repartoId}/{numero}");
 
             var json = await response.Content.ReadAsStringAsync();
@@ -135,8 +127,6 @@ public class RepartiController : Controller
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                // This will catch the "Reparto non trovato" or "Questo letto non è occupato."
-                // from your API's GetPazientePerLetto
                 if (json.Contains("Reparto non trovato."))
                 {
                     TempData["LogError"] = "Reparto non trovato per visualizzare il letto.";

@@ -9,16 +9,12 @@ namespace ProvaMVC.Controllers;
 public class UtentiController : Controller
 {
     private readonly HttpClient Client;
-    /*public UtentiController(IHttpClientFactory clientFactory)
-    {
-        Client = clientFactory.CreateClient();
-        Client.BaseAddress = new Uri("http://localhost:5099");
-    }*/
+
 
     public UtentiController(HttpClient client)
     {
         Client = client;
-        //Client.BaseAddress = new Uri("http://localhost:5099");
+        
         Client.BaseAddress = new Uri("http://localhost:5002");
     }
 
@@ -54,19 +50,29 @@ public class UtentiController : Controller
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var response = await Client.PostAsync("api/utenti/login", content);
-        if (response.IsSuccessStatusCode)
-        {
-            var result = await response.Content.ReadAsStringAsync();
-            var utenteLoggato = JsonConvert.DeserializeObject<UtenteLoggato>(result);
-            HttpContext.Session.SetInt32("Matricola", utenteLoggato.Mat);
-            HttpContext.Session.SetString("Ruolo", utenteLoggato.RuoloMat);
-            HttpContext.Session.SetInt32("Reparto", utenteLoggato.Reparto);
-            HttpContext.Session.SetString("Password", utenteLoggato.Pass);
-            return RedirectToAction("Index", "Home");
-        }
-        var errore = await response.Content.ReadAsStringAsync();
-        TempData["LogError"] = $"Errore durante il login: {errore}";
-        return View();
+            if (!response.IsSuccessStatusCode && response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                var errore = await response.Content.ReadAsStringAsync();
+                TempData["LogError"] = $"Errore durante il login: {errore}";
+                return RedirectToAction("HttpError", "Home", new { statusCode = 401 }); ///pass o matrciola sbagliati
+            }
+            else if (response.IsSuccessStatusCode )
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var utenteLoggato = JsonConvert.DeserializeObject<UtenteLoggato>(result);
+                HttpContext.Session.SetInt32("Matricola", utenteLoggato.Mat);
+                HttpContext.Session.SetString("Ruolo", utenteLoggato.RuoloMat);
+                HttpContext.Session.SetInt32("Reparto", utenteLoggato.Reparto);
+                HttpContext.Session.SetString("Password", utenteLoggato.Pass);
+                return RedirectToAction("Index", "Home");
+                
+            }
+            else
+            { 
+                var errore = await response.Content.ReadAsStringAsync();
+                TempData["LogError"] = $"Errore durante il login: {errore}";
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode }); ///server spento
+            }
         }
         catch (HttpRequestException)
         {
@@ -79,7 +85,7 @@ public class UtentiController : Controller
         }
         catch (Exception ex)
         {
-            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            
             return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
@@ -125,15 +131,18 @@ public class UtentiController : Controller
         Console.WriteLine($"RepartoID ricevuto: {nuovoUtente.IDReparto}");
         var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-        var result = await Client.PostAsync("api/utenti/registrazione", content);
-        if (result.IsSuccessStatusCode)
+        var response = await Client.PostAsync("api/utenti/registrazione", content);
+        if (!response.IsSuccessStatusCode)
         {
-            return RedirectToAction("Login");
-        }
-
-        var errore = await result.Content.ReadAsStringAsync();
-        TempData["RegError"] = $"Errore durante la registrazione: {errore}";
-        return View(model);
+                TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Registrazione avvenuta con successo! Effettua il login con matricola."+ await response.Content.ReadAsStringAsync(); 
+                return RedirectToAction("Registrazione");
+            }
+                
         }
         catch (HttpRequestException)
         {

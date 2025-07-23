@@ -4,11 +4,6 @@
     var pazienti = ViewBag.Pazienti as List<ProvaMVC.Models.Paziente>;
 }
 
-@if (TempData["LogError"] != null)
-{
-    <div class="alert alert-danger">@TempData["LogError"]</div>
-}
-
 
 @if (reparto == null)
 {

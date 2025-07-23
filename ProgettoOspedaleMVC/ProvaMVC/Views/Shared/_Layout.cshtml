@@ -56,26 +56,6 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @* Visualizza i messaggi di TempData qui *@
-            @if (TempData["LoginError"] != null)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @TempData["LoginError"]
-                </div>
-            }
-            @if (TempData["LogError"] != null)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @TempData["LogError"]
-                </div>
-            }
-            @if (TempData["AccessDenied"] != null)
-            {
-                <div class="alert alert-warning" role="alert">
-                    @TempData["AccessDenied"]
-                </div>
-            }
 
             @RenderBody()
         </main>

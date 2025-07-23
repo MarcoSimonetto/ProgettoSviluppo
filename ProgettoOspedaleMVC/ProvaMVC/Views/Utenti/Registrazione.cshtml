@@ -7,10 +7,11 @@
 <h1>Registrazione</h1>
 <hr />
 
-@if (TempData["RegError"] != null)
+@if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-danger">@TempData["RegError"]</div>
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
 }
+
 
 <form asp-action="Registrazione" method="post">
     <div class="form-group">

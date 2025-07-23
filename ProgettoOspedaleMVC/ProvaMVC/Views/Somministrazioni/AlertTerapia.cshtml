@@ -4,12 +4,12 @@
 }
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-danger">⚠️ TERAPIE SCADUTE DA SOMMINISTRARE:</h2>
+    <h2 class="mb-4 text-danger"> TERAPIE SCADUTE DA SOMMINISTRARE:</h2>
 
     @if (terapie == null || !terapie.Any())
     {
         <div class="alert alert-success">
-            Nessuna terapia in ritardo per oggi. Tutto in ordine! ✅
+            Nessuna terapia in ritardo per oggi. Tutto in ordine! 
         </div>
     }
     else
@@ -36,7 +36,7 @@
                         <td>@t.orarioPrevisto</td>
                         <td>
                             <a asp-controller="Somministrazioni" asp-action="Dettaglio" asp-route-idTerapia="@t.terapiaID" class="btn btn-sm btn-warning">
-                                📋 Dettaglio
+                                Dettaglio
                             </a>
                         </td>
                     </tr>
@@ -46,6 +46,6 @@
     }
 
     <div class="mt-4">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">⬅️ Torna alla Dashboard</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Torna alla Dashboard</a>
     </div>
 </div>

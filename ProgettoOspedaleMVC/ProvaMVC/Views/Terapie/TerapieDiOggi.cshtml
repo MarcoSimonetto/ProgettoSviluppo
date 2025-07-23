@@ -8,22 +8,9 @@
 <h2>Terapie di oggi</h2>
 
 <div class="mb-3 d-flex gap-2">
-    <a asp-action="Assegna" class="btn btn-success">➕ Nuova Terapia</a>
-    <a asp-action="Index" class="btn btn-secondary">📋 Tutte le Terapie</a>
+    <a asp-action="Assegna" class="btn btn-success">Nuova Terapia</a>
+    <a asp-action="Index" class="btn btn-secondary">Tutte le Terapie</a>
 </div>
-
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
-@if (TempData["AccessDenied"] != null)
-{
-    <div class="alert alert-warning">@TempData["AccessDenied"]</div>
-}
 
 @if (!Model.Any())
 {
@@ -57,15 +44,7 @@ else
                     <td>@t.MatricolaMedico</td>
 
                     <td class="d-flex flex-wrap gap-2">
-                        @if (ruolo == "Medico")
-                        {
-                            <a asp-action="Modifica" asp-route-id="@t.ID" class="btn btn-warning btn-sm">✏️ Modifica</a>
-                            <form asp-action="Elimina" asp-route-id="@t.ID" method="post" onsubmit="return confirm('Confermi l\'eliminazione della terapia?');">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-danger btn-sm">🗑️ Elimina</button>
-                            </form>
-                        }
-                        <a asp-controller="Somministrazioni" asp-action="Dettaglio" asp-route-idTerapia="@t.ID" class="btn btn-info btn-sm">📋 Dettaglio Somministrazioni</a>
+                        <a asp-controller="Somministrazioni" asp-action="Dettaglio" asp-route-idTerapia="@t.ID" class="btn btn-info btn-sm">Dettaglio Somministrazioni</a>
                     </td>
                 </tr>
             }

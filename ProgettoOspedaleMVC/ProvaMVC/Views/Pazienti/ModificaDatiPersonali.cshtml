@@ -5,14 +5,6 @@
 
 <h2>Modifica Dati Personali Paziente</h2>
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
 
 <form method="post" asp-action="ModificaDatiPersonali">
     <input type="hidden" name="IDPaziente" value="@Model.ID" />

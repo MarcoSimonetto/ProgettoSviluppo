@@ -7,7 +7,7 @@
 
 <h2>Assegna Nuova Terapia</h2>
 
-<a asp-action="Index" class="btn btn-secondary mb-3">← Torna all'elenco</a>
+<a asp-action="Index" class="btn btn-secondary mb-3"> Torna all'elenco</a>
 
 <form asp-action="Assegna" method="post">
     @Html.AntiForgeryToken()
@@ -50,5 +50,5 @@
 
     <input type="hidden" asp-for="MatricolaMedico" value="@matricolaMedico" />
 
-    <button type="submit" class="btn btn-primary mt-2">💾 Salva Terapia</button>
+    <button type="submit" class="btn btn-primary mt-2">Salva Terapia</button>
 </form>

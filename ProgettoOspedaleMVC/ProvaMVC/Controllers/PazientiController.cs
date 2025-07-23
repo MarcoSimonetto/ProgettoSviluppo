@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ProvaMVC.Models;
-using System.Collections.Generic;
-using System;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 
@@ -16,18 +13,16 @@ namespace ProvaMVC.Controllers
         private readonly HttpClient _client;
         private readonly ILogger<PazientiController> _logger;
 
-        public PazientiController(IHttpClientFactory clientFactory, ILogger<PazientiController> logger)
+        public PazientiController(ILogger<PazientiController> logger, HttpClient client)
         {
-            _client = clientFactory.CreateClient();
-            _client.BaseAddress = new Uri("http://localhost:5002");
             _logger = logger;
+            _client = client;
+            _client.BaseAddress = new Uri("http://localhost:5002");
         }
 
         [HttpGet]
         public async Task<IActionResult> Pazienti()
         {
-           
-            // Recupera matricola e password dalla sessione
             int? matricolaInt = HttpContext.Session.GetInt32("Matricola");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
 
@@ -49,8 +44,7 @@ namespace ProvaMVC.Controllers
 
             try
             {
-                _logger.LogInformation("Matricola from session: {Matricola}", matricola);
-                _logger.LogInformation("Password from session: {Password}", password); // Usa LogDebug in produzione
+               
 
                 string authString = $"{matricola}:{password}";
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
@@ -124,7 +118,7 @@ namespace ProvaMVC.Controllers
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
             }
 
-            // Ottieni pazienti nel reparto dell’utente loggato
+          
             var pazientiResponse = await _client.GetAsync($"api/pazienti/reparto/{repartoId}");
             var repartiResponse = await _client.GetAsync("api/reparti");
 
@@ -199,7 +193,7 @@ namespace ProvaMVC.Controllers
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
 
-            return RedirectToAction(nameof(RichiestaTrasferimentoPaziente));
+                return RedirectToAction("Index","Home");
 
             }
             catch (HttpRequestException)
@@ -287,7 +281,7 @@ namespace ProvaMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Pazienti"); // torna alla lista dei pazienti
+                return RedirectToAction("Pazienti");
             }
             else
             {
@@ -384,7 +378,6 @@ namespace ProvaMVC.Controllers
 
             paziente.DataRicovero = DateOnly.FromDateTime(DateTime.Today);
 
-            // Serializza tutto il modello Paziente
             var json = JsonConvert.SerializeObject(paziente);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -437,7 +430,6 @@ namespace ProvaMVC.Controllers
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
             }
 
-            // Chiamata per pazienti da ricoverare
             var pazientiResponse = await _client.GetAsync($"api/pazienti/da_ricoverare/{idReparto}/oggi");
 
             List<Paziente> pazienti = new List<Paziente>();
@@ -453,7 +445,7 @@ namespace ProvaMVC.Controllers
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)pazientiResponse.StatusCode });
             }
 
-            // Chiamata per letti liberi
+            
             var lettiResponse = await _client.GetAsync($"api/reparti/lista_letti_liberi/{idReparto}");
 
             List<int> lettiLiberi = new List<int>();
@@ -560,7 +552,7 @@ namespace ProvaMVC.Controllers
 
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                // Caso previsto: nessun paziente da dimettere oggi
+                
                 TempData["Info"] = "Nessun paziente da dimettere oggi.";
                 return View(new List<Paziente>());
             }

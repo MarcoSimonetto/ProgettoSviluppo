@@ -72,7 +72,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection(); COMMENTATO PERCHE DA' PROBLEMI DI AUTORIZZAZIONE
+//il metodo da problemi di UNAUTHORIZED
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

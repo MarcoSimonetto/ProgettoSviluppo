@@ -6,14 +6,7 @@
 
 <h2>Richiesta Trasferimento Paziente</h2>
 
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
+
 
 <form asp-action="RichiestaTrasferimentoPaziente" method="post">
     <div class="form-group">

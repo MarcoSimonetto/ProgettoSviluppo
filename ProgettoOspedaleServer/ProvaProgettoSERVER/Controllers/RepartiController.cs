@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using ProvaProgettoSERVER.Models;
 using ProvaProgettoSERVER.Services;
-using System.Linq;
+
 
 namespace ProvaProgettoSERVER.Controllers;
 
@@ -88,9 +86,6 @@ public class RepartiController:ControllerBase
 
             var paziente = await _context.Pazienti
                 .FirstOrDefaultAsync(p => p.IDReparto == IDReparto && p.NumeroLetto == NumeroLetto);
-
-            /*if (paziente == null)
-                return Ok("Questo letto non è occupato.");*/
 
             return Ok(paziente);
         }

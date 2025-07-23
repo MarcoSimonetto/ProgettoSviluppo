@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Humanizer.Localisation;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -20,7 +19,7 @@ public class HomeController : Controller
         Client.BaseAddress = new Uri("http://localhost:5002");
     }
 
-    public async Task<IActionResult> Index() ///cerca la view in una cartella Home (nome del controller) o Shared
+    public async Task<IActionResult> Index()
     {
         try { 
         var reparto = HttpContext.Session.GetInt32("Reparto");
@@ -50,11 +49,9 @@ public class HomeController : Controller
         }
         catch (Exception ex)
         {
-            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
             return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
-
 
 
     public IActionResult Privacy()
@@ -95,14 +92,14 @@ public class HomeController : Controller
         }
         catch (Exception ex)
         {
-            TempData["ServerMessage"] = "Errore imprevisto: " + ex.Message;
+            
             return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
     public IActionResult HttpError(int statusCode)
     {
         try { 
-        //ViewData["ServerMessage"] = TempData["ServerMessage"];
+        
         return View(statusCode);
         }
         catch (HttpRequestException)

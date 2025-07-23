@@ -8,23 +8,10 @@
 <h2>Tutte le Terapie</h2>
 
 <div class="mb-3 d-flex gap-2">
-    <a asp-action="Assegna" class="btn btn-success">➕ Nuova Terapia</a>
-    <a asp-action="Index" class="btn btn-primary">🔄 Ricarica</a>
+    <a asp-action="Assegna" class="btn btn-success"> Nuova Terapia</a>
+    <a asp-action="Index" class="btn btn-primary">Ricarica</a>
 
 </div>
-
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
-@if (TempData["AccessDenied"] != null)
-{
-    <div class="alert alert-warning">@TempData["AccessDenied"]</div>
-}
 
 @if (!Model.Any())
 {
@@ -57,10 +44,10 @@ else
                     <td>@t.DataFine.ToString("dd/MM/yyyy")</td>
                     <td>@t.MatricolaMedico</td>
                     <td class="d-flex flex-wrap gap-2">
-                            <a asp-action="Modifica" asp-route-id="@t.ID" class="btn btn-warning btn-sm">✏️ Modifica</a>
+                            <a asp-action="Modifica" asp-route-id="@t.ID" class="btn btn-warning btn-sm"> Modifica</a>
                             <form asp-action="Elimina" asp-route-id="@t.ID" method="post" onsubmit="return confirm('Confermi l\'eliminazione della terapia?');">
                                 @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-danger btn-sm">🗑️ Elimina</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
                             </form>
                         </td>
 
@@ -70,24 +57,7 @@ else
     </table>
 
     <hr />
-    @if (ruolo == "Infermiere")
-    {
         <div><a asp-action="TerapieDiOggi" class="btn btn-secondary">Somministra Le Terapie Di Oggi</a></div>
-    }
+
     
-    <hr/>
-    
-    <div>
-        <h2>RICORDA I PERMESSI:</h2>
-        <ul>
-            INFERMIERE:
-            <li>Somministra le terapie</li>
-        </ul>
-        <ul>
-            MEDICO:
-            <li>Modifica Terapia</li>
-            <li>Elimina Terapia</li>
-            <li>Assegna Terapia</li>
-        </ul>
-    </div>
 }

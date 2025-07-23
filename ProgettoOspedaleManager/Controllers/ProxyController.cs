@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 using System.Text;
 
 namespace ProxyManager.Controllers;
@@ -42,7 +41,6 @@ public class ProxyController : ControllerBase
             }
             else
             {
-                // Try to add to main headers, else to content headers
                 if (!requestMessage.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray()))
                 {
                     requestMessage.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());

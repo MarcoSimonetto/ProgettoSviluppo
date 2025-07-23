@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProvaMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d961d6ae9c53166bd70d144cc4425b59c4aede10")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+107b43f38c07fdf2bbd5bab764ede2d05db7cb23")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProvaMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProvaMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

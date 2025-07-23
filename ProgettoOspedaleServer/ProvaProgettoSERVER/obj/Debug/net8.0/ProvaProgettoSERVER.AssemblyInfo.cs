@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProvaProgettoSERVER")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78b33a06cf22fc6bc8a4307bc49d14c3001ae236")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+107b43f38c07fdf2bbd5bab764ede2d05db7cb23")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProvaProgettoSERVER")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProvaProgettoSERVER")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
