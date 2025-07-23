@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo\\ProgettoOspedaleServer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\botto\\desktop\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -40,11 +44,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "PazientiController.cs",
+              "DocumentMoniker": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
+              "ToolTip": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAANcBAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T16:32:57.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ClaimsTransformationService.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ClaimsTransformationService.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ClaimsTransformationService.cs",
@@ -54,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "TerapieController.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
@@ -64,7 +81,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "OspedaleContext.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Services\\OspedaleContext.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Services\\OspedaleContext.cs",
@@ -74,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "PazientiController.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
@@ -84,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "RepartiController.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\RepartiController.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\RepartiController.cs",
@@ -94,7 +111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "UtentiController.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\UtentiController.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\UtentiController.cs",
@@ -104,18 +121,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Program.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Program.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAAAEoAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T11:44:37.685Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T11:44:37.685Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "SomministrazioniController.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\SomministrazioniController.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\SomministrazioniController.cs",
@@ -125,7 +140,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Reparto.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Models\\Reparto.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Models\\Reparto.cs",
@@ -135,7 +150,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "BasicAuthenticationHandler.cs",
               "DocumentMoniker": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Auth\\BasicAuthenticationHandler.cs",
               "ToolTip": "D:\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Auth\\BasicAuthenticationHandler.cs",

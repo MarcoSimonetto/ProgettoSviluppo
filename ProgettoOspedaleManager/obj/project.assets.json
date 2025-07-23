@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj",
+      "projectUniqueName": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj",
       "projectName": "ProxyManager",
-      "projectPath": "D:\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj",
+      "projectPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo\\ProgettoOspedaleManager\\ProxyManager.csproj",
       "packagesPath": "C:\\Users\\botto\\.nuget\\packages\\",
-      "outputPath": "D:\\ProgettoSviluppo\\ProgettoOspedaleManager\\obj\\",
+      "outputPath": "C:\\Users\\botto\\Desktop\\ProgettoSviluppo\\ProgettoOspedaleManager\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
