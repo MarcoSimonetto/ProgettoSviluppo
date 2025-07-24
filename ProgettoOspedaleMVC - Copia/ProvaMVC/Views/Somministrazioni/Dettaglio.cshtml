@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Dettaglio Somministrazione";
+
+    var terapia = ViewBag.Terapia;
+    var paziente = ViewBag.Paziente;
+    var somministrazioni = ViewBag.Somministrazioni as List<ProvaMVC.Models.Somministrazione>;
+    var giaSomministrata = (bool)(ViewBag.GiaSomministrata ?? false);
+}
+
+<h2>Dettaglio Terapia</h2>
+
+<div>
+    <h4>Terapia: @terapia.Farmaco (@terapia.Dosaggio)</h4>
+    <p><strong>Paziente:</strong> @paziente.Nome @paziente.Cognome</p>
+    <p><strong>Orario Previsto:</strong> @terapia.OrarioSomministrazione.ToString("HH\\:mm")</p>
+
+
+    @if (giaSomministrata)
+    {
+        <div class="alert alert-success mt-3">Questa terapia è già stata somministrata oggi.</div>
+    }
+    else
+    {
+        <form asp-controller="Somministrazioni" asp-action="Somministra" method="post">
+            <input type="hidden" name="idTerapia" value="@terapia.ID" />
+            <button type="submit" class="btn btn-primary mt-3">Registra Somministrazione</button>
+        </form>
+    }
+
+    <div class="mt-4">
+        <a asp-controller="Terapie" asp-action="Index" class="btn btn-secondary">Torna all'elenco terapie</a>
+    </div>
+</div>

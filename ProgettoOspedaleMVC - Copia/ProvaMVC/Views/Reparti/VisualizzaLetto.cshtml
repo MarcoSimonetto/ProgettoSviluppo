@@ -1,0 +1,58 @@
+﻿@model ProvaMVC.Models.Paziente
+
+@{
+    ViewData["Title"] = "Visualizza Letto";
+}
+
+<h2 class="mb-4">Letto occupato</h2>
+
+@if (Model != null)
+{
+    <div class="card shadow p-4 bg-light rounded">
+        <h4 class="mb-3">Dati Paziente</h4>
+        <dl class="row">
+            <dt class="col-sm-3">Nome</dt>
+            <dd class="col-sm-9">@Model.Nome</dd>
+
+            <dt class="col-sm-3">Cognome</dt>
+            <dd class="col-sm-9">@Model.Cognome</dd>
+
+            <dt class="col-sm-3">Codice Fiscale</dt>
+            <dd class="col-sm-9">@Model.CF</dd>
+
+            <dt class="col-sm-3">Data di Nascita</dt>
+            <dd class="col-sm-9">@Model.DataNascita.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Luogo di Nascita</dt>
+            <dd class="col-sm-9">@Model.LuogoNascita</dd>
+
+            <dt class="col-sm-3">Data Ricovero</dt>
+            <dd class="col-sm-9">@Model.DataRicovero.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Data Dimissione</dt>
+            <dd class="col-sm-9">
+                @(Model.DataDimissione.HasValue
+                    ? Model.DataDimissione.Value.ToString("dd/MM/yyyy")
+                    : "Non ancora dimesso")
+            </dd>
+
+            <dt class="col-sm-3">Motivo Ricovero</dt>
+            <dd class="col-sm-9">@Model.MotivoRicovero</dd>
+
+            <dt class="col-sm-3">Patologie</dt>
+            <dd class="col-sm-9">@Model.Patologie</dd>
+
+            <dt class="col-sm-3">Allergie</dt>
+            <dd class="col-sm-9">@Model.Allergie</dd>
+
+            <dt class="col-sm-3">Altre Note</dt>
+            <dd class="col-sm-9">@Model.AltreNote</dd>
+        </dl>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        Nessun paziente risulta attualmente ricoverato in questo letto.
+    </div>
+}

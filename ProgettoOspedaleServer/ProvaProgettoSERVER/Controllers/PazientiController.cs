@@ -387,6 +387,8 @@ public class PazientiController : ControllerBase
                 }
 
                 _context.Terapie.RemoveRange(terapie);
+                throw new Exception("Errore simulato nella transazione");       // TEST FALLIMENTO da rimuovere
+
                 await _context.SaveChangesAsync();
 
                 _context.Pazienti.Remove(paziente);

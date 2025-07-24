@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Terapie in Ritardo";
+    var terapie = ViewBag.TerapieInRitardo as List<dynamic>;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-danger"> TERAPIE SCADUTE DA SOMMINISTRARE:</h2>
+
+    @if (terapie == null || !terapie.Any())
+    {
+        <div class="alert alert-success">
+            Nessuna terapia in ritardo per oggi. Tutto in ordine! 
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped shadow">
+            <thead class="table-danger">
+                <tr>
+                    <th>Terapia ID</th>
+                    <th>Farmaco</th>
+                    <th>Paziente</th>
+                    <th>Letto</th>
+                    <th>Orario Previsto</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var t in terapie)
+                {
+                    <tr>
+                        <td>@t.terapiaID</td>
+                        <td>@t.nomeFarmaco</td>
+                        <td>@t.paziente</td>
+                        <td>Letto @t.letto</td>
+                        <td>@t.orarioPrevisto</td>
+                        <td>
+                            <a asp-controller="Somministrazioni" asp-action="Dettaglio" asp-route-idTerapia="@t.terapiaID" class="btn btn-sm btn-warning">
+                                Dettaglio
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="mt-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Torna alla Dashboard</a>
+    </div>
+</div>

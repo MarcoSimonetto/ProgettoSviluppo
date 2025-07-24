@@ -1,0 +1,38 @@
+﻿@model ProvaMVC.Models.Terapia
+@{
+    ViewData["Title"] = "Modifica Terapia";
+}
+
+<h2>Modifica Terapia</h2>
+<a asp-action="Index" class="btn btn-secondary mb-3">← Torna all'elenco</a>
+
+<form asp-action="Modifica" asp-route-id="@Model.ID" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="Farmaco">Farmaco</label>
+        <input asp-for="Farmaco" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Dosaggio">Dosaggio</label>
+        <input asp-for="Dosaggio" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="OrarioSomministrazione">Orario Somministrazione</label>
+        <input asp-for="OrarioSomministrazione" type="time" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="DataInizio">Data Inizio</label>
+        <input asp-for="DataInizio" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="DataFine">Data Fine</label>
+        <input asp-for="DataFine" type="date" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Salva Modifiche</button>
+</form>

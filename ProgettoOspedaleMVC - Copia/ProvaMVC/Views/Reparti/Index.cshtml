@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Reparto - Griglia Letti";
+    var reparto = ViewBag.Reparto as ProvaMVC.Models.Reparto;
+    var pazienti = ViewBag.Pazienti as List<ProvaMVC.Models.Paziente>;
+}
+
+
+@if (reparto == null)
+{
+    <div class="alert alert-info">Impossibile caricare i dettagli del reparto. Si prega di riprovare.</div>
+}
+
+@if (ViewBag.LettiDisponibili != null && ViewBag.LettiOccupati != null)
+{
+    <div class="card text-center mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4>Stato Letti nel Reparto</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Totale: <strong>@ViewBag.LettiTotali</strong> &nbsp;|&nbsp;
+                <span class="text-success">Disponibili: @ViewBag.LettiDisponibili</span> &nbsp;|&nbsp;
+                <span class="text-danger">Occupati: @ViewBag.LettiOccupati</span>
+            </h5>
+        </div>
+        <div class="card-footer text-muted">
+            Aggiornato al: @(((DateTime?)ViewBag.DataAggiornamento)?.ToString("dd/MM/yyyy HH:mm"))
+        </div>
+    </div>
+}
+
+@if (reparto != null)
+{
+    <h1 class="display-4">Reparto: @reparto.Nome</h1>
+    <p class="lead">Disposizione dei letti nel reparto. Clicca su un letto per vedere i dettagli del paziente.</p>
+
+    <div class="mt-4">
+        <h2>Griglia Letti</h2>
+
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            @for (int i = 1; i <= reparto.NumeroLetti; i++)
+            {
+                var pazienteLetto = pazienti?.FirstOrDefault(p => p.NumeroLetto == i);
+
+                <div class="col">
+                    <div class="card h-100 @(pazienteLetto != null ? "text-bg-warning" : "text-bg-success")">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Letto @i</h5>
+                            <p class="card-text">
+                                @if (pazienteLetto != null)
+                                {
+                                    <span>Occupato da @pazienteLetto.Nome @pazienteLetto.Cognome</span>
+                                    <br />
+                                    <a href="@Url.Action("VisualizzaLetto", "Reparti", new { numero = i })" class="btn btn-sm btn-outline-dark mt-2">Visualizza Paziente</a>
+                                }
+                                else
+                                {
+                                    <span>Disponibile</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

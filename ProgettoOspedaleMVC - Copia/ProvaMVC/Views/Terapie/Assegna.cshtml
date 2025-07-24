@@ -1,0 +1,54 @@
+﻿@model ProvaMVC.Models.Terapia
+@{
+    ViewData["Title"] = "Assegna Terapia";
+    var pazientiDisponibili = ViewBag.PazientiDisponibili as List<ProvaMVC.Models.Paziente> ?? new();
+    var matricolaMedico = ViewBag.MatricolaMedico ?? 0;
+}
+
+<h2>Assegna Nuova Terapia</h2>
+
+<a asp-action="Index" class="btn btn-secondary mb-3"> Torna all'elenco</a>
+
+<form asp-action="Assegna" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="IDPaziente">Paziente</label>
+        <select class="form-control" asp-for="IDPaziente" required>
+            <option value="">-- Seleziona Paziente --</option>
+            @foreach (var p in pazientiDisponibili)
+            {
+                <option value="@p.ID">@p.Nome @p.Cognome (@p.CF)</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Farmaco">Farmaco</label>
+        <input type="text" asp-for="Farmaco" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Dosaggio">Dosaggio</label>
+        <input type="text" asp-for="Dosaggio" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="OrarioSomministrazione">Orario</label>
+        <input type="time" asp-for="OrarioSomministrazione" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="DataInizio">Data Inizio</label>
+        <input type="date" asp-for="DataInizio" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="DataFine">Data Fine</label>
+        <input type="date" asp-for="DataFine" class="form-control" required />
+    </div>
+
+    <input type="hidden" asp-for="MatricolaMedico" value="@matricolaMedico" />
+
+    <button type="submit" class="btn btn-primary mt-2">Salva Terapia</button>
+</form>
