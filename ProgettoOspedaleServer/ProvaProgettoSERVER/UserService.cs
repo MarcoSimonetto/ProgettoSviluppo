@@ -12,14 +12,13 @@ public class UserService
         _context = context;
     }
 
-    public async Task<List<string>> UserRoles(int matricola)
+    // Permette di ottenere il Ruolo dell'utente identificato dalla matricola fornita.
+    public async Task<string?> UserRole(int matricola)
     {
-        var ruolo = await _context.Utenti
+        return await _context.Utenti
             .Where(u => u.Matricola == matricola)
             .Select(u => u.Ruolo)
             .FirstOrDefaultAsync();
-
-        return string.IsNullOrEmpty(ruolo) ? new List<string>() : new List<string> { ruolo };
     }
 }
     

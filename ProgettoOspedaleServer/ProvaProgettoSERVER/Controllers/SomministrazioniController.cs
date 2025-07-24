@@ -20,6 +20,7 @@ public class SomministrazioniController : ControllerBase
         _context = context;
     }
 
+    // Ritorna tutte le somministrazioni memorizzate all'interno del database.
     [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -35,6 +36,7 @@ public class SomministrazioniController : ControllerBase
         }
     }
 
+    // Ritorna se la terapia identificata dall'ID fornito nella richiesta è stata somministrata in quella data.
     [Authorize]
     [HttpGet("verifica/{idTerapia}/{data}")]
     public async Task<IActionResult> GetSomministrazione(int idTerapia, DateOnly data)
@@ -66,6 +68,8 @@ public class SomministrazioniController : ControllerBase
         }
     }
 
+    // Utilizzato per registrare che è stata assegnata una determinata terapia. Si specifica anche la data e 
+    // la matricola dell'utente.
     [Authorize(Roles = "Infermiere")]
     [HttpPost("aggiungi")]
     public async Task<IActionResult> AggiungiSomministrazione([FromBody] Somministrazione nuova)
@@ -114,6 +118,8 @@ public class SomministrazioniController : ControllerBase
         }
     }
 
+    // Ritorna le terapie che sono state somministrate in data corrente nel reparto identificato dall'ID
+    // fornito nella richiesta.
     [Authorize]
     [HttpGet("oggi/{IDReparto}")]
     public async Task<IActionResult> SomministrazioniOdierne(int IDReparto)
@@ -157,54 +163,7 @@ public class SomministrazioniController : ControllerBase
         }
     }
 
-    [Authorize]
-    [HttpGet("oggi/ancora_in_orario/{IDReparto}")]
-    public async Task<IActionResult> SomministrazioniNonEseguiteMaAncoraInTempo(int IDReparto)
-    {
-        try
-        {
-            var oraCorrente = TimeOnly.FromDateTime(DateTime.Now);
-
-            var reparto = await _context.Reparti.AnyAsync(r => r.ID == IDReparto);
-            if (!reparto) return BadRequest("Reparto non trovato!");
-
-            var terapieAncoraInTempo = await _context.Terapie
-                .Where(t => t.DataInizio <= oggi && oggi <= t.DataFine && t.OrarioSomministrazione > oraCorrente)
-                .ToListAsync();
-
-            var somministrazioniEffettuate = await _context.Somministrazioni
-                .Where(s => s.Data == oggi)
-                .Select(s => s.IDTerapia)
-                .ToListAsync();
-
-            var pazienti = await _context.Pazienti.ToListAsync();
-
-            var daSomministrareInTempo = terapieAncoraInTempo
-                .Where(t => !somministrazioniEffettuate.Contains(t.ID))
-                .Where(t => pazienti.Any(p => p.ID == t.IDPaziente && p.IDReparto == IDReparto))
-                .Select(t =>
-                {
-                    var paziente = pazienti.First(p => p.ID == t.IDPaziente);
-                    return new
-                    {
-                        TerapiaID = t.ID,
-                        NomeFarmaco = t.Farmaco,
-                        Paziente = $"{paziente.Nome} {paziente.Cognome}",
-                        Letto = paziente.NumeroLetto,
-                        OrarioPrevisto = t.OrarioSomministrazione.ToString("HH:mm")
-                    };
-                })
-                .ToList();
-
-            return Ok(daSomministrareInTempo);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, "Errore imprevisto: " + ex.Message);
-        }
-    }
-
-
+    // Ritorna le terapie che devono essere ancora somministrate nella data corrente e che inoltre si è anche in ritardo.
     [Authorize]
     [HttpGet("oggi/in_ritardo/{IDReparto}")]
     public async Task<IActionResult> SomministrazioniNonEseguiteInRitardo(int IDReparto)

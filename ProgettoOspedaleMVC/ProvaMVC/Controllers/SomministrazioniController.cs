@@ -21,10 +21,11 @@ namespace ProvaMVC.Controllers
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        // Metodo GET che mostra il dettaglio di una terapia specifica
         [HttpGet]
         public async Task<IActionResult> Dettaglio(int idTerapia)
         {
-            
+
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -40,7 +41,7 @@ namespace ProvaMVC.Controllers
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
-                
+
                 var responseTerapia = await Client.GetAsync($"api/terapie/{idTerapia}");
                 if (!responseTerapia.IsSuccessStatusCode)
                     return RedirectToAction("Index", "Terapie");
@@ -48,7 +49,7 @@ namespace ProvaMVC.Controllers
                 var jsonTerapia = await responseTerapia.Content.ReadAsStringAsync();
                 var terapia = JsonConvert.DeserializeObject<Terapia>(jsonTerapia);
 
-                
+
                 var responsePaziente = await Client.GetAsync($"api/pazienti/{terapia.IDPaziente}");
                 if (!responsePaziente.IsSuccessStatusCode)
                     return RedirectToAction("Index", "Terapie");
@@ -56,48 +57,16 @@ namespace ProvaMVC.Controllers
                 var jsonPaziente = await responsePaziente.Content.ReadAsStringAsync();
                 var paziente = JsonConvert.DeserializeObject<Paziente>(jsonPaziente);
 
-               
-                var responseSomministrazioni = await Client.GetAsync($"api/somministrazioni/oggi/terapia/{idTerapia}");
-                var jsonSomministrazioni = await responseSomministrazioni.Content.ReadAsStringAsync();
-                var somministrazioni = JsonConvert.DeserializeObject<List<Somministrazione>>(jsonSomministrazioni) ?? new();
-
-                
-                string stato;
-                string tempoRimanenteOltre = string.Empty;
-
-                if (somministrazioni.Any())
-                {
-                    stato = "Somministrata";
-                }
-                else
-                {
-                    var orarioPrevisto = terapia.OrarioSomministrazione.ToTimeSpan();
-                    var oraAttuale = DateTime.Now.TimeOfDay;
-                    var differenza = orarioPrevisto - oraAttuale;
-
-                    if (differenza.TotalMinutes > 0)
-                    {
-                        stato = "In orario";
-                        tempoRimanenteOltre = $"Mancano {Math.Floor(differenza.TotalHours)} ore e {differenza.Minutes} minuti";
-                    }
-                    else
-                    {
-                        stato = "In ritardo";
-                       
-                        tempoRimanenteOltre = $"In ritardo di {Math.Floor(Math.Abs(differenza.TotalHours))} ore e {Math.Abs(differenza.Minutes)} minuti";
-                    }
-                }
 
                 var giaSomministrata = await VerificaSomministrazione(idTerapia, DateOnly.FromDateTime(DateTime.Today));
 
                 ViewBag.Terapia = terapia;
                 ViewBag.Paziente = paziente;
-                ViewBag.Somministrazioni = somministrazioni;
                 ViewBag.GiaSomministrata = giaSomministrata;
 
                 return View();
             }
-            
+
             catch (HttpRequestException)
             {
                 return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
@@ -114,10 +83,11 @@ namespace ProvaMVC.Controllers
             }
         }
 
+        // Metodo POST che registra la somministrazione odierna di una terapia.
         [HttpPost]
         public async Task<IActionResult> Somministra(int idTerapia)
         {
-             
+
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
 
@@ -144,6 +114,7 @@ namespace ProvaMVC.Controllers
                 var json = JsonConvert.SerializeObject(payload);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+                //aggiunge la somministrazione
                 var response = await Client.PostAsync("api/Somministrazioni/aggiungi", content);
 
                 if (!response.IsSuccessStatusCode)
@@ -171,6 +142,7 @@ namespace ProvaMVC.Controllers
 
         }
 
+        // Metodo privato che verifica se una terapia è già stata somministrata in una determinata data. Restituisce true se è presente, false altrimenti.
         [HttpGet]
         private async Task<bool> VerificaSomministrazione(int idTerapia, DateOnly data)
         {
@@ -187,6 +159,7 @@ namespace ProvaMVC.Controllers
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
+                //metodo del server che verifica se la terapia è stata somministrata passando una data (passata nel metodo - e forzata nel formato yyyy-mm-dd)
                 var response = await Client.GetAsync($"api/Somministrazioni/verifica/{idTerapia}/{data:yyyy-MM-dd}");
                 if (!response.IsSuccessStatusCode) return false;
 
@@ -198,13 +171,14 @@ namespace ProvaMVC.Controllers
                 _logger.LogError(ex, "Errore durante la verifica somministrazione");
                 return false;
             }
-            
+
         }
 
+        // Chiama il backend per ottenere le terapie non ancora somministrate ma scadute rispetto all’orario previsto.
         [HttpGet]
         public async Task<IActionResult> AlertTerapia()
         {
-            
+
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
@@ -221,6 +195,7 @@ namespace ProvaMVC.Controllers
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
+                //recupero le terapie in ritardo di oggi dato l'idreparto 
                 var response = await Client.GetAsync($"api/Somministrazioni/oggi/in_ritardo/{idReparto}");
                 if (!response.IsSuccessStatusCode)
                 {

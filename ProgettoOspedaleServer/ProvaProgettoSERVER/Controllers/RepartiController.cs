@@ -18,6 +18,7 @@ public class RepartiController:ControllerBase
         _context = context;
     }
 
+    // Ritorna tutti i reparti memorizzati all'interno del database.
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -32,6 +33,7 @@ public class RepartiController:ControllerBase
         }
     }
 
+    // Ritorna il reparto identificato dall'ID fornito nella richiesta
     [Authorize]
     [HttpGet("{IDReparto}")]
     public async Task<IActionResult> GetReparto(int IDReparto)
@@ -49,6 +51,7 @@ public class RepartiController:ControllerBase
         }
     }
 
+    // Ritorna quanti letti sono liberi all'interno del reparto identificato dall'ID fornito nella richiesta
     [Authorize]
     [HttpGet("letti_liberi/{IDReparto}")]
     public async Task<IActionResult> LettiDisponibili(int IDReparto)
@@ -71,6 +74,8 @@ public class RepartiController:ControllerBase
 
     }
 
+    // Ritorna (se presente) il paziente che è attualmente ricovero nel numero letto fornito nella richiesta
+    // del reparto identificato dall'ID fornito nella richiesta.
     [Authorize]
     [HttpGet("{IDReparto}/{NumeroLetto}")]
     public async Task<IActionResult> GetPazientePerLetto(int IDReparto, int NumeroLetto)
@@ -95,6 +100,7 @@ public class RepartiController:ControllerBase
         }
     }
 
+    // Ritorna la lista dei letti liberi del reparto identificato dall'ID fornito nella richiesta
     [Authorize]
     [HttpGet("lista_letti_liberi/{IDReparto}")]
     public async Task<IActionResult> ListaLettiLiberi(int IDReparto)

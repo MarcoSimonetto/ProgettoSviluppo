@@ -16,9 +16,7 @@
 <form asp-action="Registrazione" method="post">
     <div class="form-group">
         <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="password"
-               pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
-               title="Minimo 8 caratteri, una maiuscola e un numero" />
+        <input asp-for="Password" type="password" class="form-control" minlength="8" maxlength="15" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 

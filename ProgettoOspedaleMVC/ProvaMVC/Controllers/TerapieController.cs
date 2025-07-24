@@ -22,7 +22,7 @@ namespace ProvaMVC.Controllers
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        [HttpGet]
+        [HttpGet]//Metodo princiaple che carica la pagina inziale di terapie
         public async Task<IActionResult> Terapie()
         {
 
@@ -58,13 +58,14 @@ namespace ProvaMVC.Controllers
                 }
 
 
-
+                // carico i pazienti per idreparto preso da HttpContext.Session
                 var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
                 if (responsePazienti.IsSuccessStatusCode)
                 {
                     var jsonPazienti = await responsePazienti.Content.ReadAsStringAsync();
                     pazientiDisponibili = JsonConvert.DeserializeObject<List<Paziente>>(jsonPazienti) ?? new List<Paziente>();
 
+                    // faccio un dictionary con id, nome cognome e cf 
                     pazientiMapPerTabella = pazientiDisponibili.ToDictionary(p => p.ID, p => $"{p.Nome} {p.Cognome} ({p.CF})");
 
                     ViewBag.PazientiDisponibili = pazientiDisponibili;
@@ -72,11 +73,12 @@ namespace ProvaMVC.Controllers
                 }
                 else
                 {
-                    var errorPazienti = await responsePazienti.Content.ReadAsStringAsync();
-                    _logger.LogError("Errore API nel recupero pazienti per Terapie (GET): {StatusCode} - {Error}", responsePazienti.StatusCode, errorPazienti);
-                    TempData["ErrorMessage"] = $"Impossibile caricare i pazienti del reparto: {errorPazienti}";
+                    //se non va a buon fine torno la pagina di errore
+                    TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await responsePazienti.Content.ReadAsStringAsync();
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)responsePazienti.StatusCode });
                 }
 
+                // carico le terapie per idreparto (terapie totali)
                 var responseTerapie = await Client.GetAsync($"api/Terapie/reparto/{idReparto}");
                 if (responseTerapie.IsSuccessStatusCode)
                 {
@@ -144,7 +146,7 @@ namespace ProvaMVC.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet]   // metodo per assagnare una nuova terapia ( bottone ) 
         public async Task<IActionResult> Assegna()
         {
             try
@@ -167,6 +169,7 @@ namespace ProvaMVC.Controllers
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
+                //check se sei medico ( blocco da subito il form prima che ritorni il messaggio di errore del server )
                 var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
                 if (!check.IsSuccessStatusCode)
                 {
@@ -195,7 +198,7 @@ namespace ProvaMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Assegna(Terapia nuovaTerapia)
+        public async Task<IActionResult> Assegna(Terapia nuovaTerapia)  //metodo per inviare vero e proprio la terapia
         {
 
             var ruolo = HttpContext.Session.GetString("Ruolo");
@@ -210,7 +213,7 @@ namespace ProvaMVC.Controllers
                 return RedirectToAction("Login", "Utenti");
             }
 
-
+            //imposto la matricola del medico (che sta asseganndo al terapia) alla nuova terapia
             nuovaTerapia.MatricolaMedico = matricola.Value;
 
             if (!ModelState.IsValid)
@@ -230,6 +233,7 @@ namespace ProvaMVC.Controllers
                 var jsonContent = JsonConvert.SerializeObject(nuovaTerapia);
                 var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+                //post della terapia
                 var response = await Client.PostAsync("api/terapie/assegna", httpContent);
 
                 if (response.IsSuccessStatusCode)
@@ -259,7 +263,7 @@ namespace ProvaMVC.Controllers
         }
 
 
-
+        //Fa una chiamata HTTP GET per ottenere i pazienti di un reparto
         private async Task RepopulateViewBagData(int matricola, string? password, int idReparto, string? ruolo)
         {
 
@@ -305,7 +309,7 @@ namespace ProvaMVC.Controllers
 
         }
 
-
+        //ritorna la lista di terapie esistenti
         private async Task<List<Terapia>> GetExistingTerapie(int matricola, string? password, int idReparto)
         {
 
@@ -327,7 +331,7 @@ namespace ProvaMVC.Controllers
                     _logger.LogWarning("Password sessione non presente per autenticazione API nel recupero terapie esistenti.");
                 }
 
-
+                //ritorna i pazienti per reparto
                 var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
                 if (responsePazienti.IsSuccessStatusCode)
                 {
@@ -341,7 +345,7 @@ namespace ProvaMVC.Controllers
                     _logger.LogError("Errore nel recupero pazienti per GetExistingTerapie (helper).");
                 }
 
-
+                //ritorna tutte le terapie
                 var responseTerapie = await Client.GetAsync("api/terapie");
                 if (responseTerapie.IsSuccessStatusCode)
                 {
@@ -370,6 +374,7 @@ namespace ProvaMVC.Controllers
             return terapie;
         }
 
+        //permette di modificare la terapia (BOTTONE)
         [HttpGet]
         public async Task<IActionResult> Modifica(int id)
         {
@@ -385,12 +390,14 @@ namespace ProvaMVC.Controllers
                 string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
 
+                //solito controllo inziale del check medico per bloccare subito
                 var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
                 if (!check.IsSuccessStatusCode)
                 {
                     return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
                 }
 
+                //recupero la terapia per id 
                 var response = await Client.GetAsync($"api/terapie/{id}");
                 if (!response.IsSuccessStatusCode)
                 {
@@ -419,7 +426,7 @@ namespace ProvaMVC.Controllers
         }
 
 
-
+        //modifica effettivamente la terapia (POST)
         [HttpPost]
         public async Task<IActionResult> Modifica(int id, Terapia terapia)
         {
@@ -431,6 +438,7 @@ namespace ProvaMVC.Controllers
                 string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
 
+                //prende i dati attuali e li mette nei campi del form (precarica i dati attuali)
                 var json = JsonConvert.SerializeObject(new
                 {
                     farmaco = terapia.Farmaco,
@@ -441,6 +449,7 @@ namespace ProvaMVC.Controllers
                 });
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
+                //facciamo la put con i dati caricati
                 var response = await Client.PutAsync($"api/terapie/modifica/{id}", content);
 
                 if (!response.IsSuccessStatusCode)
@@ -468,7 +477,7 @@ namespace ProvaMVC.Controllers
         }
 
 
-
+        //elimina una terapia
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Elimina(int id)
@@ -493,7 +502,7 @@ namespace ProvaMVC.Controllers
                 {
                     return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
                 }
-
+                //richiamo il metodo rimuovi terapia per id
                 var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
 
                 if (!response.IsSuccessStatusCode)
@@ -521,7 +530,7 @@ namespace ProvaMVC.Controllers
             }
         }
 
-
+        //ritorna le terapie odierne
         [HttpGet]
         public async Task<IActionResult> TerapieDiOggi()
         {
@@ -544,7 +553,7 @@ namespace ProvaMVC.Controllers
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
-
+                //faccio la get terapie oggi (metodo del server) per idreparto 
                 var response = await Client.GetAsync($"api/terapie/oggi/{idReparto}");
 
                 if (response.IsSuccessStatusCode)
@@ -552,7 +561,7 @@ namespace ProvaMVC.Controllers
                     var json = await response.Content.ReadAsStringAsync();
                     var terapie = JsonConvert.DeserializeObject<List<Terapia>>(json) ?? new List<Terapia>();
 
-
+                    //mi faccio tornare i pazienti per reparto
                     var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
                     Dictionary<int, string> pazientiMap = new Dictionary<int, string>();
 

@@ -19,6 +19,8 @@ public class UtentiController : ControllerBase
         _context = context;
     }
 
+
+    // Verifica che i dati immessi nel form siano corretti e che l'utente non sia già registrato
     [HttpPost("registrazione")]
     public async Task<IActionResult> Registrazione([FromBody] Utente nuovoUtente)
     {
@@ -47,6 +49,7 @@ public class UtentiController : ControllerBase
 
     }
 
+    // Verifica che l'utente abbia inserito le credenziali corrette per accedere all'applicazione
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginData utenteLogin)
     {
@@ -77,6 +80,8 @@ public class UtentiController : ControllerBase
         }
     }
 
+    // Ritorna tutti gli utenti memorizzati all'interno del database.
+    // Utilizzato solo su Swagger per verificare i dati immessi.
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -91,6 +96,8 @@ public class UtentiController : ControllerBase
         }
     }
 
+    // Controlli sul Ruolo da utilizzare per bloccare il caricamento e la successiva compilazione dei form
+    // da utenti non autorizzati.
     [HttpGet("check_ruolo_medico")]
     [Authorize(Roles = "Medico")]
     public IActionResult CheckMedico()
@@ -112,8 +119,7 @@ public class UtentiController : ControllerBase
         return Ok();
     }
 
-    // il controllo della password viene fatto nel form del client con i required del modello (vedi modello Utente.cs MVC)
-    // nonostante ciò presuppondno possa fallire in qualche modo aggiungiamo un'ulteriore controllo sulla password anche dal server 
+    // Controllo della password che viene fatto anche nel Client.
     private bool ValidatePassword(string password, out string ErrorMessage)
     {
         var input = password;

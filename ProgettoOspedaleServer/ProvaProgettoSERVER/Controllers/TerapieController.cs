@@ -19,6 +19,7 @@ public class TerapieController : ControllerBase
         _context = context;
     }
 
+    // Ritorna tutte le terapie memorizzate all'interno del database.
     [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -34,6 +35,7 @@ public class TerapieController : ControllerBase
         }
     }
 
+    // Permette di assegnare una terapia ad un determinato paziente.
     [Authorize(Roles = "Medico")]
     [HttpPost("assegna")]
     public async Task<IActionResult> AssegnaTerapia([FromBody] Terapia terapia)
@@ -78,6 +80,7 @@ public class TerapieController : ControllerBase
         }
     }
 
+    // Permette di modificare la terapia identificata dall'ID fornito nella richiesta.
     [Authorize(Roles = "Medico")]
     [HttpPut("modifica/{IDTerapia}")]
     public async Task<IActionResult> ModificaTerapia(int IDTerapia, [FromBody] DatiTerapia nuovaTerapia)
@@ -129,7 +132,8 @@ public class TerapieController : ControllerBase
         }
     }
 
-
+    // Ritorna le terapie assegnate al paziente identificato dall'ID fornito nella richiesta.
+    // Utilizzato da Swagger per verificare i dati immessi.
     [Authorize]
     [HttpGet("paziente/{idPaziente}")]
     public async Task<IActionResult> TerapiePaziente(int idPaziente)
@@ -148,6 +152,7 @@ public class TerapieController : ControllerBase
         }
     }
 
+    // Ritorna la terapia identificata dall'ID fornito nella richiesta.
     [Authorize]
     [HttpGet("{idTerapia}")]
     public async Task<IActionResult> GetTerapia(int idTerapia)
@@ -164,6 +169,7 @@ public class TerapieController : ControllerBase
         }
     }
 
+    // Ritorna tutte le terapie del reparto identificato dall'ID fornito nella richiesta.
     [Authorize]
     [HttpGet("reparto/{idReparto}")]
     public async Task<IActionResult> TerapieReparto(int idReparto)
@@ -189,6 +195,7 @@ public class TerapieController : ControllerBase
         }
     }
 
+    // Elimina la terapia identificata dall'ID fornito nella richiesta e le relative somministrazioni di questa terapia.
     [Authorize(Roles = "Medico")]
     [HttpDelete("rimuovi/{idTerapia}")]
     public async Task<IActionResult> EliminaTerapia(int idTerapia)
@@ -244,6 +251,8 @@ public class TerapieController : ControllerBase
         }
     }
 
+    // Ritorna le terapie che devono essere assegnate nella data corrente nel reparto identificato
+    // dall'ID fornito nella richiesta.
     [Authorize]
     [HttpGet("oggi/{IDReparto}")]
     public async Task<IActionResult> TerapieDelGiorno(int IDReparto)

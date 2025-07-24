@@ -224,38 +224,6 @@
         }
       }
     },
-    "/api/Pazienti/da_dimettere/{IDReparto}/{data}": {
-      "get": {
-        "tags": [
-          "Pazienti"
-        ],
-        "parameters": [
-          {
-            "name": "data",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "IDReparto",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Pazienti/da_dimettere/{IDReparto}/oggi": {
       "get": {
         "tags": [
@@ -565,29 +533,6 @@
       }
     },
     "/api/Somministrazioni/oggi/{IDReparto}": {
-      "get": {
-        "tags": [
-          "Somministrazioni"
-        ],
-        "parameters": [
-          {
-            "name": "IDReparto",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Somministrazioni/oggi/ancora_in_orario/{IDReparto}": {
       "get": {
         "tags": [
           "Somministrazioni"

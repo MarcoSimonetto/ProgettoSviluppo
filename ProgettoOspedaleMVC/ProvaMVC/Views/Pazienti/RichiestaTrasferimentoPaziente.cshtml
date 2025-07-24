@@ -41,19 +41,24 @@
     <button type="submit" class="btn btn-primary mt-4">Conferma Trasferimento</button>
 </form>
 
+
 @section Scripts {
     <script>
+        // Gestisce il caricamento dinamico dei letti liberi quando un utente seleziona un reparto di destinazione in un form
+
+        // Aggiunge un event listener all'elemento con ID "idRepartoDestinazione"
+        // Quando il valore cambia (utente seleziona un nuovo reparto), esegue la funzione
         document.getElementById("idRepartoDestinazione").addEventListener("change", function () {
-            const repartoId = this.value;
+            const repartoId = this.value;   // ottiene id del reparto selezionato
             const lettoSelect = document.getElementById("numeroLetto");
             lettoSelect.innerHTML = '<option value="">Caricamento...</option>';
 
-            if (!repartoId) {
+            if (!repartoId) {  // Se l’utente non ha selezionato un reparto, mostra messaggio di errore e termina
                 lettoSelect.innerHTML = '<option value="">-- Seleziona reparto prima --</option>';
                 return;
             }
 
-            fetch(`/Reparti/GetLettiLiberi?idReparto=${repartoId}`)
+            fetch(`/Reparti/GetLettiLiberi?idReparto=${repartoId}`) // Effettua una chiamata GET al metodo del controller che restituisce i letti liberi
                 .then(res => {
                     if (!res.ok) throw new Error("Errore durante il recupero dei letti liberi.");
                     return res.json();
@@ -62,8 +67,8 @@
                     if (letti.length === 0) {
                         lettoSelect.innerHTML = '<option value="">Nessun letto disponibile</option>';
                     } else {
-                        lettoSelect.innerHTML = '';
-                        letti.forEach(n => {
+                        lettoSelect.innerHTML = '';     // Svuota la select prima di aggiungere i letti disponibili
+                        letti.forEach(n => {            // Per ogni numero di letto ricevuto, crea un'opzione nella select
                             const option = document.createElement("option");
                             option.value = n;
                             option.textContent = `Letto n. ${n}`;

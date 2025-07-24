@@ -19,6 +19,7 @@ public class PazientiController : ControllerBase
         _context = context;
     }
 
+    // Ritorna tutti i pazienti memorizzati all'interno del database
     [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -34,6 +35,7 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Ritorna il paziente identificato dall'ID fornito nella richiesta
     [Authorize]
     [HttpGet("{IDPaziente}")]
     public async Task<IActionResult> GetPaziente(int IDPaziente)
@@ -50,6 +52,8 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Viene utillizzato per aggiungere un nuovo paziente nel database.
+    // Viene utilizzato sia per la pianificazione di un nuovo ricovero e sia per il ricovero urgente.
     [Authorize(Roles = "Medico,Infermiere")]
     [HttpPost("aggiungi")]
     public async Task<IActionResult> AggiungiPaziente([FromBody] Paziente paziente)
@@ -112,6 +116,8 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Ritorna i pazienti che sono attualmente ricoverati nel reparto identificato
+    // dall'ID fornito nella richiesta.
     [Authorize]
     [HttpGet("Reparto/{IDReparto}")]
     public async Task<IActionResult> PazientiRicoverati(int IDReparto)
@@ -136,6 +142,8 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Permette di modificare i valori degli attributi relativi al ricovero del paziente
+    // identificato dall'ID fornito nella richiesta.
     [Authorize(Roles = "Medico")]
     [HttpPut("modifica_dati_medici/{IDPaziente}")]
     public async Task<IActionResult> ModificaDatiMedici([FromBody] DatiMedici pazienteModifica, int IDPaziente)
@@ -184,6 +192,7 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Permette di modificare i dati anagrafici del paziente identificato dall'ID fornito nella richiesta
     [Authorize(Roles = "Medico,Infermiere")]
     [HttpPut("modifica/{IDPaziente}")]
     public async Task<IActionResult> ModificaDati([FromBody] DatiPaziente pazienteModifica, int IDPaziente)
@@ -235,6 +244,8 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Ritorna tutti i pazienti che dovranno essere ricoverati nel reparto identificato dall'ID
+    // fornito nella richiesta.
     [Authorize]
     [HttpGet("da_ricoverare/{IDReparto}")]
     public async Task<IActionResult> GetPazientiDaRicoverare(int IDReparto)
@@ -254,6 +265,8 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Ritorna i pazienti che devono essere ricoverati nella data corrente nel reparto identificato
+    // dall'ID fornito nella richiesta.
     [Authorize]
     [HttpGet("da_ricoverare/{IDReparto}/oggi")]
     public async Task<IActionResult> GetPazientiDaRicoverareOggi(int IDReparto)
@@ -273,25 +286,8 @@ public class PazientiController : ControllerBase
         }
     }
 
-    [Authorize]
-    [HttpGet("da_dimettere/{IDReparto}/{data}")]
-    public async Task<IActionResult> GetPazientiDaDimettere(DateOnly data, int IDReparto)
-    {
-        try
-        {
-            var reparto = await _context.Reparti.FindAsync(IDReparto);
-            if (reparto == null) return NotFound("Reparto non trovato!");
-            var pazienti = await _context.Pazienti
-                .Where(p => p.DataDimissione == data && p.IDReparto == reparto.ID).ToListAsync();
-
-            return Ok(pazienti);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, "Errore imprevisto: " + ex.Message);
-        }
-    }
-
+    // Ritorna i pazienti che devono essere dimessi nella data corrente nel reparto identificato
+    // dall'ID fornito nella richiesta.
     [Authorize]
     [HttpGet("da_dimettere/{IDReparto}/oggi")]
     public async Task<IActionResult> GetPazientiDaDimettereOggi(int IDReparto)
@@ -311,6 +307,9 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Viene assegnato al paziente identificato dall'ID il numero del letto fornito nella richiesta.
+    // Il paziente deve avere come data di ricovero il giorno corrente e non deve avere ancora un letto 
+    // assegnato (cioè uguale a 0).
     [Authorize(Roles = "Medico")]
     [HttpPut("ricovera/{IDPaziente}/{NumeroLetto}")]
     public async Task<IActionResult> RicoveraPaziente(int IDPaziente, int NumeroLetto)
@@ -331,6 +330,9 @@ public class PazientiController : ControllerBase
 
             var reparto = await _context.Reparti.FindAsync(paziente.IDReparto);
             if (reparto == null) return NotFound("Reparto non trovato!");
+
+            if (paziente.DataRicovero != oggi)
+                return BadRequest("Il paziente non deve essere ricoverato oggi!");
 
             if (paziente.NumeroLetto != 0)
                 return BadRequest("Il paziente è già stato ricoverato!");
@@ -359,6 +361,8 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Rimuove dal database il paziente identificato dall'ID che viene passato nella richiesta
+    // e tutte le terapie e le somministrazioni assegnate a quel paziente.
     [Authorize(Roles = "Medico")]
     [HttpDelete("dimetti/{IDPaziente}")]
     public async Task<IActionResult> EliminaPaziente(int IDPaziente)
@@ -425,6 +429,9 @@ public class PazientiController : ControllerBase
         }
     }
 
+    // Effettua il trasferimento del paziente identificato dall'ID che viene passato nella richiesta.
+    // Il trasferimento può essere eseguito verso un'altro reparto o anche nello stesso reparto ma modificando 
+    // il numero del letto in cui il paziente viene ricoverato.
     [Authorize(Roles = "Medico, Infermiere")]
     [HttpPut("trasferimento/{IDPaziente}")]
     public async Task<IActionResult> TrasferimentoPaziente([FromBody] DatiReparto trasferimento, 

@@ -3,20 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\claimstransformationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\claimstransformationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\services\\ospedalecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\services\\ospedalecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\auth\\basicauthenticationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\auth\\basicauthenticationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\somministrazionicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\terapiecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\models\\terapia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\models\\terapia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\reparticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\utenticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|c:\\users\\marco\\progettosviluppo\\progettoospedaleserver\\provaprogettoserver\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DA864806-1191-4865-8E24-055737DB8042}|ProvaProgettoSERVER\\ProvaProgettoSERVER.csproj|solutionrelative:provaprogettoserver\\controllers\\pazienticontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +50,136 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Program.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Program.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Program.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T15:59:37.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\UserService.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\UserService.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\UserService.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\UserService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T15:57:43.077Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ClaimsTransformationService.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ClaimsTransformationService.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\ClaimsTransformationService.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\ClaimsTransformationService.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\ClaimsTransformationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T15:55:04.801Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OspedaleContext.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Services\\OspedaleContext.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Services\\OspedaleContext.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Services\\OspedaleContext.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\Services\\OspedaleContext.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T15:50:43.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BasicAuthenticationHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Auth\\BasicAuthenticationHandler.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Auth\\BasicAuthenticationHandler.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Auth\\BasicAuthenticationHandler.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\Auth\\BasicAuthenticationHandler.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T15:47:06.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SomministrazioniController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\SomministrazioniController.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Controllers\\SomministrazioniController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\SomministrazioniController.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\Controllers\\SomministrazioniController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAHkAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T15:11:29.804Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "UtentiController.cs",
               "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\UtentiController.cs",
               "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Controllers\\UtentiController.cs",
               "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\UtentiController.cs",
               "RelativeToolTip": "ProvaProgettoSERVER\\Controllers\\UtentiController.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAmwJ0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAgwFMAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-24T09:52:35.348Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Terapia.cs",
-              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Models\\Terapia.cs",
-              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Models\\Terapia.cs",
-              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Models\\Terapia.cs",
-              "RelativeToolTip": "ProvaProgettoSERVER\\Models\\Terapia.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAgwBIAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-24T09:42:13.506Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TerapieController.cs",
-              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
-              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
-              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
-              "RelativeToolTip": "ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAqwIIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-24T09:34:35.239Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "PazientiController.cs",
               "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
               "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
               "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
               "RelativeToolTip": "ProvaProgettoSERVER\\Controllers\\PazientiController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJABAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-24T08:03:22.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RepartiController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\RepartiController.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Controllers\\RepartiController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\RepartiController.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\Controllers\\RepartiController.cs",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAuwFwAAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T14:40:17.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TerapieController.cs",
+              "DocumentMoniker": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
+              "RelativeDocumentMoniker": "ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
+              "ToolTip": "C:\\Users\\Marco\\ProgettoSviluppo\\ProgettoOspedaleServer\\ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
+              "RelativeToolTip": "ProvaProgettoSERVER\\Controllers\\TerapieController.cs",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAAAKsAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T09:34:35.239Z",
               "EditorCaption": ""
             }
           ]

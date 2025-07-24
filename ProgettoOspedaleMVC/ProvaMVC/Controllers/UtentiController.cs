@@ -8,16 +8,17 @@ namespace ProvaMVC.Controllers;
 
 public class UtentiController : Controller
 {
-    private readonly HttpClient Client;
+    private readonly HttpClient _client;
 
 
     public UtentiController(HttpClient client)
     {
-        Client = client;
+        _client = client;
 
-        Client.BaseAddress = new Uri("http://localhost:5002");
+        _client.BaseAddress = new Uri("http://localhost:5002");
     }
 
+    //carica la login razor
     [HttpGet]
     public IActionResult Login()
     {
@@ -41,6 +42,7 @@ public class UtentiController : Controller
         }
     }
 
+    //metodo post login, prende i dati e li inoltra 
     [HttpPost]
     public async Task<IActionResult> Login(LoginData utente)
     {
@@ -51,12 +53,15 @@ public class UtentiController : Controller
             var json = JsonConvert.SerializeObject(utente);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await Client.PostAsync("api/utenti/login", content);
+            //chiamata post
+            var response = await _client.PostAsync("api/utenti/login", content);
+            //controllo se password o matricola sono sbagliati 
             if (!response.IsSuccessStatusCode && response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 var errore = await response.Content.ReadAsStringAsync();
-                return RedirectToAction("HttpError", "Home", new { statusCode = 401 });
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
+            //controllo tutto ok
             else if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
@@ -67,12 +72,12 @@ public class UtentiController : Controller
                 HttpContext.Session.SetString("Password", utenteLoggato.Pass);
                 return RedirectToAction("Index", "Home");
 
-            }
+            } // qualsiasi altro problema generico es. server spento 
             else
             {
                 var errore = await response.Content.ReadAsStringAsync();
                 TempData["LogError"] = $"Errore durante il login: {errore}";
-                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode }); ///server spento
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
         }
         catch (HttpRequestException)
@@ -91,6 +96,7 @@ public class UtentiController : Controller
         }
     }
 
+    //carica la Registrazione razor
     [HttpGet]
     public async Task<IActionResult> Registrazione()
     {
@@ -98,7 +104,7 @@ public class UtentiController : Controller
         {
             var model = new RegistrazioneData();
 
-            var response = await Client.GetAsync("api/reparti");
+            var response = await _client.GetAsync("api/reparti");
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -124,6 +130,7 @@ public class UtentiController : Controller
         }
     }
 
+    //metodo post registrati, prende i dati e li inoltra 
     [HttpPost]
     public async Task<IActionResult> Registrazione(RegistrazioneData model, Utente nuovoUtente)
     {
@@ -134,7 +141,8 @@ public class UtentiController : Controller
             Console.WriteLine($"RepartoID ricevuto: {nuovoUtente.IDReparto}");
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-            var response = await Client.PostAsync("api/utenti/registrazione", content);
+            //invia i dati
+            var response = await _client.PostAsync("api/utenti/registrazione", content);
             if (!response.IsSuccessStatusCode)
             {
                 TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await response.Content.ReadAsStringAsync();
@@ -142,6 +150,7 @@ public class UtentiController : Controller
             }
             else
             {
+                //ritorna il messaggio di successo con la matricola assegnata dal server per poter fare il login 
                 TempData["SuccessMessage"] = "Registrazione avvenuta con successo! Effettua il login con matricola." + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("Registrazione");
             }
@@ -162,6 +171,8 @@ public class UtentiController : Controller
             return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
+
+    //metodo di logout, rimuovo tutto da httpcontext.session e reindirizzo alla login 
     [HttpPost]
     public IActionResult Logout()
     {

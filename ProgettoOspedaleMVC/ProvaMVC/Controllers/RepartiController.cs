@@ -9,18 +9,17 @@ namespace ProvaMVC.Controllers;
 public class RepartiController : Controller
 {
     private readonly HttpClient _client;
-    private readonly ILogger<RepartiController> _logger;
 
-    public RepartiController(ILogger<RepartiController> logger, HttpClient client)
+    public RepartiController(HttpClient client)
     {
-        _logger = logger;
         _client = client;
         _client.BaseAddress = new Uri("http://localhost:5002");
     }
 
+    //carica la razor reparti
     public async Task<IActionResult> Index()
     {
- 
+
         var repartoId = HttpContext.Session.GetInt32("Reparto");
         var matricola = HttpContext.Session.GetInt32("Matricola");
         var password = HttpContext.Session.GetString("Password");
@@ -34,12 +33,13 @@ public class RepartiController : Controller
         ViewBag.Ruolo = ruolo;
         ViewBag.Matricola = matricola;
 
-        
+
         ViewBag.Reparto = null;
         ViewBag.Pazienti = new List<ProvaMVC.Models.Paziente>();
         ViewBag.LettiTotali = 0;
         ViewBag.LettiOccupati = 0;
         ViewBag.LettiDisponibili = 0;
+        //impostiamo l'ora dell'ultimo aggiornamento
         ViewBag.DataAggiornamento = DateTime.Now;
 
         try
@@ -49,12 +49,14 @@ public class RepartiController : Controller
             _client.DefaultRequestHeaders.Authorization = null;
             _client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
 
+            //prendiamo il nome del reparto e il numero di letti 
             var repartoResponse = await _client.GetAsync($"api/reparti/{repartoId}");
             repartoResponse.EnsureSuccessStatusCode();
 
             var repartoJson = await repartoResponse.Content.ReadAsStringAsync();
-            var reparto = JsonConvert.DeserializeObject<ProvaMVC.Models.Reparto>(repartoJson)!; 
+            var reparto = JsonConvert.DeserializeObject<ProvaMVC.Models.Reparto>(repartoJson)!;
 
+            //prendiamo i pazienti del reparto
             var pazientiResponse = await _client.GetAsync($"api/pazienti/Reparto/{repartoId}");
             pazientiResponse.EnsureSuccessStatusCode();
 
@@ -62,8 +64,8 @@ public class RepartiController : Controller
             var pazienti = JsonConvert.DeserializeObject<List<ProvaMVC.Models.Paziente>>(pazientiJson) ?? new List<ProvaMVC.Models.Paziente>();
 
             int lettiTotali = reparto.NumeroLetti;
-            int lettiOccupati = pazienti.Count;
-            int lettiDisponibili = lettiTotali - lettiOccupati;
+            int lettiOccupati = pazienti.Count; //conto il numero di pazienti e sono i letti occupati 
+            int lettiDisponibili = lettiTotali - lettiOccupati; //calcolo del numero letti disponibili, avendo i totali - occupati
 
             ViewBag.Reparto = reparto;
             ViewBag.Pazienti = pazienti;
@@ -74,7 +76,7 @@ public class RepartiController : Controller
 
             return View();
         }
-       
+
         catch (HttpRequestException)
         {
             return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
@@ -91,10 +93,10 @@ public class RepartiController : Controller
         }
     }
 
-    
+    //metodo che permette di visualizzare il paziente all interno del letto
     public async Task<IActionResult> VisualizzaLetto(int numero)
     {
-        
+
         var repartoId = HttpContext.Session.GetInt32("Reparto");
         var matricola = HttpContext.Session.GetInt32("Matricola");
         var password = HttpContext.Session.GetString("Password");
@@ -112,6 +114,7 @@ public class RepartiController : Controller
             _client.DefaultRequestHeaders.Authorization = null;
             _client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
 
+            //torna il paziente che Ã¨ ricoverato nel letto "numero"
             var response = await _client.GetAsync($"api/reparti/{repartoId}/{numero}");
 
             var json = await response.Content.ReadAsStringAsync();
@@ -120,31 +123,18 @@ public class RepartiController : Controller
             {
                 var paziente = JsonConvert.DeserializeObject<ProvaMVC.Models.Paziente>(json);
 
+                //se non ce paziente, si puo visualizzare i dati del paziente 
                 if (paziente != null)
                     return View("VisualizzaLetto", paziente);
 
                 TempData["LogInfo"] = "Nessun paziente trovato per questo letto.";
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                if (json.Contains("Reparto non trovato."))
-                {
-                    TempData["LogError"] = "Reparto non trovato per visualizzare il letto.";
-                }
-                else
-                {
-                    TempData["LogInfo"] = "Letto libero.";
-                }
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                TempData["LogError"] = $"Errore nel recupero del letto: {json}";
-            }
             else
             {
-                TempData["LogError"] = $"Errore nel recupero del letto: {response.StatusCode} - {json}";
-            }
+                TempData["ServerMessage"] = await response.Content.ReadAsStringAsync();
+                return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
 
+            }
             return View("VisualizzaLetto", null);
 
         }
@@ -198,6 +188,4 @@ public class RepartiController : Controller
             return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
-
-
 }

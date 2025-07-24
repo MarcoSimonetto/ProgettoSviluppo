@@ -43,27 +43,6 @@
   },
   {
     "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
-    "Method": "GetPazientiDaDimettere",
-    "RelativePath": "api/Pazienti/da_dimettere/{IDReparto}/{data}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "data",
-        "Type": "System.DateOnly",
-        "IsRequired": true
-      },
-      {
-        "Name": "IDReparto",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ProvaProgettoSERVER.Controllers.PazientiController",
     "Method": "GetPazientiDaDimettereOggi",
     "RelativePath": "api/Pazienti/da_dimettere/{IDReparto}/oggi",
     "HttpMethod": "GET",
@@ -335,22 +314,6 @@
     "ContainingType": "ProvaProgettoSERVER.Controllers.SomministrazioniController",
     "Method": "SomministrazioniOdierne",
     "RelativePath": "api/Somministrazioni/oggi/{IDReparto}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "IDReparto",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ProvaProgettoSERVER.Controllers.SomministrazioniController",
-    "Method": "SomministrazioniNonEseguiteMaAncoraInTempo",
-    "RelativePath": "api/Somministrazioni/oggi/ancora_in_orario/{IDReparto}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

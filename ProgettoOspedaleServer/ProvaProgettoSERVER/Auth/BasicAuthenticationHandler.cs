@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProvaProgettoSERVER.Auth;
 
+// Intercetta ogni richiesta HTTP, legge l’header Authorization, decodifica le credenziali (nel nostro caso Matricola e
+// Password) e, se valide, crea un utente autenticato.
+
 public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     private readonly OspedaleContext _context;

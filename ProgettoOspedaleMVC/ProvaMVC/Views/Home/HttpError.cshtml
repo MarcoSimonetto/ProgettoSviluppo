@@ -1,7 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Errore HTTP";
-    int statusCode = Convert.ToInt32(ViewContext.HttpContext.Request.Query["statusCode"]);
-    string defaultMessage = statusCode switch
+    int statusCode = Convert.ToInt32(ViewContext.HttpContext.Request.Query["statusCode"]);  //recupera il codice di stato HTTP (es. 404, 500) dalla query string della richiesta e lo converte in intero.
+
+    string defaultMessage = statusCode switch           // Usa uno switch expression per associare un messaggio descrittivo al codice HTTP.
     {
         400 => "La richiesta non è valida.",
         401 => "Accesso non autorizzato. Effettua il login.",
