@@ -1,5 +1,4 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -26,14 +25,14 @@ namespace ProvaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Terapie()
         {
-            
+
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
 
 
-            
+
             ViewBag.RuoloUtente = ruolo;
             ViewBag.MatricolaMedico = matricola ?? 0;
 
@@ -43,13 +42,13 @@ namespace ProvaMVC.Controllers
 
             try
             {
-                
+
                 if (matricola.HasValue && !string.IsNullOrEmpty(password))
                 {
                     string authString = $"{matricola}:{password}";
                     string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-                    Client.DefaultRequestHeaders.Authorization = null; 
-                    Client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token); 
+                    Client.DefaultRequestHeaders.Authorization = null;
+                    Client.DefaultRequestHeaders.Add("Authorization", "Basic " + base64Token);
                 }
                 else
                 {
@@ -59,17 +58,17 @@ namespace ProvaMVC.Controllers
                 }
 
 
-                
+
                 var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
                 if (responsePazienti.IsSuccessStatusCode)
                 {
                     var jsonPazienti = await responsePazienti.Content.ReadAsStringAsync();
                     pazientiDisponibili = JsonConvert.DeserializeObject<List<Paziente>>(jsonPazienti) ?? new List<Paziente>();
-                    
+
                     pazientiMapPerTabella = pazientiDisponibili.ToDictionary(p => p.ID, p => $"{p.Nome} {p.Cognome} ({p.CF})");
 
                     ViewBag.PazientiDisponibili = pazientiDisponibili;
-                    ViewBag.PazientiMapPerTabella = pazientiMapPerTabella; 
+                    ViewBag.PazientiMapPerTabella = pazientiMapPerTabella;
                 }
                 else
                 {
@@ -77,14 +76,14 @@ namespace ProvaMVC.Controllers
                     _logger.LogError("Errore API nel recupero pazienti per Terapie (GET): {StatusCode} - {Error}", responsePazienti.StatusCode, errorPazienti);
                     TempData["ErrorMessage"] = $"Impossibile caricare i pazienti del reparto: {errorPazienti}";
                 }
-                
+
                 var responseTerapie = await Client.GetAsync($"api/Terapie/reparto/{idReparto}");
                 if (responseTerapie.IsSuccessStatusCode)
                 {
                     var allTerapie = await responseTerapie.Content.ReadAsStringAsync();
                     var deserializedTerapie = JsonConvert.DeserializeObject<List<Terapia>>(allTerapie) ?? new List<Terapia>();
 
-                    
+
                     if (pazientiMapPerTabella.Any())
                     {
                         terapie = deserializedTerapie.Where(t => pazientiMapPerTabella.ContainsKey(t.IDPaziente)).ToList();
@@ -100,8 +99,8 @@ namespace ProvaMVC.Controllers
                     _logger.LogError("Errore API nel recupero terapie per Terapie (GET): {StatusCode} - {Error}", responseTerapie.StatusCode, errorTerapie);
                     TempData["ErrorMessage"] = $"Impossibile caricare le terapie: {errorTerapie}";
                 }
-            
-                 
+
+
                 return View(terapie);
             }
             catch (HttpRequestException)
@@ -124,8 +123,9 @@ namespace ProvaMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            try {
-            return await Terapie();
+            try
+            {
+                return await Terapie();
             }
             catch (HttpRequestException)
             {
@@ -143,37 +143,38 @@ namespace ProvaMVC.Controllers
             }
         }
 
-        
+
         [HttpGet]
         public async Task<IActionResult> Assegna()
         {
-            try { 
-
-            var ruolo = HttpContext.Session.GetString("Ruolo");
-
-            var matricola = HttpContext.Session.GetInt32("Matricola");
-            var password = HttpContext.Session.GetString("Password");
-            var reparto = HttpContext.Session.GetInt32("Reparto");
-
-            
-            if (!matricola.HasValue || string.IsNullOrEmpty(password) || !reparto.HasValue)
+            try
             {
-                TempData["LoginError"] = "Sessione scaduta o dati utente mancanti. Effettuare nuovamente il login.";
-                return RedirectToAction("Login", "Utenti");
-            }
 
-            string authString = $"{matricola.Value}:{password}";
-            string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+                var ruolo = HttpContext.Session.GetString("Ruolo");
 
-            var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
-            if (!check.IsSuccessStatusCode)
-            {
-                return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
-            }
+                var matricola = HttpContext.Session.GetInt32("Matricola");
+                var password = HttpContext.Session.GetString("Password");
+                var reparto = HttpContext.Session.GetInt32("Reparto");
 
-            await RepopulateViewBagData(matricola.Value, password, reparto.Value, ruolo);
-            return View(new Terapia());
+
+                if (!matricola.HasValue || string.IsNullOrEmpty(password) || !reparto.HasValue)
+                {
+                    TempData["LoginError"] = "Sessione scaduta o dati utente mancanti. Effettuare nuovamente il login.";
+                    return RedirectToAction("Login", "Utenti");
+                }
+
+                string authString = $"{matricola.Value}:{password}";
+                string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+                var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
+                if (!check.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+                }
+
+                await RepopulateViewBagData(matricola.Value, password, reparto.Value, ruolo);
+                return View(new Terapia());
             }
             catch (HttpRequestException)
             {
@@ -191,33 +192,33 @@ namespace ProvaMVC.Controllers
             }
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Assegna(Terapia nuovaTerapia)
         {
-            
+
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
             var idReparto = HttpContext.Session.GetInt32("Reparto");
 
-            
+
             if (!matricola.HasValue || string.IsNullOrEmpty(password) || !idReparto.HasValue)
             {
                 TempData["LoginError"] = "Sessione scaduta o dati utente mancanti. Effettuare nuovamente il login.";
                 return RedirectToAction("Login", "Utenti");
             }
 
-            
+
             nuovaTerapia.MatricolaMedico = matricola.Value;
 
             if (!ModelState.IsValid)
             {
-                
+
                 await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
                 TempData["ErrorMessage"] = "Errore di validazione nel form di assegnazione terapia. Controlla i campi.";
-                return View(nuovaTerapia); 
+                return View(nuovaTerapia);
             }
 
             try
@@ -237,19 +238,8 @@ namespace ProvaMVC.Controllers
                 }
                 else
                 {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    _logger.LogError("Errore API nell'assegnazione terapia (POST): {StatusCode} - {Error}", response.StatusCode, errorContent);
-                    TempData["ErrorMessage"] = $"Errore durante l'assegnazione della terapia: {response.StatusCode} - {errorContent}";
-
-                    if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized ||
-                        response.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                    {
-                        TempData["LoginError"] = "Sessione API scaduta o non autorizzata. Effettuare nuovamente il login.";
-                        return RedirectToAction("Login", "Utenti");
-                    }
-                    
-                    await RepopulateViewBagData(matricola.Value, password, idReparto.Value, ruolo);
-                    return View(nuovaTerapia);
+                    TempData["ServerMessage"] = "Errore durante l'assegnamento della terapia" + await response.Content.ReadAsStringAsync();
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
                 }
             }
             catch (HttpRequestException)
@@ -269,13 +259,13 @@ namespace ProvaMVC.Controllers
         }
 
 
-        
+
         private async Task RepopulateViewBagData(int matricola, string? password, int idReparto, string? ruolo)
         {
-           
+
             try
             {
-                
+
                 if (!string.IsNullOrEmpty(password))
                 {
                     string authString = $"{matricola}:{password}";
@@ -288,22 +278,22 @@ namespace ProvaMVC.Controllers
                     _logger.LogWarning("Password sessione non presente per autenticazione API nel ripopolamento ViewBag.");
                 }
 
-                
+
                 var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
                 if (responsePazienti.IsSuccessStatusCode)
                 {
                     var jsonPazienti = await responsePazienti.Content.ReadAsStringAsync();
                     var pazientiList = JsonConvert.DeserializeObject<List<Paziente>>(jsonPazienti) ?? new List<Paziente>();
                     ViewBag.PazientiDisponibili = pazientiList;
-                    
+
                     ViewBag.PazientiMapPerTabella = pazientiList.ToDictionary(p => p.ID, p => $"{p.Nome} {p.Cognome} ({p.CF})");
                 }
                 else
                 {
                     var errorContent = await responsePazienti.Content.ReadAsStringAsync();
                     _logger.LogError("Errore nel ripopolamento pazienti (helper): {StatusCode} - {Error}", responsePazienti.StatusCode, errorContent);
-                    ViewBag.PazientiDisponibili = new List<Paziente>(); 
-                    ViewBag.PazientiMapPerTabella = new Dictionary<int, string>(); 
+                    ViewBag.PazientiDisponibili = new List<Paziente>();
+                    ViewBag.PazientiMapPerTabella = new Dictionary<int, string>();
                 }
             }
             catch (Exception ex)
@@ -315,7 +305,7 @@ namespace ProvaMVC.Controllers
 
         }
 
-        
+
         private async Task<List<Terapia>> GetExistingTerapie(int matricola, string? password, int idReparto)
         {
 
@@ -324,7 +314,7 @@ namespace ProvaMVC.Controllers
 
             try
             {
-                
+
                 if (!string.IsNullOrEmpty(password))
                 {
                     string authString = $"{matricola}:{password}";
@@ -337,13 +327,13 @@ namespace ProvaMVC.Controllers
                     _logger.LogWarning("Password sessione non presente per autenticazione API nel recupero terapie esistenti.");
                 }
 
-                
+
                 var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
                 if (responsePazienti.IsSuccessStatusCode)
                 {
                     var jsonPazienti = await responsePazienti.Content.ReadAsStringAsync();
                     var pazientiList = JsonConvert.DeserializeObject<List<Paziente>>(jsonPazienti) ?? new List<Paziente>();
-                    
+
                     pazientiMapPerTabella = pazientiList.ToDictionary(p => p.ID, p => $"{p.Nome} {p.Cognome} ({p.CF})");
                 }
                 else
@@ -351,7 +341,7 @@ namespace ProvaMVC.Controllers
                     _logger.LogError("Errore nel recupero pazienti per GetExistingTerapie (helper).");
                 }
 
-                
+
                 var responseTerapie = await Client.GetAsync("api/terapie");
                 if (responseTerapie.IsSuccessStatusCode)
                 {
@@ -383,33 +373,34 @@ namespace ProvaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Modifica(int id)
         {
-            try { 
-            var ruolo = HttpContext.Session.GetString("Ruolo");
-            var matricola = HttpContext.Session.GetInt32("Matricola");
-            var password = HttpContext.Session.GetString("Password");
-
-            if (ruolo == null || !matricola.HasValue || string.IsNullOrEmpty(password))
-                return RedirectToAction("Login", "Utenti");
-
-            string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
-
-            var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
-            if (!check.IsSuccessStatusCode)
+            try
             {
-               return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
-            }
+                var ruolo = HttpContext.Session.GetString("Ruolo");
+                var matricola = HttpContext.Session.GetInt32("Matricola");
+                var password = HttpContext.Session.GetString("Password");
 
-            var response = await Client.GetAsync($"api/terapie/{id}");
-            if (!response.IsSuccessStatusCode)
-            {
-                TempData["ErrorMessage"] = "Errore nel caricamento della terapia.";
-                return RedirectToAction("Index");
-            }
+                if (ruolo == null || !matricola.HasValue || string.IsNullOrEmpty(password))
+                    return RedirectToAction("Login", "Utenti");
 
-            var json = await response.Content.ReadAsStringAsync();
-            var terapia = JsonConvert.DeserializeObject<Terapia>(json);
-            return View("Modifica", terapia);
+                string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
+
+                var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
+                if (!check.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
+                }
+
+                var response = await Client.GetAsync($"api/terapie/{id}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    TempData["ServerMessage"] = "Errore durante l'assegnamento della terapia" + await response.Content.ReadAsStringAsync();
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+                }
+
+                var json = await response.Content.ReadAsStringAsync();
+                var terapia = JsonConvert.DeserializeObject<Terapia>(json);
+                return View("Modifica", terapia);
             }
             catch (HttpRequestException)
             {
@@ -432,32 +423,33 @@ namespace ProvaMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Modifica(int id, Terapia terapia)
         {
-            try { 
-            var matricola = HttpContext.Session.GetInt32("Matricola");
-            var password = HttpContext.Session.GetString("Password");
+            try
+            {
+                var matricola = HttpContext.Session.GetInt32("Matricola");
+                var password = HttpContext.Session.GetString("Password");
 
-            string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
+                string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{matricola}:{password}"));
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
 
                 var json = JsonConvert.SerializeObject(new
-            {
-                farmaco = terapia.Farmaco,
-                dosaggio = terapia.Dosaggio,
-                orarioSomministrazione = terapia.OrarioSomministrazione.ToString(@"hh\:mm"),
-                dataInizio = terapia.DataInizio,
-                dataFine = terapia.DataFine
-            });
+                {
+                    farmaco = terapia.Farmaco,
+                    dosaggio = terapia.Dosaggio,
+                    orarioSomministrazione = terapia.OrarioSomministrazione.ToString(@"hh\:mm"),
+                    dataInizio = terapia.DataInizio,
+                    dataFine = terapia.DataFine
+                });
 
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await Client.PutAsync($"api/terapie/modifica/{id}", content);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await Client.PutAsync($"api/terapie/modifica/{id}", content);
 
-            if (response.IsSuccessStatusCode)
-            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    TempData["ServerMessage"] = "Errore durante l'assegnamento della terapia" + await response.Content.ReadAsStringAsync();
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
+                }
                 return RedirectToAction("Index");
-            }
 
-            TempData["ErrorMessage"] = "Errore nella modifica della terapia.";
-            return View("Modifica", terapia);
             }
             catch (HttpRequestException)
             {
@@ -476,43 +468,43 @@ namespace ProvaMVC.Controllers
         }
 
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Elimina(int id)
         {
-                var matricola = HttpContext.Session.GetInt32("Matricola");
-                var password = HttpContext.Session.GetString("Password");
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var password = HttpContext.Session.GetString("Password");
 
-                if (!matricola.HasValue || string.IsNullOrEmpty(password))
+            if (!matricola.HasValue || string.IsNullOrEmpty(password))
+            {
+                TempData["LoginError"] = "Sessione scaduta.";
+                return RedirectToAction("Login", "Utenti");
+            }
+
+            try
+            {
+                string authString = $"{matricola}:{password}";
+                string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
+
+                var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
+                if (!check.IsSuccessStatusCode)
                 {
-                    TempData["LoginError"] = "Sessione scaduta.";
-                    return RedirectToAction("Login", "Utenti");
+                    return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
                 }
 
-                try
+                var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
+
+                if (!response.IsSuccessStatusCode)
                 {
-                    string authString = $"{matricola}:{password}";
-                    string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
-                    Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
-
-                    var check = await Client.GetAsync("api/utenti/check_ruolo_medico");
-                    if (!check.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("HttpError", "Home", new { statusCode = (int)check.StatusCode });
-                    }
-
-                    var response = await Client.DeleteAsync($"api/terapie/rimuovi/{id}");
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        var error = await response.Content.ReadAsStringAsync();
-                        TempData["ErrorMessage"] = $"Errore durante l'eliminazione: {response.StatusCode} - {error}";
-                    }
-
-                    return RedirectToAction("Index");
+                    var error = await response.Content.ReadAsStringAsync();
+                    TempData["ErrorMessage"] = $"Errore durante l'eliminazione: {response.StatusCode} - {error}";
                 }
-               
+
+                return RedirectToAction("Index");
+            }
+
             catch (HttpRequestException)
             {
                 return RedirectToAction("HttpError", "Home", new { statusCode = 503 });
@@ -529,11 +521,11 @@ namespace ProvaMVC.Controllers
             }
         }
 
-        
+
         [HttpGet]
         public async Task<IActionResult> TerapieDiOggi()
         {
-            
+
             var ruolo = HttpContext.Session.GetString("Ruolo");
             var matricola = HttpContext.Session.GetInt32("Matricola");
             var password = HttpContext.Session.GetString("Password");
@@ -547,12 +539,12 @@ namespace ProvaMVC.Controllers
 
             try
             {
-                
+
                 string authString = $"{matricola}:{password}";
                 string base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authString));
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Token);
 
-                
+
                 var response = await Client.GetAsync($"api/terapie/oggi/{idReparto}");
 
                 if (response.IsSuccessStatusCode)
@@ -560,7 +552,7 @@ namespace ProvaMVC.Controllers
                     var json = await response.Content.ReadAsStringAsync();
                     var terapie = JsonConvert.DeserializeObject<List<Terapia>>(json) ?? new List<Terapia>();
 
-                   
+
                     var responsePazienti = await Client.GetAsync($"api/pazienti/reparto/{idReparto}");
                     Dictionary<int, string> pazientiMap = new Dictionary<int, string>();
 

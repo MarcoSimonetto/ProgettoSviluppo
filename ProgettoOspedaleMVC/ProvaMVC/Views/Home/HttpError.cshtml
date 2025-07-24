@@ -13,18 +13,16 @@
 
         _ => "Si è verificato un errore imprevisto."
     };
-
-    string? serverMessage = ViewData["ServerMessage"] as string;
 }
 
 <div class="container mt-5 text-center">
     <h1 class="display-4">Errore @statusCode</h1>
     <p class="lead mt-3">@defaultMessage</p>
 
-    @if (!string.IsNullOrEmpty(serverMessage) && statusCode != 403)
+    @if (TempData["ServerMessage"] != null && statusCode != 403)
     {
         <div class="alert alert-danger mt-4">
-            <strong>Messaggio del server:</strong> @serverMessage
+            <strong>Messaggio del server:</strong> @TempData["ServerMessage"]
         </div>
     }
 

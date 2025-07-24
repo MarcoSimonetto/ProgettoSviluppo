@@ -14,15 +14,16 @@ public class UtentiController : Controller
     public UtentiController(HttpClient client)
     {
         Client = client;
-        
+
         Client.BaseAddress = new Uri("http://localhost:5002");
     }
 
     [HttpGet]
     public IActionResult Login()
     {
-        try { 
-        return View();
+        try
+        {
+            return View();
         }
         catch (HttpRequestException)
         {
@@ -43,20 +44,20 @@ public class UtentiController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(LoginData utente)
     {
-        try { 
+        try
+        {
 
-        var matricola = HttpContext.Session.GetInt32("Matricola");
-        var json = JsonConvert.SerializeObject(utente);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var matricola = HttpContext.Session.GetInt32("Matricola");
+            var json = JsonConvert.SerializeObject(utente);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await Client.PostAsync("api/utenti/login", content);
+            var response = await Client.PostAsync("api/utenti/login", content);
             if (!response.IsSuccessStatusCode && response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 var errore = await response.Content.ReadAsStringAsync();
-                TempData["LogError"] = $"Errore durante il login: {errore}";
-                return RedirectToAction("HttpError", "Home", new { statusCode = 401 }); ///pass o matrciola sbagliati
+                return RedirectToAction("HttpError", "Home", new { statusCode = 401 });
             }
-            else if (response.IsSuccessStatusCode )
+            else if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
                 var utenteLoggato = JsonConvert.DeserializeObject<UtenteLoggato>(result);
@@ -65,10 +66,10 @@ public class UtentiController : Controller
                 HttpContext.Session.SetInt32("Reparto", utenteLoggato.Reparto);
                 HttpContext.Session.SetString("Password", utenteLoggato.Pass);
                 return RedirectToAction("Index", "Home");
-                
+
             }
             else
-            { 
+            {
                 var errore = await response.Content.ReadAsStringAsync();
                 TempData["LogError"] = $"Errore durante il login: {errore}";
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode }); ///server spento
@@ -85,7 +86,7 @@ public class UtentiController : Controller
         }
         catch (Exception ex)
         {
-            
+
             return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
         }
     }
@@ -93,18 +94,19 @@ public class UtentiController : Controller
     [HttpGet]
     public async Task<IActionResult> Registrazione()
     {
-        try { 
-        var model = new RegistrazioneData();
-
-        var response = await Client.GetAsync("api/reparti");
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var json = await response.Content.ReadAsStringAsync();
-            var reparti = JsonConvert.DeserializeObject<List<Reparto>>(json);
-            model.Reparti = reparti;
-        }
+            var model = new RegistrazioneData();
 
-        return View(model);
+            var response = await Client.GetAsync("api/reparti");
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var reparti = JsonConvert.DeserializeObject<List<Reparto>>(json);
+                model.Reparti = reparti;
+            }
+
+            return View(model);
         }
         catch (HttpRequestException)
         {
@@ -126,23 +128,24 @@ public class UtentiController : Controller
     public async Task<IActionResult> Registrazione(RegistrazioneData model, Utente nuovoUtente)
     {
 
-        try { 
-        var jsonBody = JsonConvert.SerializeObject(nuovoUtente);
-        Console.WriteLine($"RepartoID ricevuto: {nuovoUtente.IDReparto}");
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
-        var response = await Client.PostAsync("api/utenti/registrazione", content);
-        if (!response.IsSuccessStatusCode)
+        try
         {
+            var jsonBody = JsonConvert.SerializeObject(nuovoUtente);
+            Console.WriteLine($"RepartoID ricevuto: {nuovoUtente.IDReparto}");
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+            var response = await Client.PostAsync("api/utenti/registrazione", content);
+            if (!response.IsSuccessStatusCode)
+            {
                 TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
             else
             {
-                TempData["SuccessMessage"] = "Registrazione avvenuta con successo! Effettua il login con matricola."+ await response.Content.ReadAsStringAsync(); 
+                TempData["SuccessMessage"] = "Registrazione avvenuta con successo! Effettua il login con matricola." + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("Registrazione");
             }
-                
+
         }
         catch (HttpRequestException)
         {
@@ -162,15 +165,16 @@ public class UtentiController : Controller
     [HttpPost]
     public IActionResult Logout()
     {
-        try { 
-        HttpContext.Session.Remove("Matricola");
-        HttpContext.Session.Remove("Ruolo");
-        HttpContext.Session.Remove("Reparto");
-        HttpContext.Session.Remove("Password");
+        try
+        {
+            HttpContext.Session.Remove("Matricola");
+            HttpContext.Session.Remove("Ruolo");
+            HttpContext.Session.Remove("Reparto");
+            HttpContext.Session.Remove("Password");
 
-        HttpContext.Session.Clear();
+            HttpContext.Session.Clear();
 
-        return RedirectToAction("Login");
+            return RedirectToAction("Login");
         }
         catch (HttpRequestException)
         {

@@ -9,10 +9,12 @@ namespace ProvaMVC.Models
         public string CF { get; set; }
 
         [Required]
+        [RegularExpression(@"^(?=.[A-Z])(?=.\d)(a-z).{8,15}$",
+        ErrorMessage = "La password deve contenere almeno 8 caratteri, massimo 15, una lettera maiuscola e un numero.")]
         public string Password { get; set; }
 
         [Required]
-        public string Ruolo { get; set; } 
+        public string Ruolo { get; set; }
 
         [Required]
         public int IDReparto { get; set; }

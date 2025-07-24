@@ -50,21 +50,13 @@ public class TerapieController : ControllerBase
             if(matricola!=terapia.MatricolaMedico)
                 return BadRequest("Devi passare la tua matricola quando assegni una terapia!");
 
-            var authHeader = Request.Headers["Authorization"].ToString();
-            Console.WriteLine($"Authorization header: {authHeader}");
-
-            var user = User.Identity;
-            Console.WriteLine($"User authenticated: {user?.IsAuthenticated}");
-            Console.WriteLine($"Claims: {string.Join(", ", User.Claims.Select(c => $"{c.Type}={c.Value}"))}");
-
-
             var paziente = await _context.Pazienti.FindAsync(terapia.IDPaziente);
             if (paziente == null) return NotFound("Paziente non trovato!");
             if (utente.IDReparto != paziente.IDReparto) 
                 return BadRequest("Non puoi assegnare una terapia ad un paziente di un altro reparto!");
 
             if (terapia.DataInizio>terapia.DataFine)
-                return BadRequest("Hai una inserito una data di inizio che viene dopo la data di fine!");
+                return BadRequest("Hai inserito una data di inizio che viene dopo la data di fine!");
             if (terapia.DataInizio < paziente.DataRicovero || terapia.DataFine < paziente.DataRicovero)
                 return BadRequest("La data di inizio o fine terapia non può precedere la data di ricovero del paziente.");
             if (paziente.DataDimissione != null)
@@ -94,21 +86,35 @@ public class TerapieController : ControllerBase
         {
             var matricolaClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(matricolaClaim, out var matricola))
-            {
                 return Unauthorized("Matricola non valida nei claims!");
-            }
 
             var terapia = await _context.Terapie.FindAsync(IDTerapia);
             if (terapia == null) return NotFound("Terapia non trovata!");
 
+            var paziente = await _context.Pazienti.FindAsync(terapia.IDPaziente);
+            if (paziente == null) return NotFound("Paziente associato alla terapia non trovato!");
+
+            var dataInizio = nuovaTerapia.DataInizio ?? terapia.DataInizio;
+            var dataFine = nuovaTerapia.DataFine ?? terapia.DataFine;
+
+            if (dataInizio > dataFine)
+                return BadRequest("Hai inserito una data di inizio che viene dopo la data di fine!");
+
+            if (dataInizio < paziente.DataRicovero || dataFine < paziente.DataRicovero)
+                return BadRequest("La data di inizio o fine terapia non può precedere la data di ricovero del paziente.");
+
+            if (paziente.DataDimissione != null &&
+               (dataInizio > paziente.DataDimissione || dataFine > paziente.DataDimissione))
+                return BadRequest("La data di inizio o fine terapia non può essere dopo la data di dimissione del paziente!");
+
             if (matricola != terapia.MatricolaMedico)
                 terapia.MatricolaMedico = matricola;
 
-            if(nuovaTerapia.Farmaco!=null) terapia.Farmaco = nuovaTerapia.Farmaco;
-            if(nuovaTerapia.Dosaggio!=null) terapia.Dosaggio = nuovaTerapia.Dosaggio;
-            if(nuovaTerapia.OrarioSomministrazione!=null) terapia.OrarioSomministrazione = nuovaTerapia.OrarioSomministrazione.Value;
-            if(nuovaTerapia.DataInizio!=null) terapia.DataInizio = nuovaTerapia.DataInizio.Value;
-            if(nuovaTerapia.DataFine!=null) terapia.DataFine = nuovaTerapia.DataFine.Value;
+            if (nuovaTerapia.Farmaco != null) terapia.Farmaco = nuovaTerapia.Farmaco;
+            if (nuovaTerapia.Dosaggio != null) terapia.Dosaggio = nuovaTerapia.Dosaggio;
+            if (nuovaTerapia.OrarioSomministrazione != null) terapia.OrarioSomministrazione = nuovaTerapia.OrarioSomministrazione.Value;
+            if (nuovaTerapia.DataInizio != null) terapia.DataInizio = nuovaTerapia.DataInizio.Value;
+            if (nuovaTerapia.DataFine != null) terapia.DataFine = nuovaTerapia.DataFine.Value;
 
             await _context.SaveChangesAsync();
             return Ok(terapia);
@@ -120,9 +126,9 @@ public class TerapieController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, "Errore imprevisto: " + ex.Message);
-
         }
     }
+
 
     [Authorize]
     [HttpGet("paziente/{idPaziente}")]

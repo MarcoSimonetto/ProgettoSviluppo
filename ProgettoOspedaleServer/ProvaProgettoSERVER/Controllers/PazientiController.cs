@@ -158,10 +158,12 @@ public class PazientiController : ControllerBase
             if (pazienteModifica.DataRicovero != null)
                 paziente.DataRicovero = pazienteModifica.DataRicovero.Value;
 
+            if (pazienteModifica.DataDimissione != null)
+                paziente.DataDimissione = pazienteModifica.DataDimissione;
+
             if (paziente.DataRicovero > paziente.DataDimissione && paziente.DataDimissione != null)
                 return BadRequest("Hai inserito data di ricovero e di dimissione errate!");
-            paziente.DataDimissione = pazienteModifica.DataDimissione;
-
+             
             if (pazienteModifica.MotivoRicovero != null) paziente.MotivoRicovero = pazienteModifica.MotivoRicovero;
             paziente.Patologie = pazienteModifica.Patologie;
             paziente.Allergie = pazienteModifica.Allergie;
@@ -200,11 +202,21 @@ public class PazientiController : ControllerBase
             if (paziente.IDReparto != utente.IDReparto)
                 return BadRequest("Non puoi modificare i dati personali dei pazienti di un altro reparto!");
 
+            if (pazienteModifica.CF != null && pazienteModifica.CF != paziente.CF)
+            {
+                var esiste = await _context.Pazienti
+                    .AnyAsync(p => p.CF == pazienteModifica.CF && p.ID != IDPaziente);
+
+                if (esiste)
+                    return BadRequest("Codice fiscale già assegnato ad un altro paziente!");
+
+                paziente.CF = pazienteModifica.CF;
+            }
+
             if (pazienteModifica.DataNascita > oggi)
                 return BadRequest("Data di nascita non valida!");
             if (pazienteModifica.DataNascita != null) paziente.DataNascita = pazienteModifica.DataNascita.Value;
 
-            if (pazienteModifica.CF != null) paziente.CF = pazienteModifica.CF;
             if (pazienteModifica.Nome != null) paziente.Nome = pazienteModifica.Nome;
             if (pazienteModifica.Cognome != null) paziente.Cognome = pazienteModifica.Cognome;
             if (pazienteModifica.LuogoNascita != null) paziente.LuogoNascita = pazienteModifica.LuogoNascita;
@@ -387,8 +399,8 @@ public class PazientiController : ControllerBase
                 }
 
                 _context.Terapie.RemoveRange(terapie);
-                throw new Exception("Errore simulato nella transazione");       // TEST FALLIMENTO da rimuovere
-
+                //per forzare l'errore nella transazione
+                //throw new Exception("errore transazione");
                 await _context.SaveChangesAsync();
 
                 _context.Pazienti.Remove(paziente);

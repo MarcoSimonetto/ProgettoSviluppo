@@ -389,7 +389,7 @@ namespace ProvaMVC.Controllers
             }
             else
             {
-                TempData["ServerMessage"] = "\"Errore nel ricovero urgente " + await response.Content.ReadAsStringAsync();
+                TempData["ServerMessage"] = "Errore nel ricovero urgente " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
             }
@@ -723,8 +723,7 @@ namespace ProvaMVC.Controllers
                 TempData["ServerMessage"] = "Errore nella modifica dei dati medici " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
-
-            return RedirectToAction("Pazienti");
+            else return RedirectToAction("Pazienti");
 
             }
             catch (HttpRequestException)
@@ -826,11 +825,10 @@ namespace ProvaMVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                TempData["ServerMessage"] = "Errore nella modifica dei dati personali " + await response.Content.ReadAsStringAsync();
+                TempData["ServerMessage"] = "Errore nella modifica dei dati personali: " + await response.Content.ReadAsStringAsync();
                 return RedirectToAction("HttpError", "Home", new { statusCode = (int)response.StatusCode });
             }
-
-            return RedirectToAction("Pazienti");
+            else return RedirectToAction("Pazienti");
 
             }
             catch (HttpRequestException)
@@ -893,9 +891,6 @@ namespace ProvaMVC.Controllers
                 return RedirectToAction("HttpError", "Home", new { statusCode = 500 });
             }
         }
-
-
-
 
     }
 }
